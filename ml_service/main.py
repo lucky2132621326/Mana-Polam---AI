@@ -8,7 +8,7 @@ import io
 app = FastAPI()
 
 # Load model once at startup
-model = tf.keras.models.load_model("mobilenetv2_best.keras")
+model = tf.keras.models.load_model("mobilenetv2_best.h5")
 
 IMG_SIZE = 224
 
