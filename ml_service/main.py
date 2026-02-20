@@ -3,12 +3,13 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from PIL import Image
-import io
-
+import io import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "mobilenetv2_best.h5")
 app = FastAPI()
 
 # Load model once at startup
-model = tf.keras.models.load_model("mobilenetv2_best.h5")
+model = tf.keras.models.load_model(MODEL_PATH)
 
 IMG_SIZE = 224
 
