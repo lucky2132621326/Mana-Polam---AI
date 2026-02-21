@@ -1,6 +1,5 @@
-fastapi
-uvicorn
-tensorflow-cpu==2.15.0
+flask
+flask-cors
+tensorflow
 numpy
 pillow
-python-multipart
