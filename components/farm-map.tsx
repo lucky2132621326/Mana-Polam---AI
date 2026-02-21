@@ -267,9 +267,16 @@ export default function FarmMap() {
             {/* ================= FARM LAYOUT ================= */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-primary" />
-                  Farm Layout
+                <CardTitle className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-primary" />
+                    Farm Layout
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs text-green-600">
+                    <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
+                    Live
+                  </div>
                 </CardTitle>
                 <CardDescription>
                   24 zones across 4 rows and 6 columns
@@ -362,6 +369,27 @@ export default function FarmMap() {
                   <div className="space-y-8">
 
                     {/* Farm-wide Infection Probability */}
+                    {(() => {
+                      const confidences = Object.values(mlData).map(m => m.confidence)
+                      const avg = confidences.reduce((a, b) => a + b, 0) / confidences.length
+
+                      let label = "Stable"
+                      let color = "text-green-600"
+
+                      if (avg > 0.7) {
+                        label = "Critical Outbreak Risk"
+                        color = "text-red-600"
+                      } else if (avg > 0.4) {
+                        label = "Moderate Risk"
+                        color = "text-yellow-600"
+                      }
+
+                      return (
+                        <div className={`mt-3 text-sm font-medium ${color}`}>
+                          Overall Status: {label}
+                        </div>
+                      )
+                    })()}
                     {(() => {
                       const confidences = Object.values(mlData).map(m => m.confidence)
                       const avg =

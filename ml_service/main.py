@@ -12,10 +12,17 @@ CORS(app)               # ✅ THEN enable CORS
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "mobilenetv2_best.keras")
 
+# DATASET_DIR = os.path.join(BASE_DIR, "dataset", "train")
+
+# Get class names in sorted order
+# Temporary dummy class names until dataset is ready
+class_names = [f"Class_{i}" for i in range(38)]
+
 model = tf.keras.models.load_model(MODEL_PATH)
 
 IMG_SIZE = 224
 
+@app.route("/predict", methods=["POST"])
 @app.route("/predict", methods=["POST"])
 def predict():
     file = request.files["file"]
@@ -27,15 +34,24 @@ def predict():
     img_array = np.expand_dims(img_array, axis=0)
     img_array = preprocess_input(img_array)
 
+    # ✅ Correct variable used here
     predictions = model.predict(img_array)[0]
 
-    predicted_index = int(np.argmax(predictions))
-    confidence = float(np.max(predictions))
+    # ✅ Top 3 indices
+    top3_indices = predictions.argsort()[-3:][::-1]
+
+    top3 = [
+        {
+            "classIndex": int(i),
+            "probability": float(predictions[i])
+        }
+        for i in top3_indices
+    ]
 
     return jsonify({
-        "classIndex": predicted_index,
-        "confidence": confidence
+        "classIndex": int(top3_indices[0]),
+        "confidence": float(predictions[top3_indices[0]]),
+        "top3": top3
     })
-
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
