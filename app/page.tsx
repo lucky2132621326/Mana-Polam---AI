@@ -1,8 +1,11 @@
+"use client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
+import { useEffect, useState } from "react"
+
 import {
   Droplets,
   Thermometer,
@@ -18,8 +21,8 @@ import {
   Users,
 } from "lucide-react"
 
-export default function Dashboard() {
-  // Mock data for demonstration
+
+export default function Dashboard() {  // Mock data for demonstration
   const farmHealthScore = 87
   const totalZones = 12
   const healthyZones = 8
@@ -30,7 +33,34 @@ export default function Dashboard() {
     soilMoisture: 68,
     temperature: 24,
     humidity: 72,
+
   }
+
+  const [mlResult, setMlResult] = useState<any>(null)
+  const [currentTime, setCurrentTime] = useState("")
+
+  useEffect(() => {
+    // Load ML result
+    const stored = localStorage.getItem("mlResult")
+    if (stored) {
+      setMlResult(JSON.parse(stored))
+    }
+
+    // Live updating clock
+    const updateTime = () => {
+      setCurrentTime(
+        new Date().toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "medium",
+        })
+      )
+    }
+
+    updateTime()
+    const interval = setInterval(updateTime, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   const criticalZones = [
     { id: "Zone-A3", severity: "high", disease: "Leaf Blight", lastSprayed: "2 days ago" },
@@ -55,8 +85,9 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Calendar className="h-4 w-4" />
-            <span>Last updated: {new Date().toLocaleString()}</span>
-          </div>
+            <span className="font-medium text-primary">
+              Live • {currentTime}
+            </span>          </div>
         </div>
 
         {/* Farm Health Overview */}
@@ -144,6 +175,61 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Brain className="h-5 w-5 text-purple-600" />
+              AI Disease Intelligence
+            </CardTitle>
+            <CardDescription>
+              Machine learning powered crop health analysis
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            {!mlResult ? (
+              <p className="text-muted-foreground text-sm">
+                No AI detection performed yet. Upload a leaf image to analyze crop health.
+              </p>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium">Latest Detection</p>
+                  <p className="text-xl font-bold">
+                    Class {mlResult.classIndex}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium">Confidence</p>
+                  <Progress value={mlResult.confidence * 100} />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {(mlResult.confidence * 100).toFixed(2)}%
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-medium">Environmental Risk</p>
+                  <Badge
+                    variant={
+                      mlResult.confidence > 0.7 && sensorData.humidity > 75
+                        ? "destructive"
+                        : mlResult.confidence > 0.4
+                          ? "secondary"
+                          : "outline"
+                    }
+                  >
+                    {mlResult.confidence > 0.7 && sensorData.humidity > 75
+                      ? "High Risk"
+                      : mlResult.confidence > 0.4
+                        ? "Moderate Risk"
+                        : "Low Risk"}
+                  </Badge>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -235,6 +321,12 @@ export default function Dashboard() {
                 </a>
               </Button>
               <Button variant="outline" className="h-12 bg-transparent" asChild>
+                <a href="/detection">
+                  <Brain className="mr-2 h-4 w-4" />
+                  Disease Detection
+                </a>
+              </Button>
+              <Button variant="outline" className="h-12 bg-transparent" asChild>
                 <a href="/recommendations">
                   <Brain className="mr-2 h-4 w-4" />
                   AI Recommendations
@@ -246,10 +338,10 @@ export default function Dashboard() {
                   User Management
                 </a>
               </Button>
-              <Button variant="outline" className="h-12 bg-transparent">
+              {/* <Button variant="outline" className="h-12 bg-transparent">
                 <AlertTriangle className="mr-2 h-4 w-4" />
                 Alerts
-              </Button>
+              </Button> */}
             </div>
           </CardContent>
         </Card>
