@@ -20,22 +20,18 @@ import {
   Brain,
   Users,
 } from "lucide-react"
-import { Trans } from "@/components/language-provider"
 
 export default function Dashboard() {
+
   const [zones, setZones] = useState<any[]>([])
   const [mlResult, setMlResult] = useState<any>(null)
   const [currentTime, setCurrentTime] = useState("")
   const [isSpraying, setIsSpraying] = useState<string | null>(null)
 
   const fetchZones = async () => {
-    try {
-      const res = await fetch("/api/zones")
-      const data = await res.json()
-      setZones(data)
-    } catch (e) {
-      console.error(e)
-    }
+    const res = await fetch("/api/zones")
+    const data = await res.json()
+    setZones(data)
   }
 
   useEffect(() => {
@@ -107,20 +103,13 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">
-              <Trans en={"Farm Dashboard"} te={"ఫారం డాష్‌బోర్డు"} />
-            </h1>
-            <p className="text-muted-foreground">
-              <Trans
-                en={"Monitor crop health and manage pesticide spraying"}
-                te={"ఫసలుల ఆరోగ్యాన్ని పర్యవేక్షించండి మరియు పురుగు మందు స్ప్రేయింగ్ నిర్వహించండి"}
-              />
-            </p>
+            <h1 className="text-3xl font-bold text-foreground">Farm Dashboard</h1>
+            <p className="text-muted-foreground">Monitor crop health and manage pesticide spraying</p>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Calendar className="h-4 w-4" />
             <span className="font-medium text-primary">
-              <Trans en={`Live • ${currentTime}`} te={`నేరుగా • ${currentTime}`} />
+              Live • {currentTime}
             </span>
           </div>
         </div>
@@ -129,9 +118,7 @@ export default function Dashboard() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
-                <Trans en={"Farm Health Score"} te={"ఫార్మ్ ఆరోగ్య స్కోరు"} />
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Farm Health Score</CardTitle>
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -145,9 +132,7 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
-                <Trans en={"Healthy Zones"} te={"ఆరోగ్యవంతమైన ప్రాంతాలు"} />
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Healthy Zones</CardTitle>
               <CheckCircle className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
@@ -158,9 +143,7 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
-                <Trans en={"Warning Zones"} te={"జాగ్రత్త ప్రాంతాలు"} />
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Warning Zones</CardTitle>
               <AlertTriangle className="h-4 w-4 text-yellow-600" />
             </CardHeader>
             <CardContent>
@@ -171,9 +154,7 @@ export default function Dashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
-                <Trans en={"Infected Zones"} te={"బాధిత ప్రాంతాలు"} />
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Infected Zones</CardTitle>
               <AlertTriangle className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
@@ -186,24 +167,15 @@ export default function Dashboard() {
         {/* Sensor Data */}
         <Card>
           <CardHeader>
-            <CardTitle>
-              <Trans en={"Real-time Sensor Data"} te={"నేరుగా సెన్సార్ డేటా"} />
-            </CardTitle>
-            <CardDescription>
-              <Trans
-                en={"Current environmental conditions across the farm"}
-                te={"ఫార్మ్ మొత్తం ప్రస్తుత పర్యావరణ పరిస్థితులు"}
-              />
-            </CardDescription>
+            <CardTitle>Real-time Sensor Data</CardTitle>
+            <CardDescription>Current environmental conditions across the farm</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-3">
               <div className="flex items-center gap-3 p-4 rounded-lg bg-muted/50">
                 <Droplets className="h-8 w-8 text-blue-600" />
                 <div>
-                  <p className="text-sm font-medium">
-                    <Trans en={"Soil Moisture"} te={"మట్టి తేమ"} />
-                  </p>
+                  <p className="text-sm font-medium">Soil Moisture</p>
                   <p className="text-2xl font-bold">{avgMoisture}%</p>
                 </div>
               </div>
@@ -211,9 +183,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3 p-4 rounded-lg bg-muted/50">
                 <Thermometer className="h-8 w-8 text-orange-600" />
                 <div>
-                  <p className="text-sm font-medium">
-                    <Trans en={"Temperature"} te={"ఉష్ణోగ్రత"} />
-                  </p>
+                  <p className="text-sm font-medium">Temperature</p>
                   <p className="text-2xl font-bold">{temperature}°C</p>
                 </div>
               </div>
@@ -221,9 +191,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-3 p-4 rounded-lg bg-muted/50">
                 <Wind className="h-8 w-8 text-green-600" />
                 <div>
-                  <p className="text-sm font-medium">
-                    <Trans en={"Humidity"} te={"ఆర్ద్రత"} />
-                  </p>
+                  <p className="text-sm font-medium">Humidity</p>
                   <p className="text-2xl font-bold">{humidity}%</p>
                 </div>
               </div>
@@ -238,14 +206,9 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-red-600" />
-                <Trans en={"Zones Requiring Attention"} te={"శ్రద్ధ అవసరమైన ప్రాంతాలు"} />
+                Zones Requiring Attention
               </CardTitle>
-              <CardDescription>
-                <Trans
-                  en={"Areas with detected issues that need spraying"}
-                  te={"సమస్యలు గుర్తించిన ప్రాంతాలు — స్ప్రేయింగ్ అవసరం"}
-                />
-              </CardDescription>
+              <CardDescription>Areas with detected issues that need spraying</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {criticalZones.map(zone => (
@@ -255,26 +218,20 @@ export default function Dashboard() {
                     <div>
                       <p className="font-medium">{zone.id}</p>
                       <p className="text-sm text-muted-foreground">
-                        {zone.disease ?? <Trans en={"Health Degrading"} te={"ఆరోగ్యం దిగజారుతోంది"} />}
+                        {zone.disease ?? "Health Degrading"}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Badge variant="destructive">
-                      <Trans en={"High"} te={"ఎత్తు"} />
-                    </Badge>
+                    <Badge variant="destructive">High</Badge>
                     <Button
                       size="sm"
                       variant="outline"
                       disabled={isSpraying === zone.id}
                       onClick={() => handleSpray(zone.id)}
                     >
-                      {isSpraying === zone.id ? (
-                        <Trans en={"Spraying..."} te={"స్ప్రేయింగ్..."} />
-                      ) : (
-                        <Trans en={"Spray Now"} te={"ఇప్పుడు స్ప్రే చేయండి"} />
-                      )}
+                      {isSpraying === zone.id ? "Spraying..." : "Spray Now"}
                     </Button>
                   </div>
                 </div>
@@ -286,20 +243,16 @@ export default function Dashboard() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Sprout className="h-5 w-5 text-green-600" />
-                <Trans en={"Recent Activity"} te={"ఇటీవల చర్యలు"} />
+                Recent Activity
               </CardTitle>
-              <CardDescription>
-                <Trans en={"Latest actions and alerts from your farm"} te={"మీ ఫారం నుండి తాజా చర్యలు మరియు అలర్ట్‌లు"} />
-              </CardDescription>
+              <CardDescription>Latest actions and alerts from your farm</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {recentActivity.map(zone => (
                 <div key={zone.id} className="flex items-start gap-3">
                   <div className="h-2 w-2 rounded-full bg-primary mt-2" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium">
-                      <Trans en={"Spraying completed"} te={"స్ప్రేయింగ్ పూర్తి జరిగింది"} />
-                    </p>
+                    <p className="text-sm font-medium">Spraying completed</p>
                     <p className="text-xs text-muted-foreground">
                       {zone.id} • {new Date(zone.lastSprayed).toLocaleTimeString()}
                     </p>
@@ -308,7 +261,7 @@ export default function Dashboard() {
               ))}
               <Separator />
               <Button variant="outline" className="w-full bg-transparent">
-                <Trans en={"View All Activity"} te={"అన్ని చర్యలను చూడండి"} />
+                View All Activity
               </Button>
             </CardContent>
           </Card>
@@ -318,49 +271,45 @@ export default function Dashboard() {
         {/* Quick Actions (RESTORED EXACTLY) */}
         <Card>
           <CardHeader>
-            <CardTitle>
-              <Trans en={"Quick Actions"} te={"త్వరిత చర్యలు"} />
-            </CardTitle>
-            <CardDescription>
-              <Trans en={"Common tasks and controls"} te={"సాధారణ పనులు మరియు నియంత్రణలు"} />
-            </CardDescription>
+            <CardTitle>Quick Actions</CardTitle>
+            <CardDescription>Common tasks and controls</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-3 md:grid-cols-6">
               <Button className="h-12" asChild>
                 <a href="/controls">
                   <Sprout className="mr-2 h-4 w-4" />
-                  <Trans en={"Start Auto Spray"} te={"ఆటో స్ప్రే ప్రారంభించండి"} />
+                  Start Auto Spray
                 </a>
               </Button>
               <Button variant="outline" className="h-12 bg-transparent" asChild>
                 <a href="/map">
                   <MapPin className="mr-2 h-4 w-4" />
-                  <Trans en={"View Farm Map"} te={"ఫార్మ్ మ్యాప్ చూడండి"} />
+                  View Farm Map
                 </a>
               </Button>
               <Button variant="outline" className="h-12 bg-transparent" asChild>
                 <a href="/analytics">
                   <Activity className="mr-2 h-4 w-4" />
-                  <Trans en={"Analytics"} te={"విశ్లేషణలు"} />
+                  Analytics
                 </a>
               </Button>
               <Button variant="outline" className="h-12 bg-transparent" asChild>
                 <a href="/detection">
                   <Brain className="mr-2 h-4 w-4" />
-                  <Trans en={"Disease Detection"} te={"రోగ నిర్ధారణ"} />
+                  Disease Detection
                 </a>
               </Button>
               <Button variant="outline" className="h-12 bg-transparent" asChild>
                 <a href="/recommendations">
                   <Brain className="mr-2 h-4 w-4" />
-                  <Trans en={"AI Recommendations"} te={"AI సూచనలు"} />
+                  AI Recommendations
                 </a>
               </Button>
               <Button variant="outline" className="h-12 bg-transparent" asChild>
                 <a href="/users">
                   <Users className="mr-2 h-4 w-4" />
-                  <Trans en={"User Management"} te={"వినియోగదారుల నిర్వహణ"} />
+                  User Management
                 </a>
               </Button>
             </div>

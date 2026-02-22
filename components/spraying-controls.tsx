@@ -27,7 +27,6 @@ import {
   BarChart3,
   MapPin,
 } from "lucide-react"
-import { Trans } from "@/components/language-provider"
 
 interface SprayingSession {
   id: string
@@ -164,42 +163,25 @@ export default function SprayingControls() {
     }
   }
 
-  const pesticideLabel = (type: string) => {
-    switch (type.toLowerCase()) {
-      case "fungicide":
-        return "ఫంగిసైడ్"
-      case "insecticide":
-        return "ఇన్‌సెక్టిసైడ్"
-      case "herbicide":
-        return "హెర్బిసైడ్"
-      case "bactericide":
-        return "బాక్టిరిసైడ్"
-      case "nematicide":
-        return "నెమాటిసైడ్"
-      default:
-        return type
-    }
-  }
-
   return (
     <div className="min-h-screen bg-background p-4 md:p-6">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground"><Trans en={"Spraying Controls"} te={"స్ప్రాయింగ్ నియంత్రణలు"} /></h1>
-            <p className="text-muted-foreground"><Trans en={"Manage pesticide spraying operations and schedules"} te={"పెస్టిసైడ్ స్ప్రేయింగ్ ఆపరేషన్లు మరియు షెడ్యూల్‌లను నిర్వహించండి"} /></p>
+            <h1 className="text-3xl font-bold text-foreground">Spraying Controls</h1>
+            <p className="text-muted-foreground">Manage pesticide spraying operations and schedules</p>
           </div>
 
           {/* System Status */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-sm text-muted-foreground"><Trans en={"System Online"} te={"సిస్టమ్ ఆన్‌లైన్"} /></span>
+              <span className="text-sm text-muted-foreground">System Online</span>
             </div>
             <div className="flex items-center gap-2">
               <Droplets className="h-4 w-4 text-blue-600" />
-              <span className="text-sm"><Trans en={"Pesticide:"} te={"పెస్టిసైడ్:"} /> {pesticideLevel}%</span>
+              <span className="text-sm">Pesticide: {pesticideLevel}%</span>
             </div>
           </div>
         </div>
@@ -211,26 +193,21 @@ export default function SprayingControls() {
               <div className="flex items-center gap-3">
                 <Zap className="h-5 w-5 text-primary" />
                 <div>
-                  <h3 className="font-medium"><Trans en={"Operation Mode"} te={"ఆపరేషన్ మోడ్"} /></h3>
+                  <h3 className="font-medium">Operation Mode</h3>
                   <p className="text-sm text-muted-foreground">
-                    {autoMode ? (
-                      <Trans
-                        en={"AI automatically manages spraying based on sensor data"}
-                        te={"AI సెన్సార్ డేటాకు ఆధారంగా స్వయంచాలకంగా స్ప్రేయింగ్ నిర్వహిస్తుంది"}
-                      />
-                    ) : (
-                      <Trans en={"Manual control of all spraying operations"} te={"అన్ని స్ప్రేయింగ్ ఆపరేషన్లకు మాన్యువల్ నియంత్రణ"} />
-                    )}
+                    {autoMode
+                      ? "AI automatically manages spraying based on sensor data"
+                      : "Manual control of all spraying operations"}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Label htmlFor="auto-mode" className="text-sm">
-                  <Trans en={"Manual"} te={"మాన్యువల్"} />
+                  Manual
                 </Label>
                 <Switch id="auto-mode" checked={autoMode} onCheckedChange={setAutoMode} />
                 <Label htmlFor="auto-mode" className="text-sm">
-                  <Trans en={"Auto"} te={"ఆటో"} />
+                  Auto
                 </Label>
               </div>
             </div>
@@ -239,9 +216,9 @@ export default function SprayingControls() {
 
         <Tabs defaultValue="manual" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="manual"><Trans en={"Manual Control"} te={"మెన్యువల్ నియంత్రణ"} /></TabsTrigger>
-            <TabsTrigger value="schedule"><Trans en={"Schedule"} te={"షెడ్యూల్"} /></TabsTrigger>
-            <TabsTrigger value="active"><Trans en={"Active Sessions"} te={"క్రియాశీల సెషన్లు"} /></TabsTrigger>
+            <TabsTrigger value="manual">Manual Control</TabsTrigger>
+            <TabsTrigger value="schedule">Schedule</TabsTrigger>
+            <TabsTrigger value="active">Active Sessions</TabsTrigger>
           </TabsList>
 
           {/* Manual Control Tab */}
@@ -252,9 +229,9 @@ export default function SprayingControls() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-primary" />
-                    <Trans en={"Zone Selection"} te={"జోన్ ఎంపిక"} />
+                    Zone Selection
                   </CardTitle>
-                  <CardDescription><Trans en={"Select zones for manual spraying"} te={"మాన్యువల్ స్ప్రేయింగ్ కోసం జోన్లు ఎంచుకోండి"} /></CardDescription>
+                  <CardDescription>Select zones for manual spraying</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-6 gap-2">
@@ -271,10 +248,10 @@ export default function SprayingControls() {
                     ))}
                   </div>
 
-                    <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground"><Trans en={`Selected: ${selectedZones.length} zones`} te={`ఎంచుకున్నవి: ${selectedZones.length} జోన్లు`} /></span>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Selected: {selectedZones.length} zones</span>
                     <Button variant="outline" size="sm" onClick={() => setSelectedZones([])} className="bg-transparent">
-                      <Trans en={"Clear All"} te={"అన్నింటిని క్లియర్ చేయండి"} />
+                      Clear All
                     </Button>
                   </div>
                 </CardContent>
@@ -283,17 +260,17 @@ export default function SprayingControls() {
               {/* Spray Settings */}
               <Card>
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2">
                     <Settings className="h-5 w-5 text-primary" />
-                    <Trans en={"Spray Settings"} te={"స్ప్రే సెట్టింగ్స్"} />
+                    Spray Settings
                   </CardTitle>
-                  <CardDescription><Trans en={"Configure dosage and pesticide type"} te={"డోసేజ్ మరియు పెస్టిసైడ్ రకం కాన్ఫిగర్ చేయండి"} /></CardDescription>
+                  <CardDescription>Configure dosage and pesticide type</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Dosage Slider */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <Label><Trans en={"Dosage Level"} te={"డోసేజ్ స్థాయి"} /></Label>
+                      <Label>Dosage Level</Label>
                       <span className="text-sm font-medium">{globalDosage[0]}%</span>
                     </div>
                     <Slider
@@ -305,14 +282,14 @@ export default function SprayingControls() {
                       className="w-full"
                     />
                     <div className="flex justify-between text-xs text-muted-foreground">
-                      <span><Trans en={"Light (10%)"} te={"తక్కువ (10%)"} /></span>
-                      <span><Trans en={"Heavy (100%)"} te={"భారీ (100%)"} /></span>
+                      <span>Light (10%)</span>
+                      <span>Heavy (100%)</span>
                     </div>
                   </div>
 
                   {/* Pesticide Type */}
                   <div className="space-y-2">
-                    <Label><Trans en={"Pesticide Type"} te={"పెస్టిసైడ్ రకం"} /></Label>
+                    <Label>Pesticide Type</Label>
                     <Select defaultValue="fungicide">
                       <SelectTrigger>
                         <SelectValue />
@@ -320,7 +297,7 @@ export default function SprayingControls() {
                       <SelectContent>
                         {pesticideTypes.map((type) => (
                           <SelectItem key={type.toLowerCase()} value={type.toLowerCase()}>
-                            <Trans en={type} te={pesticideLabel(type)} />
+                            {type}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -329,7 +306,7 @@ export default function SprayingControls() {
 
                   {/* Duration */}
                   <div className="space-y-2">
-                    <Label><Trans en={"Duration (minutes)"} te={"కాలవ్యవధి (నిమిషాలు)"} /></Label>
+                    <Label>Duration (minutes)</Label>
                     <Input type="number" defaultValue="15" min="5" max="60" />
                   </div>
 
@@ -341,7 +318,7 @@ export default function SprayingControls() {
                     disabled={selectedZones.length === 0 || autoMode}
                   >
                     <Sprout className="mr-2 h-5 w-5" />
-                    <Trans en={`Start Spraying (${selectedZones.length} zones)`} te={`స్ప్రేయింగ్ ప్రారంభించండి (${selectedZones.length} జోన్లు)`} />
+                    Start Spraying ({selectedZones.length} zones)
                   </Button>
                 </CardContent>
               </Card>
@@ -354,9 +331,9 @@ export default function SprayingControls() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calendar className="h-5 w-5 text-primary" />
-                  <Trans en={"Spraying Schedule"} te={"స్ప్రే షెడ్యూల్"} />
+                  Spraying Schedule
                 </CardTitle>
-                <CardDescription><Trans en={"Set up automated spraying schedules"} te={"స్వయంచాలక స్ప్రేయింగ్ షెడ్యూల్‌లు సజ్జం చేయండి"} /></CardDescription>
+                <CardDescription>Set up automated spraying schedules</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid gap-6 md:grid-cols-2">
@@ -365,7 +342,7 @@ export default function SprayingControls() {
                       <Label>Zone</Label>
                       <Select>
                         <SelectTrigger>
-                          <SelectValue placeholder={<Trans en={"Select zone"} te={"జోన్ ఎంచుకోండి"} />} />
+                          <SelectValue placeholder="Select zone" />
                         </SelectTrigger>
                         <SelectContent>
                           {zones.map((zone) => (
@@ -378,21 +355,21 @@ export default function SprayingControls() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label><Trans en={"Time"} te={"సమయం"} /></Label>
+                      <Label>Time</Label>
                       <Input type="time" defaultValue="06:00" />
                     </div>
 
                     <div className="space-y-2">
-                      <Label><Trans en={"Frequency"} te={"పునరావృతి"} /></Label>
+                      <Label>Frequency</Label>
                       <Select defaultValue="daily">
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="daily"><Trans en={"Daily"} te={"రోజువారీ"} /></SelectItem>
-                          <SelectItem value="weekly"><Trans en={"Weekly"} te={"వారానిక"} /></SelectItem>
-                          <SelectItem value="biweekly"><Trans en={"Bi-weekly"} te={"రెండు వారాలలో ఒకసారి"} /></SelectItem>
-                          <SelectItem value="monthly"><Trans en={"Monthly"} te={"నెలలో ఒకసారి"} /></SelectItem>
+                          <SelectItem value="daily">Daily</SelectItem>
+                          <SelectItem value="weekly">Weekly</SelectItem>
+                          <SelectItem value="biweekly">Bi-weekly</SelectItem>
+                          <SelectItem value="monthly">Monthly</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -437,8 +414,8 @@ export default function SprayingControls() {
             {/* Scheduled Sessions */}
             <Card>
               <CardHeader>
-                <CardTitle><Trans en={"Upcoming Schedules"} te={"రాబోయే షెడ్యూల్‌లు"} /></CardTitle>
-                <CardDescription><Trans en={"Manage your scheduled spraying sessions"} te={"మీ షెడ్యూల్ చేసిన సెషన్లను నిర్వహించండి"} /></CardDescription>
+                <CardTitle>Upcoming Schedules</CardTitle>
+                <CardDescription>Manage your scheduled spraying sessions</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -449,24 +426,24 @@ export default function SprayingControls() {
                         <div className="flex items-center gap-3">
                           <Clock className="h-4 w-4 text-blue-600" />
                           <div>
-                            <p className="font-medium"><Trans en={`Zone ${session.zone}`} te={`జోన్ ${session.zone}`} /></p>
+                            <p className="font-medium">Zone {session.zone}</p>
                             <p className="text-sm text-muted-foreground">
-                              {session.startTime} • <Trans en={session.pesticideType} te={pesticideLabel(session.pesticideType)} /> • {session.dosage}%
+                              {session.startTime} • {session.pesticideType} • {session.dosage}%
                             </p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
                           <Button variant="outline" size="sm" className="bg-transparent">
-                            <Trans en={"Edit"} te={"సవరణ"} />
+                            Edit
                           </Button>
                           <Button variant="outline" size="sm" className="bg-transparent">
-                            <Trans en={"Cancel"} te={"రద్దు చేయి"} />
+                            Cancel
                           </Button>
                         </div>
                       </div>
                     ))}
                   {sprayingSessions.filter((s) => s.status === "scheduled").length === 0 && (
-                    <p className="text-center text-muted-foreground py-8"><Trans en={"No scheduled sessions"} te={"షెడ్యూల్ సెషన్లు లేవు"} /></p>
+                    <p className="text-center text-muted-foreground py-8">No scheduled sessions</p>
                   )}
                 </div>
               </CardContent>
@@ -479,9 +456,9 @@ export default function SprayingControls() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <BarChart3 className="h-5 w-5 text-primary" />
-                  <Trans en={"Active Spraying Sessions"} te={"సక్రియ స్ప్రేయింగ్ సెషన్లు"} />
+                  Active Spraying Sessions
                 </CardTitle>
-                <CardDescription><Trans en={"Monitor and control ongoing spraying operations"} te={"చలించే స్ప్రేయింగ్ ఆపరేషన్లను పర్యవేక్షించండి మరియు నియంత్రించండి"} /></CardDescription>
+                <CardDescription>Monitor and control ongoing spraying operations</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -493,30 +470,27 @@ export default function SprayingControls() {
                           <div className="flex items-center gap-3">
                             {getStatusIcon(session.status)}
                             <div>
-                              <h4 className="font-medium"><Trans en={`Zone ${session.zone}`} te={`జోన్ ${session.zone}`} /></h4>
+                              <h4 className="font-medium">Zone {session.zone}</h4>
                               <p className="text-sm text-muted-foreground">
-                                <Trans en={`Started:`} te={`ప్రారంభం:`} /> {session.startTime} • <Trans en={session.pesticideType} te={pesticideLabel(session.pesticideType)} /> • {session.dosage}%
+                                Started: {session.startTime} • {session.pesticideType} • {session.dosage}%
                               </p>
                             </div>
                           </div>
                           <Badge variant={session.status === "active" ? "default" : "secondary"} className="capitalize">
-                            {session.status === "active" ? <Trans en={"Active"} te={"సక్రియ"} /> : <Trans en={"Paused"} te={"విరామం"} />}
+                            {session.status}
                           </Badge>
                         </div>
 
                         <div className="space-y-2">
                           <div className="flex items-center justify-between text-sm">
-                            <span><Trans en={"Progress"} te={"ప్రగతి"} /></span>
+                            <span>Progress</span>
                             <span>{session.progress}%</span>
                           </div>
                           <Progress value={session.progress} className="h-2" />
                           <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span><Trans en={`Duration: ${session.duration} min`} te={`కాలవ్యవధి: ${session.duration} నిమిషాలు`} /></span>
+                            <span>Duration: {session.duration} min</span>
                             <span>
-                              <Trans
-                                en={`Est. completion: ${Math.round(((100 - session.progress) / 100) * session.duration)} min`}
-                                te={`అంచనా పూర్తి: ${Math.round(((100 - session.progress) / 100) * session.duration)} నిమిషాలు`}
-                              />
+                              Est. completion: {Math.round(((100 - session.progress) / 100) * session.duration)} min
                             </span>
                           </div>
                         </div>
@@ -531,12 +505,12 @@ export default function SprayingControls() {
                             {session.status === "active" ? (
                               <>
                                 <Pause className="mr-2 h-4 w-4" />
-                                <Trans en={"Pause"} te={"విరామం"} />
+                                Pause
                               </>
                             ) : (
                               <>
                                 <Play className="mr-2 h-4 w-4" />
-                                <Trans en={"Resume"} te={"పునరంభించు"} />
+                                Resume
                               </>
                             )}
                           </Button>
@@ -547,7 +521,7 @@ export default function SprayingControls() {
                             className="bg-transparent"
                           >
                             <Square className="mr-2 h-4 w-4" />
-                            <Trans en={"Stop"} te={"ఆపు"} />
+                            Stop
                           </Button>
                         </div>
                       </div>
@@ -556,7 +530,7 @@ export default function SprayingControls() {
                   {sprayingSessions.filter((s) => s.status === "active" || s.status === "paused").length === 0 && (
                     <div className="text-center py-8">
                       <Sprout className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground"><Trans en={"No active spraying sessions"} te={"సక్రియ స్ప్రేయింగ్ సెషన్లు లేవు"} /></p>
+                      <p className="text-muted-foreground">No active spraying sessions</p>
                     </div>
                   )}
                 </div>
@@ -570,9 +544,9 @@ export default function SprayingControls() {
                   <div className="flex items-center gap-3">
                     <AlertTriangle className="h-5 w-5 text-destructive" />
                     <div>
-                      <h4 className="font-medium text-destructive"><Trans en={"Low Pesticide Level"} te={"పెస్టిసైడ్ స్థాయి తక్కువ"} /></h4>
+                      <h4 className="font-medium text-destructive">Low Pesticide Level</h4>
                       <p className="text-sm text-muted-foreground">
-                        <Trans en={`Current level: ${pesticideLevel}%. Refill recommended before starting new sessions.`} te={`ప్రస్తుత స్థాయి: ${pesticideLevel}%. కొత్త సెషన్లు ప్రారంభించడానికి ముందు పునఃపూరణ సిఫార్సు చేయబడింది.`} />
+                        Current level: {pesticideLevel}%. Refill recommended before starting new sessions.
                       </p>
                     </div>
                   </div>
