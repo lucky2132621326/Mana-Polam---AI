@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Trans } from "@/components/language-provider"
 
 export default function DetectionPage() {
   const [file, setFile] = useState<File | null>(null)
@@ -51,9 +52,9 @@ export default function DetectionPage() {
 
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">🌿 AI Disease Detection</h1>
+          <h1 className="text-3xl font-bold">🌿 <Trans en={"AI Disease Detection"} te={"AI రోగ గుర్తింపు"} /></h1>
           <p className="text-muted-foreground">
-            Upload a leaf image to analyze potential plant diseases.
+            <Trans en={"Upload a leaf image to analyze potential plant diseases."} te={"సంభావ్య పంట వ్యాధులను విశ్లేషించడానికి ఆకుల చిత్రాన్ని అప్‌లోడ్ చేయండి."} />
           </p>
         </div>
 
@@ -72,7 +73,7 @@ export default function DetectionPage() {
                 />
               ) : (
                 <span className="text-muted-foreground text-sm">
-                  Image Preview
+                  <Trans en={"Image Preview"} te={"చిత్రం ప్రివ్యూ"} />
                 </span>
               )}
             </div>
@@ -97,7 +98,7 @@ export default function DetectionPage() {
                 disabled={!file || loading}
                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
               >
-                {loading ? "Analyzing..." : "Analyze Leaf"}
+                {loading ? <Trans en={"Analyzing..."} te={"విశ్లేషిస్తోంది..."} /> : <Trans en={"Analyze Leaf"} te={"ఆకును విశ్లేషించండి"} />}
               </button>
             </div>
           </div>
@@ -107,21 +108,21 @@ export default function DetectionPage() {
         {result && (
   <div className="mt-6 bg-gray-100 p-6 rounded-xl shadow-sm">
     <h2 className="text-xl font-semibold mb-3">
-      Prediction Result
+      <Trans en={"Prediction Result"} te={"గణనా ఫలితం"} />
     </h2>
 
     <p className="text-lg">
-      <span className="font-medium">Detected Disease:</span>{" "}
+      <span className="font-medium"><Trans en={"Detected Disease:"} te={"గుర్తించిన వ్యాధి:"} /></span>{" "}
       {result.disease?.replace(/___/g, " - ").replace(/_/g, " ")}
     </p>
 
     <p className="mt-2">
-      <span className="font-medium">Confidence:</span>{" "}
+      <span className="font-medium"><Trans en={"Confidence:"} te={"నమ్మకం:"} /></span>{" "}
       {(result.confidence * 100).toFixed(2)}%
     </p>
 
     <h3 className="mt-4 font-medium">
-      Top 3 Predictions:
+      <Trans en={"Top 3 Predictions:"} te={"Top 3 అంచనాలు:"} />
     </h3>
 
     <ul className="mt-2 space-y-1">

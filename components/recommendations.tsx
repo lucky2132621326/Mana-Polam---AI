@@ -26,6 +26,7 @@ import {
   X,
   Check,
 } from "lucide-react"
+import { Trans } from "@/components/language-provider"
 
 interface Recommendation {
   id: string
@@ -144,6 +145,46 @@ export default function Recommendations() {
     },
   ])
 
+  // Telugu translations for dynamic recommendation content
+  const teTranslations: Record<string, string> = {
+    "Immediate Spraying Required - Zone A3": "తక్షణ స్ప్రేయింగ్ అవసరం - జోన్ A3",
+    "Leaf blight detected with rapid spread potential. Weather conditions favor disease progression.": "పత్రాల బ్లైట్ వేగంగా పसरే అవకాశంతో గుర్తించబడింది. వాతావరణ పరిస్థితులు రోగ విస్తరణకు అనుకూలంగా ఉన్నాయి.",
+    "Preventive Treatment - Row B": "నిరోధక చికిత్స - రో బి",
+    "Weather forecast indicates conditions favorable for aphid infestation in 48-72 hours.": "వాతావరణ అంచనాలు 48-72 గంటలలో ఎఫిడ్ దాడికి అనుకూలమైన పరిస్థితులను సూచిస్తాయి.",
+    "Optimize Spraying Schedule": "స్ప్రేయింగ్ షెడ్యూల్‌ను ఆప్టిమైజ్ చేయండి",
+    "Adjust spraying times to early morning (5-7 AM) for better pesticide effectiveness and reduced waste.": "ఉత్తమ రసాయన పనితీరుకు మరియు వ్యర్థం తగ్గించడానికి స్ప్రేయింగ్ సమయాలను ఆరవేలా (5-7 AM) మార్చండి.",
+    "Sensor Calibration Due": "సెన్సార్ కాలిబ్రేషన్ అవసరం",
+    "Soil moisture sensors in zones C2 and D4 showing drift from expected values.": "జోన్లు C2 మరియు D4 లో బాటి మాయిశ్చర్ సెన్సార్లు ఆశించిన విలువల నుండి వంగుతున్నాయి.",
+
+    // Actions
+    "Apply fungicide spray": "ఫంగిసైడ్ స్ప్రే చేయండి",
+    "Increase monitoring frequency": "మిక్కిలి పర్యవేక్షణ తరచుదనం పెంచండి",
+    "Check adjacent zones": "కక్కి ఉన్న జోన్లను తనిఖీ చేయండి",
+    "Schedule preventive insecticide application": "నిరోధక ఇన్సెక్టిసైడ్ అప్లికేషన్ షెడ్యూల్ చేయండి",
+    "Deploy monitoring traps": "పర్యవేక్షణ ఫందాల్ని అమలు చేయండి",
+    "Prepare treatment equipment": "చికిత్స పరికరాలను సిద్ధం చేయండి",
+    "Update spraying schedules": "స్ప్రేయింగ్ షెడ్యూల్‌లను నవీకరించండి",
+    "Adjust equipment timers": "పరికరాల టైమర్లను సర్దుబాటు చేయండి",
+    "Train operators on new timing": "కొత్త సమయాలపై ఆపరేటర్లకు శిక్షణ ఇవ్వండి",
+    "Schedule sensor calibration": "సెన్సార్ కాలిబ్రేషన్ షెడ్యూల్ చేయండి",
+    "Verify readings manually": "రిడింగ్స్‌ను మాన్యువల్‌గా ధృవీకరించండి",
+    "Update calibration records": "కాలిబ్రేషన్ రికార్డులను నవీకరించండి",
+
+    // Small phrases
+    "AI Reasoning": "AI వివరణ",
+    "Recommended Actions": "సిఫార‌స్డ్ చర్యలు",
+    "Immediate Actions": "తక్షణ చర్యలు",
+    "Take Action Now": "ఇప్పుడే చర్య తీసుకోండి",
+    "Get Help": "సాయంకోరుకోండి",
+    "No Implemented Actions Yet": "ఇప్పటి వరకు అమలు చేయబడిన చర్యలు లేవు",
+    "All Caught Up!": "అందరూ పక్కాగా ఉన్నాయి!",
+    "No active recommendations at the moment. The AI is continuously monitoring your farm.": "ప్రస్తుతం క్రియాశీల సూచనలు లేవు. AI మీ వ్యర్థాన్ని నిరంతరం పర్యవేక్షిస్తోంది.",
+    "No Urgent Actions": "తక్షణ చర్యలు లేవు",
+    "Great! No urgent recommendations requiring immediate attention.": "మంచిది! తక్షణ శ్రద్ధ అవసరమైన తక్షణ సూచనలు లేవు.",
+  }
+
+  const t = (en: string) => teTranslations[en] ?? en
+
   const getTypeColor = (type: string) => {
     switch (type) {
       case "urgent":
@@ -205,8 +246,8 @@ export default function Recommendations() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">AI Recommendations</h1>
-            <p className="text-muted-foreground">Intelligent suggestions for optimal farm management</p>
+            <h1 className="text-3xl font-bold text-foreground"><Trans en={"AI Recommendations"} te={"AI సూచనలు"} /></h1>
+            <p className="text-muted-foreground"><Trans en={"Intelligent suggestions for optimal farm management"} te={"ఆప్టిమల్ ఫార్మ్ నిర్వహణ కోసం తెలివైన సూచనలు"} /></p>
           </div>
 
           {/* Settings */}
@@ -218,13 +259,13 @@ export default function Recommendations() {
                 onCheckedChange={setAutoRecommendations}
               />
               <Label htmlFor="auto-recommendations" className="text-sm">
-                Auto Recommendations
+                <Trans en={"Auto Recommendations"} te={"స్వయంచాలక సూచనలు"} />
               </Label>
             </div>
             <div className="flex items-center gap-2">
               <Switch id="notifications" checked={notifications} onCheckedChange={setNotifications} />
               <Label htmlFor="notifications" className="text-sm">
-                Notifications
+                <Trans en={"Notifications"} te={"నోటిఫికేషన్లు"} />
               </Label>
             </div>
           </div>
@@ -234,55 +275,55 @@ export default function Recommendations() {
         <div className="grid gap-4 md:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Recommendations</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"Active Recommendations"} te={"సక్రియ సూచనలు"} /></CardTitle>
               <Brain className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{activeRecommendations.length}</div>
-              <p className="text-xs text-muted-foreground">Pending actions</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Pending actions"} te={"పెండింగ్ చర్యలు"} /></p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Urgent Actions</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"Urgent Actions"} te={"తక్షణ చర్యలు"} /></CardTitle>
               <AlertTriangle className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600">{urgentCount}</div>
-              <p className="text-xs text-muted-foreground">Require immediate attention</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Require immediate attention"} te={"తక్షణ శ్రద్ధ అవసరం"} /></p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Important Items</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"Important Items"} te={"ముఖ్య అంశాలు"} /></CardTitle>
               <Clock className="h-4 w-4 text-orange-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-orange-600">{importantCount}</div>
-              <p className="text-xs text-muted-foreground">Within 24 hours</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Within 24 hours"} te={"24 గంటలలో"} /></p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">AI Confidence</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"AI Confidence"} te={"AI నమ్మకం"} /></CardTitle>
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-primary">89%</div>
-              <p className="text-xs text-muted-foreground">Average accuracy</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Average accuracy"} te={"సగటు ఖచ్చితత్వం"} /></p>
             </CardContent>
           </Card>
         </div>
 
         <Tabs defaultValue="active" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="active">Active ({activeRecommendations.length})</TabsTrigger>
-            <TabsTrigger value="urgent">Urgent ({urgentCount})</TabsTrigger>
-            <TabsTrigger value="implemented">Implemented</TabsTrigger>
-            <TabsTrigger value="insights">AI Insights</TabsTrigger>
+            <TabsTrigger value="active"><Trans en={"Active"} te={"సక్రియ"} /> ({activeRecommendations.length})</TabsTrigger>
+            <TabsTrigger value="urgent"><Trans en={"Urgent"} te={"తక్షణ"} /> ({urgentCount})</TabsTrigger>
+            <TabsTrigger value="implemented"><Trans en={"Implemented"} te={"అమలులో"} /></TabsTrigger>
+            <TabsTrigger value="insights"><Trans en={"AI Insights"} te={"AI అవగాహనలు"} /></TabsTrigger>
           </TabsList>
 
           {/* Active Recommendations */}
@@ -295,7 +336,7 @@ export default function Recommendations() {
                       <div className={`p-2 rounded-lg ${getTypeColor(rec.type)}`}>{getTypeIcon(rec.type)}</div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <CardTitle className="text-lg">{rec.title}</CardTitle>
+                          <CardTitle className="text-lg"><Trans en={rec.title} te={t(rec.title)} /></CardTitle>
                           <Badge variant={getPriorityColor(rec.priority)} className="capitalize">
                             {rec.priority}
                           </Badge>
@@ -306,7 +347,7 @@ export default function Recommendations() {
                             </Badge>
                           )}
                         </div>
-                        <CardDescription className="text-base">{rec.description}</CardDescription>
+                          <CardDescription className="text-base"><Trans en={rec.description} te={t(rec.description)} /></CardDescription>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -326,7 +367,7 @@ export default function Recommendations() {
                   <div className="grid gap-4 md:grid-cols-3">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">AI Confidence</span>
+                        <span className="text-muted-foreground"><Trans en={"AI Confidence"} te={"AI నమ్మకం"} /></span>
                         <span className="font-medium">{rec.confidence}%</span>
                       </div>
                       <Progress value={rec.confidence} className="h-2" />
@@ -347,19 +388,19 @@ export default function Recommendations() {
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium flex items-center gap-2">
                       <Brain className="h-4 w-4" />
-                      AI Reasoning
+                      <Trans en={"AI Reasoning"} te={t("AI Reasoning")} />
                     </h4>
-                    <p className="text-sm text-muted-foreground">{rec.reasoning}</p>
+                    <p className="text-sm text-muted-foreground"><Trans en={rec.reasoning} te={t(rec.reasoning)} /></p>
                   </div>
 
                   {/* Recommended Actions */}
                   <div className="space-y-2">
-                    <h4 className="text-sm font-medium">Recommended Actions</h4>
+                    <h4 className="text-sm font-medium"><Trans en={"Recommended Actions"} te={t("Recommended Actions")} /></h4>
                     <ul className="space-y-1">
                       {rec.actions.map((action, index) => (
                         <li key={index} className="flex items-center gap-2 text-sm">
                           <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                          {action}
+                          <Trans en={action} te={t(action)} />
                         </li>
                       ))}
                     </ul>
@@ -369,14 +410,14 @@ export default function Recommendations() {
                   <div className="flex items-center gap-2 pt-2">
                     <Button onClick={() => handleImplement(rec.id)}>
                       <Check className="mr-2 h-4 w-4" />
-                      Implement
+                      <Trans en={"Implement"} te={"అమలు చేయండి"} />
                     </Button>
                     <Button variant="outline" className="bg-transparent">
                       <Calendar className="mr-2 h-4 w-4" />
-                      Schedule
+                      <Trans en={"Schedule"} te={"టైమ్ షెడ్యూల్"} />
                     </Button>
                     <Button variant="outline" className="bg-transparent">
-                      More Details
+                      <Trans en={"More Details"} te={"మరింత వివరాలు"} />
                     </Button>
                   </div>
                 </CardContent>
@@ -387,9 +428,9 @@ export default function Recommendations() {
               <Card>
                 <CardContent className="text-center py-12">
                   <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">All Caught Up!</h3>
+                  <h3 className="text-lg font-medium mb-2"><Trans en={"All Caught Up!"} te={t("All Caught Up!")} /></h3>
                   <p className="text-muted-foreground">
-                    No active recommendations at the moment. The AI is continuously monitoring your farm.
+                    <Trans en={"No active recommendations at the moment. The AI is continuously monitoring your farm."} te={t("No active recommendations at the moment. The AI is continuously monitoring your farm.")} />
                   </p>
                 </CardContent>
               </Card>
@@ -410,7 +451,7 @@ export default function Recommendations() {
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <CardTitle className="text-lg text-red-600">{rec.title}</CardTitle>
+                            <CardTitle className="text-lg text-red-600"><Trans en={rec.title} te={t(rec.title)} /></CardTitle>
                             {rec.zone && (
                               <Badge variant="outline" className="text-xs">
                                 <MapPin className="mr-1 h-3 w-3" />
@@ -418,7 +459,7 @@ export default function Recommendations() {
                               </Badge>
                             )}
                           </div>
-                          <CardDescription className="text-base">{rec.description}</CardDescription>
+                          <CardDescription className="text-base"><Trans en={rec.description} te={t(rec.description)} /></CardDescription>
                         </div>
                       </div>
                     </div>
@@ -426,29 +467,29 @@ export default function Recommendations() {
                   <CardContent className="space-y-4">
                     <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800">
                       <p className="text-sm text-red-800 dark:text-red-200 font-medium">
-                        ⚠️ Urgent Action Required: {rec.timeframe}
+                        ⚠️ <Trans en={"Urgent Action Required:"} te={"తక్షణ చర్య అవసరం:"} /> <Trans en={rec.timeframe} te={t(rec.timeframe)} />
                       </p>
                     </div>
 
                     <div className="space-y-2">
-                      <h4 className="text-sm font-medium">Immediate Actions</h4>
+                      <h4 className="text-sm font-medium"><Trans en={"Immediate Actions"} te={t("Immediate Actions")} /></h4>
                       <ul className="space-y-1">
                         {rec.actions.map((action, index) => (
                           <li key={index} className="flex items-center gap-2 text-sm">
                             <div className="h-1.5 w-1.5 rounded-full bg-red-600" />
-                            {action}
+                            <Trans en={action} te={t(action)} />
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
                       <Button className="bg-red-600 hover:bg-red-700" onClick={() => handleImplement(rec.id)}>
                         <Zap className="mr-2 h-4 w-4" />
-                        Take Action Now
+                        <Trans en={"Take Action Now"} te={t("Take Action Now")} />
                       </Button>
                       <Button variant="outline" className="bg-transparent">
-                        Get Help
+                        <Trans en={"Get Help"} te={t("Get Help")} />
                       </Button>
                     </div>
                   </CardContent>
@@ -459,9 +500,9 @@ export default function Recommendations() {
               <Card>
                 <CardContent className="text-center py-12">
                   <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No Urgent Actions</h3>
+                  <h3 className="text-lg font-medium mb-2"><Trans en={"No Urgent Actions"} te={t("No Urgent Actions")} /></h3>
                   <p className="text-muted-foreground">
-                    Great! No urgent recommendations requiring immediate attention.
+                    <Trans en={"Great! No urgent recommendations requiring immediate attention."} te={t("Great! No urgent recommendations requiring immediate attention.")} />
                   </p>
                 </CardContent>
               </Card>
@@ -481,12 +522,12 @@ export default function Recommendations() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <CardTitle className="text-lg">{rec.title}</CardTitle>
+                          <CardTitle className="text-lg"><Trans en={rec.title} te={t(rec.title)} /></CardTitle>
                           <Badge variant="outline" className="text-green-600 border-green-600">
-                            Implemented
+                            <Trans en={"Implemented"} te={"అమలులో"} />
                           </Badge>
                         </div>
-                        <CardDescription>{rec.description}</CardDescription>
+                        <CardDescription><Trans en={rec.description} te={t(rec.description)} /></CardDescription>
                       </div>
                     </div>
                   </CardHeader>
@@ -497,9 +538,9 @@ export default function Recommendations() {
               <Card>
                 <CardContent className="text-center py-12">
                   <Lightbulb className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No Implemented Actions Yet</h3>
+                  <h3 className="text-lg font-medium mb-2"><Trans en={"No Implemented Actions Yet"} te={"ఇప్పటికే అమలు చేయబడిన చర్యలు వేచివున్నాయి"} /></h3>
                   <p className="text-muted-foreground">
-                    Implemented recommendations will appear here for tracking and review.
+                    <Trans en={"Implemented recommendations will appear here for tracking and review."} te={"అమలైన సూచనలు ట్రాకింగ్ మరియు సమీక్ష కోసం ఇక్కడ కనిపిస్తాయి."} />
                   </p>
                 </CardContent>
               </Card>
@@ -512,29 +553,29 @@ export default function Recommendations() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="h-5 w-5 text-primary" />
-                  AI Performance Insights
+                  <Trans en={"AI Performance Insights"} te={"AI పనితీరు అవగాహనలు"} />
                 </CardTitle>
-                <CardDescription>How the AI system is helping optimize your farm</CardDescription>
+                <CardDescription><Trans en={"How the AI system is helping optimize your farm"} te={"AI సిస్టమ్ మీ వ్యవసాయాన్ని ఆప్టిమైజ్ చేయడంలో ఎలా సహాయపడుతుంది"} /></CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-4">
-                    <h4 className="font-medium">Prediction Accuracy</h4>
+                    <h4 className="font-medium"><Trans en={"Prediction Accuracy"} te={"పెరుగుదల ఖచ్చితత్వం"} /></h4>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">Disease Detection</span>
+                        <span className="text-sm"><Trans en={"Disease Detection"} te={"రోగ నిర్ధారణ"} /></span>
                         <span className="text-sm font-medium">94%</span>
                       </div>
                       <Progress value={94} className="h-2" />
 
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">Weather Predictions</span>
+                        <span className="text-sm"><Trans en={"Weather Predictions"} te={"వాతావరణ తర్ఫీదులు"} /></span>
                         <span className="text-sm font-medium">87%</span>
                       </div>
                       <Progress value={87} className="h-2" />
 
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">Optimal Timing</span>
+                        <span className="text-sm"><Trans en={"Optimal Timing"} te={"సువర్ణ సమయం"} /></span>
                         <span className="text-sm font-medium">91%</span>
                       </div>
                       <Progress value={91} className="h-2" />
@@ -542,20 +583,20 @@ export default function Recommendations() {
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="font-medium">Impact Metrics</h4>
+                    <h4 className="font-medium"><Trans en={"Impact Metrics"} te={"ప్రభావ సూచికలు"} /></h4>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">Pesticide Reduction</span>
+                        <span className="text-sm"><Trans en={"Pesticide Reduction"} te={"పెస్టిసైడ్ తగ్గింపు"} /></span>
                         <span className="text-sm font-medium text-green-600">-23%</span>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">Early Disease Detection</span>
+                        <span className="text-sm"><Trans en={"Early Disease Detection"} te={"ముందస్తు రోగ గుర్తింపు"} /></span>
                         <span className="text-sm font-medium text-green-600">+67%</span>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">Yield Improvement</span>
+                        <span className="text-sm"><Trans en={"Yield Improvement"} te={"ఉత్పత్తి మెరుగుదల"} /></span>
                         <span className="text-sm font-medium text-green-600">+12%</span>
                       </div>
                     </div>
@@ -565,17 +606,17 @@ export default function Recommendations() {
                 <Separator />
 
                 <div className="space-y-4">
-                  <h4 className="font-medium">Learning Insights</h4>
+                  <h4 className="font-medium"><Trans en={"Learning Insights"} te={"లెర్నింగ్ అవగాహనలు"} /></h4>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="p-4 rounded-lg bg-muted/50">
-                      <h5 className="font-medium text-sm mb-2">Pattern Recognition</h5>
+                      <h5 className="font-medium text-sm mb-2"><Trans en={"Pattern Recognition"} te={"ప్యాటర్న్ గుర్తింపు"} /></h5>
                       <p className="text-sm text-muted-foreground">
                         AI has identified that Zone A3 is 40% more susceptible to leaf blight during high humidity
                         periods.
                       </p>
                     </div>
                     <div className="p-4 rounded-lg bg-muted/50">
-                      <h5 className="font-medium text-sm mb-2">Optimization Discovery</h5>
+                      <h5 className="font-medium text-sm mb-2"><Trans en={"Optimization Discovery"} te={"ఆప్టిమైజేషన్ కనుగొనడం"} /></h5>
                       <p className="text-sm text-muted-foreground">
                         Morning spraying (5-7 AM) shows 25% better pesticide effectiveness compared to afternoon
                         applications.
@@ -588,17 +629,17 @@ export default function Recommendations() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Seasonal Predictions</CardTitle>
-                <CardDescription>AI forecasts for the upcoming season</CardDescription>
+                <CardTitle><Trans en={"Seasonal Predictions"} te={"ఋతువుల ఊహాలు"} /></CardTitle>
+                <CardDescription><Trans en={"AI forecasts for the upcoming season"} te={" రాబోయే సీజన్ కోసం AI అంచనాలు"} /></CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3 p-3 rounded-lg border">
                     <ThermometerSun className="h-5 w-5 text-orange-600 mt-0.5" />
                     <div>
-                      <h5 className="font-medium">Temperature Trends</h5>
+                      <h5 className="font-medium"><Trans en={"Temperature Trends"} te={"ఉష్ణోగ్రత ధోరణులు"} /></h5>
                       <p className="text-sm text-muted-foreground">
-                        Expect 2-3°C above average temperatures in the next 30 days. Increased pest activity likely.
+                        <Trans en={"Expect 2-3°C above average temperatures in the next 30 days. Increased pest activity likely."} te={"తదుపరి 30 రోజుల్లో సగటునకు 2-3°C ఎక్కువ ఉష్ణోగ్రతలు எதிர்பారవచ్చు. పెస్టు కార్యకలాపం పెరగడం సాధ్యం."} />
                       </p>
                     </div>
                   </div>
@@ -606,10 +647,9 @@ export default function Recommendations() {
                   <div className="flex items-start gap-3 p-3 rounded-lg border">
                     <Droplets className="h-5 w-5 text-blue-600 mt-0.5" />
                     <div>
-                      <h5 className="font-medium">Rainfall Forecast</h5>
+                      <h5 className="font-medium"><Trans en={"Rainfall Forecast"} te={"వర్ష సూచిక"} /></h5>
                       <p className="text-sm text-muted-foreground">
-                        Below-average rainfall predicted. Consider adjusting irrigation schedules and drought-resistant
-                        practices.
+                        <Trans en={"Below-average rainfall predicted. Consider adjusting irrigation schedules and drought-resistant practices."} te={"సగటు కంటే తక్కువ వర్షం ఆశించబడింది. సించన షెడ్యూల్‌లు మరియు ఎండ నిరోధక పద్ధతులను సరిచేసుకోండి."} />
                       </p>
                     </div>
                   </div>
@@ -617,10 +657,9 @@ export default function Recommendations() {
                   <div className="flex items-start gap-3 p-3 rounded-lg border">
                     <Wind className="h-5 w-5 text-green-600 mt-0.5" />
                     <div>
-                      <h5 className="font-medium">Wind Patterns</h5>
+                      <h5 className="font-medium"><Trans en={"Wind Patterns"} te={"గాలి ధోరణులు"} /></h5>
                       <p className="text-sm text-muted-foreground">
-                        Favorable wind conditions for spraying operations expected to continue. Optimal application
-                        windows identified.
+                        <Trans en={"Favorable wind conditions for spraying operations expected to continue. Optimal application windows identified."} te={"స్ప్రేయింగ్ ఆపరేషన్లు కోసం అనుకూల గాలి పరిస్థితులు కొనసాగుతాయని ఊహించబడుతున్నాయి. ఉత్తమ అప్లికేషన్ సమయాలు గుర్తించబడ్డాయి."} />
                       </p>
                     </div>
                   </div>
