@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { Trans } from "@/components/language-provider"
 import { diseaseKnowledge } from "@/app/data/diseaseKnowledge"
 import { pesticideDatabase } from "@/app/data/pesticideDatabase"
 import { getSafePesticideRecommendation } from "@/app/lib/pesticideEngine"
-
 
 export default function DetectionPage() {
   const [file, setFile] = useState<File | null>(null)
@@ -12,8 +12,7 @@ export default function DetectionPage() {
   const [result, setResult] = useState<any>(null)
   const [loading, setLoading] = useState(false)
 
-  const knowledge =
-    result?.disease ? diseaseKnowledge[result.disease] : undefined;
+  const knowledge = result?.disease ? diseaseKnowledge[result.disease] : undefined;
 
   const normalize = (str: string) =>
     str
@@ -23,12 +22,12 @@ export default function DetectionPage() {
       .trim()
 
 
-const recommendation = result?.disease
-  ? getSafePesticideRecommendation(result.disease, result.confidence)
-  : null
+  const recommendation = result?.disease
+    ? getSafePesticideRecommendation(result.disease, result.confidence)
+    : null
 
-const recommendedPesticides = recommendation?.pesticides || []
-const warningMessage = recommendation?.warning
+  const recommendedPesticides = recommendation?.pesticides || []
+  const warningMessage = recommendation?.warning
 
   console.log("Detected disease:", result?.disease);
   console.log("Approved list:", pesticideDatabase.map(p => p.approvedFor));
@@ -72,9 +71,9 @@ const warningMessage = recommendation?.warning
 
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">🌿 AI Disease Detection</h1>
+          <h1 className="text-3xl font-bold">🌿 <Trans en={"AI Disease Detection"} te={"AI రోగ గుర్తింపు"} /></h1>
           <p className="text-muted-foreground">
-            Upload a leaf image to analyze potential plant diseases.
+            <Trans en={"Upload a leaf image to analyze potential plant diseases."} te={"సంభావ్య పంట వ్యాధులను విశ్లేషించడానికి ఆకుల చిత్రాన్ని అప్‌లోడ్ చేయండి."} />
           </p>
         </div>
 
@@ -92,7 +91,7 @@ const warningMessage = recommendation?.warning
                 />
               ) : (
                 <span className="text-muted-foreground text-sm">
-                  Image Preview
+                  <Trans en={"Image Preview"} te={"చిత్రం ప్రివ్యూ"} />
                 </span>
               )}
             </div>
@@ -117,7 +116,7 @@ const warningMessage = recommendation?.warning
                 disabled={!file || loading}
                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
               >
-                {loading ? "Analyzing..." : "Analyze Leaf"}
+                {loading ? <Trans en={"Analyzing..."} te={"విశ్లేషిస్తోంది..."} /> : <Trans en={"Analyze Leaf"} te={"ఆకును విశ్లేషించండి"} />}
               </button>
             </div>
           </div>
@@ -125,64 +124,70 @@ const warningMessage = recommendation?.warning
 
         {/* Result Card */}
         {result && (
-          <div className="mt-6 bg-gray-100 p-6 rounded-xl shadow-sm">
-            <h2 className="text-xl font-semibold mb-3">
-              Prediction Result
-            </h2>
+          <div>
+            <div className="mt-6 bg-gray-100 p-6 rounded-xl shadow-sm">
+              <h2 className="text-xl font-semibold mb-3">
+                <Trans en={"Prediction Result"} te={"గణనా ఫలితం"} />
+              </h2>
 
-            <p className="text-lg">
-              <span className="font-medium">Detected Disease:</span>{" "}
-              {result.disease?.replace(/___/g, " - ").replace(/_/g, " ")}
-            </p>
+              <p className="text-lg">
+                <span className="font-medium"><Trans en={"Detected Disease:"} te={"గుర్తించిన వ్యాధి:"} /></span>{" "}
+                {result.disease?.replace(/___/g, " - ").replace(/_/g, " ")}
+              </p>
 
-            <p className="mt-2">
-              <span className="font-medium">Confidence:</span>{" "}
-              {(result.confidence * 100).toFixed(2)}%
-            </p>
+              <p className="mt-2">
+                <span className="font-medium"><Trans en={"Confidence:"} te={"నమ్మకం:"} /></span>{" "}
+                {(result.confidence * 100).toFixed(2)}%
+              </p>
 
-            <h3 className="mt-4 font-medium">
-              Top 3 Predictions:
-            </h3>
+              <h3 className="mt-4 font-medium">
+                <Trans en={"Top 3 Predictions:"} te={"Top 3 అంచనాలు:"} />
+              </h3>
 
-            <ul className="mt-2 space-y-1">
-              {result.top3?.map((item: any, index: number) => (
-                <li key={index}>
-                  {item.disease
-                    .replace(/___/g, " - ")
-                    .replace(/_/g, " ")} —{" "}
-                  {(item.probability * 100).toFixed(2)}%
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+              <ul className="mt-2 space-y-1">
+                {result.top3?.map((item: any, index: number) => (
+                  <li key={index}>
+                    {item.disease
+                      .replace(/___/g, " - ")
+                      .replace(/_/g, " ")} —{" "}
+                    {(item.probability * 100).toFixed(2)}%
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        {/* Pesticide Panel */}
-        {recommendedPesticides.length > 0 && (
-          <div className="mt-6 p-6 rounded-xl border bg-white shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">
-              Government Approved Pesticide Options
-            </h2>
+            {/* Pesticide Panel */}
+            {recommendedPesticides.length > 0 && (
+              <div className="mt-6 p-6 rounded-xl border bg-white shadow-sm">
+                <h2 className="text-xl font-semibold mb-4">
+                  <Trans en={"Government Approved Pesticide Options"} te={"ప్రభుత్వ అనుమతిఇన pesticide ఎంపికలు"} />
+                </h2>
 
-            {recommendedPesticides.map((pesticide, index) => (
-              <div
-                key={index}
-                className="mb-4 p-4 rounded-lg bg-gray-50 border"
-              >
-                <h3 className="font-medium text-lg">
-                  {pesticide.chemicalName}
-                </h3>
+                {warningMessage && (
+                  <div className="mb-3 text-sm text-yellow-700">⚠ {warningMessage}</div>
+                )}
 
-                <p><strong>Type:</strong> {pesticide.type}</p>
-                <p><strong>Dosage:</strong> {pesticide.dosage}</p>
-                <p><strong>Application:</strong> {pesticide.applicationMethod}</p>
-                <p><strong>Spray Interval:</strong> {pesticide.sprayInterval}</p>
-                <p><strong>Pre-Harvest Interval:</strong> {pesticide.preHarvestInterval}</p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  ⚠ {pesticide.safetyNote}
-                </p>
+                {recommendedPesticides.map((pesticide: any, index: number) => (
+                  <div
+                    key={index}
+                    className="mb-4 p-4 rounded-lg bg-gray-50 border"
+                  >
+                    <h3 className="font-medium text-lg">
+                      {pesticide.chemicalName}
+                    </h3>
+
+                    <p><strong><Trans en={"Type:"} te={"రకం:"} /></strong> {pesticide.type}</p>
+                    <p><strong><Trans en={"Dosage:"} te={"మోతాదు:"} /></strong> {pesticide.dosage}</p>
+                    <p><strong><Trans en={"Application:"} te={"వినియోగం:"} /></strong> {pesticide.applicationMethod}</p>
+                    <p><strong><Trans en={"Spray Interval:"} te={"స్ప్రే పరిధి:"} /></strong> {pesticide.sprayInterval}</p>
+                    <p><strong><Trans en={"Pre-Harvest Interval:"} te={"పూర్వ-గడువు:"} /></strong> {pesticide.preHarvestInterval}</p>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      ⚠ {pesticide.safetyNote}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         )}
 

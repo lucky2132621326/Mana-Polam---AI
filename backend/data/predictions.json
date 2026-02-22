@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-02-22T00:00:00Z",
+  "sensors": {
+    "moisture": [12, 15, 72, 70, 68, 74]
+  },
+  "zones": [
+    {
+      "zoneId": "zone-1",
+      "moisture": [12, 13, 14, 16],
+      "sprays": 2,
+      "detections": [
+        { "disease": "blight", "confidence": 0.92 },
+        { "disease": "mildew", "confidence": 0.3 }
+      ]
+    },
+    {
+      "zoneId": "zone-2",
+      "moisture": [60, 62, 63],
+      "sprays": 0,
+      "detections": [
+        { "disease": "healthy", "confidence": 0.1 }
+      ]
+    },
+    {
+      "zoneId": "zone-3",
+      "moisture": [30, 25, 28],
+      "sprays": 4,
+      "detections": [
+        { "disease": "rust", "confidence": 0.65 }
+      ]
+    }
+  ]
+}

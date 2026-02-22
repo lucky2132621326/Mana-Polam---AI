@@ -37,6 +37,7 @@ import {
   Wrench,
   User,
 } from "lucide-react"
+import { Trans } from "@/components/language-provider"
 
 interface UserInterface {
   id: string
@@ -176,6 +177,19 @@ export default function UserManagement() {
     }
   }
 
+  const roleLabels: Record<string, { en: string; te: string }> = {
+    admin: { en: "Admin", te: "ప్రశాసకుడు" },
+    manager: { en: "Manager", te: "మేనేజర్" },
+    operator: { en: "Operator", te: "ఆపరేటర్" },
+    viewer: { en: "Viewer", te: "వీక్షకుడు" },
+  }
+
+  const statusLabels: Record<string, { en: string; te: string }> = {
+    active: { en: "active", te: "చురుకైన" },
+    inactive: { en: "inactive", te: "నిష్క్రియ" },
+    pending: { en: "pending", te: "పై మరలింది" },
+  }
+
   const handleAddUser = () => {
     const user: UserInterface = {
       id: Date.now().toString(),
@@ -223,81 +237,89 @@ export default function UserManagement() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">User Management</h1>
-            <p className="text-muted-foreground">Manage users, roles, and system settings</p>
+            <h1 className="text-3xl font-bold text-foreground">
+              <Trans en={"User Management"} te={"వినియోగదారు నిర్వహణ"} />
+            </h1>
+            <p className="text-muted-foreground">
+              <Trans en={"Manage users, roles, and system settings"} te={"వినియోగదారుల్ని, పాత్రలు మరియు సిస్టమ్ సెట్టింగ్స్‌ను నిర్వహించండి"} />
+            </p>
           </div>
 
           <Dialog open={isAddUserOpen} onOpenChange={setIsAddUserOpen}>
             <DialogTrigger asChild>
               <Button>
                 <UserPlus className="mr-2 h-4 w-4" />
-                Add User
+                <Trans en={"Add User"} te={"వినియోగదారుని జోడించండి"} />
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Add New User</DialogTitle>
-                <DialogDescription>Create a new user account with appropriate permissions.</DialogDescription>
+                <DialogTitle>
+                  <Trans en={"Add New User"} te={"కొత్త వినియోగదారుడు జోడించండి"} />
+                </DialogTitle>
+                <DialogDescription>
+                  <Trans en={"Create a new user account with appropriate permissions."} te={"సరైన అనుమతులతో కొత్త వినియోగదారు ఖాతాను సృష్టించండి."} />
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name"><Trans en={"Full Name"} te={"పూర్తి పేరు"} /></Label>
                   <Input
                     id="name"
                     value={newUser.name}
                     onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-                    placeholder="Enter full name"
+                    placeholder={"Enter full name"}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email"><Trans en={"Email"} te={"ఇమెయిల్"} /></Label>
                   <Input
                     id="email"
                     type="email"
                     value={newUser.email}
                     onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                    placeholder="Enter email address"
+                    placeholder={"Enter email address"}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="role">Role</Label>
+                  <Label htmlFor="role"><Trans en={"Role"} te={"పాత్ర"} /></Label>
                   <Select value={newUser.role} onValueChange={(value: any) => setNewUser({ ...newUser, role: value })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="admin">Admin</SelectItem>
-                      <SelectItem value="manager">Manager</SelectItem>
-                      <SelectItem value="operator">Operator</SelectItem>
-                      <SelectItem value="viewer">Viewer</SelectItem>
+                      <SelectItem value="admin"><Trans en={"Admin"} te={"ప్రశాసకుడు"} /></SelectItem>
+                      <SelectItem value="manager"><Trans en={"Manager"} te={"మేనేజర్"} /></SelectItem>
+                      <SelectItem value="operator"><Trans en={"Operator"} te={"ఆపరేటర్"} /></SelectItem>
+                      <SelectItem value="viewer"><Trans en={"Viewer"} te={"వీక్షకుడు"} /></SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone (Optional)</Label>
+                  <Label htmlFor="phone"><Trans en={"Phone (Optional)"} te={"ఫోన్ (ఐచ్ఛిక)"} /></Label>
                   <Input
                     id="phone"
                     value={newUser.phone}
                     onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
-                    placeholder="Enter phone number"
+                    placeholder={"Enter phone number"}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="location">Location (Optional)</Label>
+                  <Label htmlFor="location"><Trans en={"Location (Optional)"} te={"లొకేషన్ (ఐచ్ఛిక)"} /></Label>
                   <Input
                     id="location"
                     value={newUser.location}
                     onChange={(e) => setNewUser({ ...newUser, location: e.target.value })}
-                    placeholder="Enter work location"
+                    placeholder={"Enter work location"}
                   />
                 </div>
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setIsAddUserOpen(false)} className="bg-transparent">
-                  Cancel
+                  <Trans en={"Cancel"} te={"రద్దు చేయండి"} />
                 </Button>
                 <Button onClick={handleAddUser} disabled={!newUser.name || !newUser.email}>
-                  Add User
+                  <Trans en={"Add User"} te={"వినియోగదారుని జోడించండి"} />
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -308,66 +330,66 @@ export default function UserManagement() {
         <div className="grid gap-4 md:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"Total Users"} te={"మొత్తం వినియోగదారులు"} /></CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{users.length}</div>
-              <p className="text-xs text-muted-foreground">Registered accounts</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Registered accounts"} te={"నమోదు చేసిన ఖాతాలు"} /></p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"Active Users"} te={"సక్రియ వినియోగదారులు"} /></CardTitle>
               <Users className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">
                 {users.filter((u) => u.status === "active").length}
               </div>
-              <p className="text-xs text-muted-foreground">Currently active</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Currently active"} te={"ప్రస్తుతం చురుకైన"} /></p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Admins</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"Admins"} te={"ప్రశాసకులు"} /></CardTitle>
               <Crown className="h-4 w-4 text-red-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{users.filter((u) => u.role === "admin").length}</div>
-              <p className="text-xs text-muted-foreground">Administrator accounts</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Administrator accounts"} te={"ప్రశాసక ఖాతాలు"} /></p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending</CardTitle>
+              <CardTitle className="text-sm font-medium"><Trans en={"Pending"} te={"వేచి ఉంది"} /></CardTitle>
               <UserPlus className="h-4 w-4 text-yellow-600" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-yellow-600">
                 {users.filter((u) => u.status === "pending").length}
               </div>
-              <p className="text-xs text-muted-foreground">Awaiting activation</p>
+              <p className="text-xs text-muted-foreground"><Trans en={"Awaiting activation"} te={"చురుకుగా చేయబడడానికి వేచి ఉంది"} /></p>
             </CardContent>
           </Card>
         </div>
 
         <Tabs defaultValue="users" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="roles">Roles & Permissions</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+            <TabsTrigger value="users"><Trans en={"Users"} te={"వినియోగదారులు"} /></TabsTrigger>
+            <TabsTrigger value="roles"><Trans en={"Roles & Permissions"} te={"పాత్రలు & అనుమతులు"} /></TabsTrigger>
+            <TabsTrigger value="settings"><Trans en={"Settings"} te={"సెట్టింగ్స్"} /></TabsTrigger>
           </TabsList>
 
           {/* Users Tab */}
           <TabsContent value="users" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>User Accounts</CardTitle>
-                <CardDescription>Manage user accounts and their access levels</CardDescription>
+                <CardTitle><Trans en={"User Accounts"} te={"వినియోగదారు ఖాతాలు"} /></CardTitle>
+                <CardDescription><Trans en={"Manage user accounts and their access levels"} te={"వినియోగదారుల ఖాతాలను మరియు అవి పొందే ప్రవేశ స్థాయిలను నిర్వహించండి"} /></CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -388,9 +410,9 @@ export default function UserManagement() {
                             <h4 className="font-medium">{user.name}</h4>
                             <Badge variant={getRoleColor(user.role)} className="flex items-center gap-1">
                               {getRoleIcon(user.role)}
-                              {user.role}
+                              <Trans en={roleLabels[user.role]?.en ?? user.role} te={roleLabels[user.role]?.te ?? user.role} />
                             </Badge>
-                            <span className={`text-xs ${getStatusColor(user.status)}`}>● {user.status}</span>
+                            <span className={`text-xs ${getStatusColor(user.status)}`}>● <Trans en={statusLabels[user.status]?.en ?? user.status} te={statusLabels[user.status]?.te ?? user.status} /></span>
                           </div>
                           <div className="flex items-center gap-4 text-sm text-muted-foreground">
                             <span className="flex items-center gap-1">
@@ -450,24 +472,26 @@ export default function UserManagement() {
             <div className="grid gap-6 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Shield className="h-5 w-5" />
-                    Role Definitions
-                  </CardTitle>
-                  <CardDescription>User roles and their capabilities</CardDescription>
-                </CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Shield className="h-5 w-5" />
+                      <Trans en={"Role Definitions"} te={"పాత్ర నిర్వచనాలు"} />
+                    </CardTitle>
+                    <CardDescription>
+                      <Trans en={"User roles and their capabilities"} te={"వినియోగదారుల పాత్రలు మరియు వాటి సామర్థ్యాలు"} />
+                    </CardDescription>
+                  </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
                     <div className="flex items-start gap-3 p-3 rounded-lg border">
                       <Crown className="h-5 w-5 text-red-600 mt-0.5" />
                       <div>
-                        <h4 className="font-medium">Administrator</h4>
+                        <h4 className="font-medium"><Trans en={"Administrator"} te={"ప్రశాసకుడు"} /></h4>
                         <p className="text-sm text-muted-foreground">
-                          Full system access, user management, system configuration
+                          <Trans en={"Full system access, user management, system configuration"} te={"సంపూర్ణ సిస్టమ్ యాక్సెస్, వినియోగదారుల నిర్వహణ, సిస్టమ్ కాన్ఫిగరేషన్"} />
                         </p>
                         <div className="flex flex-wrap gap-1 mt-2">
                           <Badge variant="outline" className="text-xs">
-                            All Permissions
+                            <Trans en={"All Permissions"} te={"అన్ని అనుమతులు"} />
                           </Badge>
                         </div>
                       </div>
@@ -476,23 +500,15 @@ export default function UserManagement() {
                     <div className="flex items-start gap-3 p-3 rounded-lg border">
                       <Shield className="h-5 w-5 text-blue-600 mt-0.5" />
                       <div>
-                        <h4 className="font-medium">Manager</h4>
+                        <h4 className="font-medium"><Trans en={"Manager"} te={"మేనేజర్"} /></h4>
                         <p className="text-sm text-muted-foreground">
-                          Operational oversight, analytics access, spraying control
+                          <Trans en={"Operational oversight, analytics access, spraying control"} te={"ఆపరేటింగ్ పర్యవేక్షణ, విశ్లేషణలకు ప్రాప్తి, స్ప్రేయింగ్ నియంత్రణ"} />
                         </p>
                         <div className="flex flex-wrap gap-1 mt-2">
-                          <Badge variant="outline" className="text-xs">
-                            Dashboard
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            Analytics
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            Spraying
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            Recommendations
-                          </Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Dashboard"} te={"డాష్‌బోర్డు"} /></Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Analytics"} te={"విశ్లేషణలు"} /></Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Spraying"} te={"స్ప్రేయింగ్"} /></Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Recommendations"} te={"సూచనలు"} /></Badge>
                         </div>
                       </div>
                     </div>
@@ -500,18 +516,12 @@ export default function UserManagement() {
                     <div className="flex items-start gap-3 p-3 rounded-lg border">
                       <Wrench className="h-5 w-5 text-green-600 mt-0.5" />
                       <div>
-                        <h4 className="font-medium">Operator</h4>
-                        <p className="text-sm text-muted-foreground">Field operations, spraying control, map access</p>
+                        <h4 className="font-medium"><Trans en={"Operator"} te={"ఆపరేటర్"} /></h4>
+                        <p className="text-sm text-muted-foreground"><Trans en={"Field operations, spraying control, map access"} te={"ఫీల్డ్ ఆపరేషన్లు, స్ప్రేయింగ్ నియంత్రణ, మ్యాప్ యాక్సెస్"} /></p>
                         <div className="flex flex-wrap gap-1 mt-2">
-                          <Badge variant="outline" className="text-xs">
-                            Dashboard
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            Map
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            Spraying
-                          </Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Dashboard"} te={"డాష్‌బోర్డు"} /></Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Map"} te={"మ్యాప్"} /></Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Spraying"} te={"స్ప్రేయింగ్"} /></Badge>
                         </div>
                       </div>
                     </div>
@@ -519,15 +529,11 @@ export default function UserManagement() {
                     <div className="flex items-start gap-3 p-3 rounded-lg border">
                       <Eye className="h-5 w-5 text-gray-600 mt-0.5" />
                       <div>
-                        <h4 className="font-medium">Viewer</h4>
-                        <p className="text-sm text-muted-foreground">Read-only access to dashboard and reports</p>
+                        <h4 className="font-medium"><Trans en={"Viewer"} te={"వీక్షకుడు"} /></h4>
+                        <p className="text-sm text-muted-foreground"><Trans en={"Read-only access to dashboard and reports"} te={"డాష్‌బోర్డు మరియు నివేదికలకు చదవగల మాత్రమే ప్రాప్తి"} /></p>
                         <div className="flex flex-wrap gap-1 mt-2">
-                          <Badge variant="outline" className="text-xs">
-                            Dashboard
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            Analytics
-                          </Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Dashboard"} te={"డాష్‌బోర్డు"} /></Badge>
+                          <Badge variant="outline" className="text-xs"><Trans en={"Analytics"} te={"విశ్లేషణలు"} /></Badge>
                         </div>
                       </div>
                     </div>
@@ -537,8 +543,8 @@ export default function UserManagement() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Permission Matrix</CardTitle>
-                  <CardDescription>Detailed permissions by role</CardDescription>
+                  <CardTitle><Trans en={"Permission Matrix"} te={"అనుమతి మ్యాట్రిక్స్"} /></CardTitle>
+                  <CardDescription><Trans en={"Detailed permissions by role"} te={"ప్రతి పాత్రకు వివరణాత్మక అనుమతులు"} /></CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -550,9 +556,28 @@ export default function UserManagement() {
                       "AI Recommendations",
                       "User Management",
                       "System Settings",
-                    ].map((permission) => (
-                      <div key={permission} className="flex items-center justify-between text-sm">
-                        <span>{permission}</span>
+                      ].map((permission) => (
+                        <div key={permission} className="flex items-center justify-between text-sm">
+                          <span>
+                            <Trans
+                              en={permission}
+                              te={
+                                permission === "Dashboard Access"
+                                  ? "డాష్‌బోర్డు యాక్సెస్"
+                                  : permission === "Farm Map"
+                                  ? "ఫార్మ్ మ్యాప్"
+                                  : permission === "Spraying Controls"
+                                  ? "స్ప్రేయింగ్ నియంత్రణలు"
+                                  : permission === "Analytics & Reports"
+                                  ? "విశ్లేషణలు మరియు నివేదికలు"
+                                  : permission === "AI Recommendations"
+                                  ? "AI సూచనలు"
+                                  : permission === "System Settings"
+                                  ? "సిస్టమ్ సెట్టింగ్స్"
+                                  : permission
+                              }
+                            />
+                          </span>
                         <div className="flex items-center gap-2">
                           <span className="text-red-600">●</span>
                           <span className="text-blue-600">●</span>
@@ -562,19 +587,19 @@ export default function UserManagement() {
                       </div>
                     ))}
                     <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t">
-                      <span>Legend:</span>
+                      <span><Trans en={"Legend:"} te={"వ్యాఖ్య:"} /></span>
                       <div className="flex items-center gap-4">
+                          <span className="flex items-center gap-1">
+                            <span className="text-red-600">●</span> <Trans en={"Admin"} te={"ప్రశాసకుడు"} />
+                          </span>
                         <span className="flex items-center gap-1">
-                          <span className="text-red-600">●</span> Admin
+                          <span className="text-blue-600">●</span> <Trans en={"Manager"} te={"మేనేజర్"} />
                         </span>
                         <span className="flex items-center gap-1">
-                          <span className="text-blue-600">●</span> Manager
+                          <span className="text-green-600">●</span> <Trans en={"Operator"} te={"ఆపరేటర్"} />
                         </span>
                         <span className="flex items-center gap-1">
-                          <span className="text-green-600">●</span> Operator
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <span className="text-gray-400">○</span> Viewer
+                          <span className="text-gray-400">○</span> <Trans en={"Viewer"} te={"వీక్షకుడు"} />
                         </span>
                       </div>
                     </div>
@@ -590,17 +615,19 @@ export default function UserManagement() {
               {/* Notification Settings */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Bell className="h-5 w-5" />
-                    Notification Settings
-                  </CardTitle>
-                  <CardDescription>Configure how you receive alerts and updates</CardDescription>
-                </CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Bell className="h-5 w-5" />
+                      <Trans en={"Notification Settings"} te={"అలర్ట్ సెట్టింగ్స్"} />
+                    </CardTitle>
+                    <CardDescription>
+                      <Trans en={"Configure how you receive alerts and updates"} te={"మీరు అలర్ట్‌లు మరియు నవీకరణలు ఎలా పొందాలో కాన్ఫిగర్ చేయండి"} />
+                    </CardDescription>
+                  </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label htmlFor="email-notifications">Email Notifications</Label>
-                      <p className="text-sm text-muted-foreground">Receive alerts via email</p>
+                      <Label htmlFor="email-notifications"><Trans en={"Email Notifications"} te={"ఇమెయిల్ అలర్ట్స్"} /></Label>
+                      <p className="text-sm text-muted-foreground"><Trans en={"Receive alerts via email"} te={"ఇమెయిల్ ద్వారా అలర్ట్లు పొందండి"} /></p>
                     </div>
                     <Switch
                       id="email-notifications"
@@ -616,8 +643,8 @@ export default function UserManagement() {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label htmlFor="sms-notifications">SMS Notifications</Label>
-                      <p className="text-sm text-muted-foreground">Receive alerts via text message</p>
+                      <Label htmlFor="sms-notifications"><Trans en={"SMS Notifications"} te={"SMS అలర్ట్స్"} /></Label>
+                      <p className="text-sm text-muted-foreground"><Trans en={"Receive alerts via text message"} te={"టెక్స్ట్ సందేశాల ద్వారా అలర్ట్లు పొందండి"} /></p>
                     </div>
                     <Switch
                       id="sms-notifications"
@@ -633,8 +660,8 @@ export default function UserManagement() {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label htmlFor="push-notifications">Push Notifications</Label>
-                      <p className="text-sm text-muted-foreground">Browser and mobile push alerts</p>
+                      <Label htmlFor="push-notifications"><Trans en={"Push Notifications"} te={"పుష్ అలర్ట్స్"} /></Label>
+                      <p className="text-sm text-muted-foreground"><Trans en={"Browser and mobile push alerts"} te={"బ్రౌజర్ మరియు మొబైల్ పుష్ అలర్ట్లు"} /></p>
                     </div>
                     <Switch
                       id="push-notifications"
@@ -650,8 +677,8 @@ export default function UserManagement() {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label htmlFor="urgent-only">Urgent Only</Label>
-                      <p className="text-sm text-muted-foreground">Only receive critical alerts</p>
+                      <Label htmlFor="urgent-only"><Trans en={"Urgent Only"} te={"కేవలం తక్షణ అలర్ట్లు"} /></Label>
+                      <p className="text-sm text-muted-foreground"><Trans en={"Only receive critical alerts"} te={"మాత్రమే ముఖ్యమైన అలర్ట్లు అందుకోండి"} /></p>
                     </div>
                     <Switch
                       id="urgent-only"
@@ -672,9 +699,9 @@ export default function UserManagement() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Lock className="h-5 w-5" />
-                    Security Settings
+                    <Trans en={"Security Settings"} te={"భద్రత సెట్టింగ్స్"} />
                   </CardTitle>
-                  <CardDescription>Manage account security and access controls</CardDescription>
+                  <CardDescription><Trans en={"Manage account security and access controls"} te={"ఖాతా భద్రత మరియు 접근 నియంత్రణలను నిర్వహించండి"} /></CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -695,7 +722,7 @@ export default function UserManagement() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="session-timeout">Session Timeout (minutes)</Label>
+                    <Label htmlFor="session-timeout"><Trans en={"Session Timeout (minutes)"} te={"సెషన్ సమాప్తి (నిమిషాలు)"} /></Label>
                     <Select
                       value={settings.security.sessionTimeout.toString()}
                       onValueChange={(value) =>
@@ -719,7 +746,7 @@ export default function UserManagement() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="password-expiry">Password Expiry (days)</Label>
+                    <Label htmlFor="password-expiry"><Trans en={"Password Expiry (days)"} te={"పాస్వర్డ్ కాలనిరచన (రోజులు)"} /></Label>
                     <Select
                       value={settings.security.passwordExpiry.toString()}
                       onValueChange={(value) =>
@@ -743,7 +770,7 @@ export default function UserManagement() {
                   </div>
 
                   <Button variant="outline" className="w-full bg-transparent">
-                    Change Password
+                    <Trans en={"Change Password"} te={"పాస్వర్డ్ మార్చండి"} />
                   </Button>
                 </CardContent>
               </Card>
@@ -753,13 +780,13 @@ export default function UserManagement() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Settings className="h-5 w-5" />
-                    System Preferences
+                    <Trans en={"System Preferences"} te={"సిస్టమ్ ఇష్టాలు"} />
                   </CardTitle>
-                  <CardDescription>Customize your dashboard experience</CardDescription>
+                  <CardDescription><Trans en={"Customize your dashboard experience"} te={"మీ డాష్‌బోర్డును అనుకూలీకరించండి"} /></CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="theme">Theme</Label>
+                    <Label htmlFor="theme"><Trans en={"Theme"} te={"థీమ్"} /></Label>
                     <Select
                       value={settings.preferences.theme}
                       onValueChange={(value) =>
@@ -773,15 +800,15 @@ export default function UserManagement() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
+                        <SelectItem value="light"><Trans en={"Light"} te={"లైట్"} /></SelectItem>
+                        <SelectItem value="dark"><Trans en={"Dark"} te={"డార్క్"} /></SelectItem>
+                        <SelectItem value="system"><Trans en={"System"} te={"సిస్టమ్"} /></SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="language">Language</Label>
+                    <Label htmlFor="language"><Trans en={"Language"} te={"భాష"} /></Label>
                     <Select
                       value={settings.preferences.language}
                       onValueChange={(value) =>
@@ -795,16 +822,16 @@ export default function UserManagement() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="en">English</SelectItem>
-                        <SelectItem value="es">Spanish</SelectItem>
-                        <SelectItem value="fr">French</SelectItem>
-                        <SelectItem value="de">German</SelectItem>
+                        <SelectItem value="en"><Trans en={"English"} te={"English"} /></SelectItem>
+                        <SelectItem value="es"><Trans en={"Spanish"} te={"Spanish"} /></SelectItem>
+                        <SelectItem value="fr"><Trans en={"French"} te={"French"} /></SelectItem>
+                        <SelectItem value="de"><Trans en={"German"} te={"German"} /></SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="timezone">Timezone</Label>
+                    <Label htmlFor="timezone"><Trans en={"Timezone"} te={"టైమ్జోన్"} /></Label>
                     <Select
                       value={settings.preferences.timezone}
                       onValueChange={(value) =>
@@ -828,7 +855,7 @@ export default function UserManagement() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="date-format">Date Format</Label>
+                    <Label htmlFor="date-format"><Trans en={"Date Format"} te={"తేదీ ఫార్మాట్"} /></Label>
                     <Select
                       value={settings.preferences.dateFormat}
                       onValueChange={(value) =>
@@ -853,12 +880,12 @@ export default function UserManagement() {
 
               {/* Profile Settings */}
               <Card>
-                <CardHeader>
+                  <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <User className="h-5 w-5" />
-                    Profile Settings
+                    <Trans en={"Profile Settings"} te={"ప్రొఫైల్ సెట్టింగ్స్"} />
                   </CardTitle>
-                  <CardDescription>Update your personal information</CardDescription>
+                  <CardDescription><Trans en={"Update your personal information"} te={"మీ వ్యక్తిగత సమాచారాన్ని నవీకరించండి"} /></CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center gap-4">
@@ -872,31 +899,31 @@ export default function UserManagement() {
                       </AvatarFallback>
                     </Avatar>
                     <Button variant="outline" className="bg-transparent">
-                      Change Avatar
+                      <Trans en={"Change Avatar"} te={"ఆవతార్ మార్చండి"} />
                     </Button>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="profile-name">Full Name</Label>
+                    <Label htmlFor="profile-name"><Trans en={"Full Name"} te={"పూర్తి పేరు"} /></Label>
                     <Input id="profile-name" defaultValue={currentUser.name} />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="profile-email">Email</Label>
+                    <Label htmlFor="profile-email"><Trans en={"Email"} te={"ఇమెయిల్"} /></Label>
                     <Input id="profile-email" type="email" defaultValue={currentUser.email} />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="profile-phone">Phone</Label>
+                    <Label htmlFor="profile-phone"><Trans en={"Phone"} te={"ఫోన్"} /></Label>
                     <Input id="profile-phone" defaultValue={currentUser.phone} />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="profile-location">Location</Label>
+                    <Label htmlFor="profile-location"><Trans en={"Location"} te={"లొకేషన్"} /></Label>
                     <Input id="profile-location" defaultValue={currentUser.location} />
                   </div>
 
-                  <Button className="w-full">Save Changes</Button>
+                  <Button className="w-full"><Trans en={"Save Changes"} te={"మార్పులను సేవ్ చేయండి"} /></Button>
                 </CardContent>
               </Card>
             </div>

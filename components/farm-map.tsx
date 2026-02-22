@@ -19,6 +19,7 @@ import {
   RotateCcw,
 } from "lucide-react"
 import { generateRecommendation } from "@/lib/ai-engine"
+import { Trans } from "@/components/language-provider"
 
 
 interface ZoneData {
@@ -168,6 +169,26 @@ export default function FarmMap() {
     return () => clearInterval(interval)
   }, [farmData])
 
+  const getAvgLabel = (avg: number) => {
+    if (avg > 0.7) return { en: "High Alert", te: "హెచ్చరిక" }
+    if (avg > 0.4) return { en: "Monitor", te: "మానిటర్" }
+    return { en: "Stable", te: "స్థిరంగా" }
+  }
+
+  const teMap: Record<string, string> = {
+    "Healthy Zone": "ఆరోగ్యవంతమైన జోన్",
+    "Severe Water Stress": "తీవ్ర నీటి ఒత్తిడి",
+    "Moderate Stress": "మధ్యస్థ ఒత్తిడి",
+    "Environmental conditions are within optimal range.": "పర్యావరణ పరిస్థితులు ఆప్టిమల్ పరిధిలో ఉన్నాయి.",
+    "No immediate action required.": "తక్షణ చర్య అవసరం లేదు.",
+    "Targeted irrigation reduces up to 50% water wastage.": "లక్ష్యమైన నీరుల పంపిణీ నీటి వ్యర్థాన్ని 50% వరకు తగ్గిస్తుంది.",
+    "No unnecessary spraying performed.": "అవసరం లేని స్ప్రేయింగ్ చేయబడలేదు.",
+    "Immediate irrigation and nutrient spray required.": "తక్షణ ఇరిగేషన్ మరియు పోషక స్ప్రే అవసరం.",
+    "Controlled irrigation recommended.": "నియంత్రిత ఇరిగేషన్ సిఫార్సు చేయబడుతుంది."
+  }
+
+  const t = (en: string) => teMap[en] ?? en
+
   const getZoneColor = (status: string) => {
     switch (status) {
       case "healthy":
@@ -219,8 +240,12 @@ export default function FarmMap() {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Interactive Farm Map</h1>
-            <p className="text-muted-foreground">Click on zones to view detailed information and control spraying</p>
+            <h1 className="text-3xl font-bold text-foreground">
+              <Trans en={"Interactive Farm Map"} te={"ఇంటరాక్టివ్ ఫారం మ్యాప్"} />
+            </h1>
+            <p className="text-muted-foreground">
+              <Trans en={"Click on zones to view detailed information and control spraying"} te={"వివరాలు మరియు స్ప్రేయింగ్ నియంత్రణ కోసం జోన్లపై క్లిక్ చేయండి"} />
+            </p>
           </div>
 
           {/* Map Controls */}
@@ -234,7 +259,9 @@ export default function FarmMap() {
             <Button variant="outline" size="sm" onClick={handleReset} className="bg-transparent">
               <RotateCcw className="h-4 w-4" />
             </Button>
-            <span className="text-sm text-muted-foreground ml-2">Zoom: {Math.round(zoomLevel * 100)}%</span>
+            <span className="text-sm text-muted-foreground ml-2">
+              <Trans en={`Zoom: ${Math.round(zoomLevel * 100)}%`} te={`జూమ్: ${Math.round(zoomLevel * 100)}%`} />
+            </span>
           </div>
         </div>
 
@@ -244,18 +271,18 @@ export default function FarmMap() {
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center gap-2">
                 <div className="h-4 w-4 rounded bg-green-500 border border-green-600" />
-                <span className="text-sm">Healthy</span>
+                <span className="text-sm"><Trans en={"Healthy"} te={"ఆరోగ్యంగా"} /></span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-4 w-4 rounded bg-yellow-500 border border-yellow-600" />
-                <span className="text-sm">Warning</span>
+                <span className="text-sm"><Trans en={"Warning"} te={"హೆచ్చరిక"} /></span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-4 w-4 rounded bg-red-500 border border-red-600" />
-                <span className="text-sm">Critical</span>
+                <span className="text-sm"><Trans en={"Critical"} te={"కుటుంబ పరిస్థితి"} /></span>
               </div>
               <Separator orientation="vertical" className="h-6" />
-              <p className="text-sm text-muted-foreground">Click on any zone for detailed information</p>
+              <p className="text-sm text-muted-foreground"><Trans en={"Click on any zone for detailed information"} te={"వివరాలకు ఏదైనా జోన్‌పై క్లిక్ చేయండి"} /></p>
             </div>
           </CardContent>
         </Card>
@@ -267,19 +294,19 @@ export default function FarmMap() {
             {/* ================= FARM LAYOUT ================= */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center justify-between">
+                  <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <MapPin className="h-5 w-5 text-primary" />
-                    Farm Layout
+                    <Trans en={"Farm Layout"} te={"ఫార్మ్ అమరిక"} />
                   </div>
 
                   <div className="flex items-center gap-2 text-xs text-green-600">
                     <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
-                    Live
+                    <Trans en={"Live"} te={"లో"} />
                   </div>
                 </CardTitle>
                 <CardDescription>
-                  24 zones across 4 rows and 6 columns
+                  <Trans en={"24 zones across 4 rows and 6 columns"} te={"4 వరుసలు, 6 కాలములలో 24 జోన్లు"} />
                 </CardDescription>
               </CardHeader>
 
@@ -330,24 +357,19 @@ export default function FarmMap() {
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
                   <CardTitle className="text-lg">
-                    Farm Intelligence Overview
+                    <Trans en={"Farm Intelligence Overview"} te={"ఫార్మ్ ఇంటెలిజెన్స్ అవలోకనం"} />
                   </CardTitle>
                   <CardDescription>
-                    AI-driven ecosystem and outbreak analysis
+                    <Trans en={"AI-driven ecosystem and outbreak analysis"} te={"AI ఆధారిత పరిసర వ్యవస్థ మరియు వ్యాప్తి విశ్లేషణ"} />
                   </CardDescription>
                 </div>
 
-                {Object.keys(mlData).length > 0 && (() => {
+                  {Object.keys(mlData).length > 0 && (() => {
                   const avg =
                     Object.values(mlData).reduce((a, b) => a + b.confidence, 0) /
                     Object.values(mlData).length
 
-                  const label =
-                    avg > 0.7
-                      ? "High Alert"
-                      : avg > 0.4
-                        ? "Monitor"
-                        : "Stable"
+                  const labelObj = getAvgLabel(avg)
 
                   const style =
                     avg > 0.7
@@ -358,7 +380,7 @@ export default function FarmMap() {
 
                   return (
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style}`}>
-                      {label}
+                      <Trans en={labelObj.en} te={labelObj.te} />
                     </span>
                   )
                 })()}
@@ -373,20 +395,18 @@ export default function FarmMap() {
                       const confidences = Object.values(mlData).map(m => m.confidence)
                       const avg = confidences.reduce((a, b) => a + b, 0) / confidences.length
 
-                      let label = "Stable"
+                      const labelObjLocal = getAvgLabel(avg)
                       let color = "text-green-600"
 
                       if (avg > 0.7) {
-                        label = "Critical Outbreak Risk"
                         color = "text-red-600"
                       } else if (avg > 0.4) {
-                        label = "Moderate Risk"
                         color = "text-yellow-600"
                       }
 
                       return (
                         <div className={`mt-3 text-sm font-medium ${color}`}>
-                          Overall Status: {label}
+                          <Trans en={"Overall Status:"} te={"మొత్తం స్థితి:"} /> <Trans en={labelObjLocal.en} te={labelObjLocal.te} />
                         </div>
                       )
                     })()}
@@ -398,7 +418,7 @@ export default function FarmMap() {
                       return (
                         <div className="p-6 rounded-xl bg-gradient-to-br from-emerald-50 via-white to-green-50 border shadow-sm">                          <div className="flex justify-between items-center">
                           <span className="text-sm font-medium">
-                            Farm-wide Infection Probability
+                            <Trans en={"Farm-wide Infection Probability"} te={"ఫార్మ్-వైడ్ సంక్రమణ సంభావ్యత"} />
                           </span>
                           <span className="text-3xl font-bold tracking-tight">
                             {(avg * 100).toFixed(1)}%
@@ -423,7 +443,7 @@ export default function FarmMap() {
                     {/* Highest Spread Risk Zones */}
                     <div>
                       <h4 className="text-sm font-semibold mb-3">
-                        Highest Spread Risk Zones
+                        <Trans en={"Highest Spread Risk Zones"} te={"అత్యధిక వ్యాప్తి ప్రమాద జోన్లు"} />
                       </h4>
 
                       <div className="grid md:grid-cols-3 gap-4">
@@ -454,7 +474,7 @@ export default function FarmMap() {
                                 className="p-4 rounded-lg border bg-white shadow-sm"
                               >
                                 <div className="text-xs uppercase text-muted-foreground">
-                                  Zone
+                                  <Trans en={"Zone"} te={"జోన్"} />
                                 </div>
 
                                 <div className="text-lg font-semibold">
@@ -462,11 +482,11 @@ export default function FarmMap() {
                                 </div>
 
                                 <div className="text-sm text-muted-foreground">
-                                  Risk Score: {percent}%
+                                  <Trans en={"Risk Score:"} te={"రిస్క్ స్కోర్:"} /> {percent}%
                                 </div>
 
                                 <div className={`mt-2 text-xs font-semibold ${style}`}>
-                                  {label}
+                                  {label === "High Risk" ? <Trans en={"High Risk"} te={"అత్యధిక ప్రమాదం"} /> : label === "Moderate Risk" ? <Trans en={"Moderate Risk"} te={"మధ్యస్థ ప్రమాదం"} /> : <Trans en={"Low Risk"} te={"తక్కువ ప్రమాదం"} />}
                                 </div>
                               </div>
                             )
@@ -484,13 +504,17 @@ export default function FarmMap() {
           {/* Zone Details */}
           <div>
             <Card>
-              <CardHeader>
+                <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Sprout className="h-5 w-5 text-green-600" />
-                  Zone Details
+                  <Trans en={"Zone Details"} te={"జోన్ వివరాలు"} />
                 </CardTitle>
                 <CardDescription>
-                  {selectedZone ? `Information for ${selectedZone.id}` : "Select a zone to view details"}
+                  {selectedZone ? (
+                    <Trans en={`Information for ${selectedZone.id}`} te={`${selectedZone.id} కోసం సమాచారం`} />
+                  ) : (
+                    <Trans en={"Select a zone to view details"} te={"వివరాలు చూడటానికి ఒక జోన్‌ని ఎంచుకోండి"} />
+                  )}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -508,7 +532,7 @@ export default function FarmMap() {
                         }
                         className="capitalize"
                       >
-                        {selectedZone.status}
+                        {selectedZone.status === "healthy" ? <Trans en={"Healthy"} te={"ఆరోగ్యంగా"} /> : selectedZone.status === "warning" ? <Trans en={"Warning"} te={"హెచ్చరిక"} /> : <Trans en={"Critical"} te={"కుటుంబ పరిస్థితి"} />}
                       </Badge>
                       <span className="text-sm font-medium">Score: {selectedZone.healthScore}%</span>
                     </div>
@@ -525,12 +549,12 @@ export default function FarmMap() {
 
                     {/* Sensor Data */}
                     <div className="space-y-3">
-                      <h4 className="text-sm font-medium">Environmental Data</h4>
+                      <h4 className="text-sm font-medium"><Trans en={"Environmental Data"} te={"పరిసర డేటా"} /></h4>
 
                       <div className="flex items-center gap-3">
                         <Droplets className="h-4 w-4 text-blue-600" />
                         <div className="flex-1">
-                          <p className="text-sm">Soil Moisture</p>
+                          <p className="text-sm"><Trans en={"Soil Moisture"} te={"మట్టి తేమ"} /></p>
                           <p className="text-lg font-bold">{selectedZone.soilMoisture}%</p>
                         </div>
                       </div>
@@ -538,7 +562,7 @@ export default function FarmMap() {
                       <div className="flex items-center gap-3">
                         <Thermometer className="h-4 w-4 text-orange-600" />
                         <div className="flex-1">
-                          <p className="text-sm">Temperature</p>
+                          <p className="text-sm"><Trans en={"Temperature"} te={"ఉష్ణోగ్రత"} /></p>
                           <p className="text-lg font-bold">{selectedZone.temperature}°C</p>
                         </div>
                       </div>
@@ -546,7 +570,7 @@ export default function FarmMap() {
                       <div className="flex items-center gap-3">
                         <Wind className="h-4 w-4 text-green-600" />
                         <div className="flex-1">
-                          <p className="text-sm">Humidity</p>
+                          <p className="text-sm"><Trans en={"Humidity"} te={"ఆर्द్రత"} /></p>
                           <p className="text-lg font-bold">{selectedZone.humidity}%</p>
                         </div>
                       </div>
@@ -555,10 +579,10 @@ export default function FarmMap() {
                       <>
                         <Separator />
                         <div className="space-y-3">
-                          <h4 className="text-sm font-medium">ML Disease Detection</h4>
+                          <h4 className="text-sm font-medium"><Trans en={"ML Disease Detection"} te={"ML రోగ గుర్తింపు"} /></h4>
 
                           <div className="text-sm">
-                            <strong>Confidence:</strong>{" "}
+                            <strong><Trans en={"Confidence:"} te={"నమ్మకత్వం:"} /></strong>{" "}
                             {(mlData[selectedZone.id].confidence * 100).toFixed(2)}%
                           </div>
 
@@ -587,14 +611,14 @@ export default function FarmMap() {
 
                             return (
                               <div className="text-sm">
-                                <strong>Spread Risk:</strong>{" "}
-                                <span className={riskColor}>{spreadRisk}</span>
+                                <strong><Trans en={"Spread Risk:"} te={"విస్తరణ ప్రమాదం:"} /></strong>{" "}
+                                <span className={riskColor}>{spreadRisk === "High" ? <Trans en={"High"} te={"అత్యధిక"} /> : spreadRisk === "Moderate" ? <Trans en={"Moderate"} te={"మధ్యస్థ"} /> : <Trans en={"Low"} te={"తక్కువ"} />}</span>
                               </div>
                             )
                           })()}
 
                           <div className="text-xs text-muted-foreground">
-                            Last Scan: {mlData[selectedZone.id].lastScan.toLocaleTimeString()}
+                            <Trans en={"Last Scan:"} te={"చివరి స్కాన్:"} /> {mlData[selectedZone.id].lastScan.toLocaleTimeString()}
                           </div>
                         </div>
                       </>
@@ -607,7 +631,7 @@ export default function FarmMap() {
 
                         {/* Header + Severity Badge */}
                         <div className="flex items-center justify-between">
-                          <span className="text-sm font-semibold">AI Risk Analysis</span>
+                          <span className="text-sm font-semibold"><Trans en={"AI Risk Analysis"} te={"AI రిస్క్ విశ్లేషణ"} /></span>
 
                           <Badge
                             variant={
@@ -619,32 +643,32 @@ export default function FarmMap() {
                             }
                             className="capitalize"
                           >
-                            {aiRecommendation.severity}
+                            {aiRecommendation.severity === "high" ? <Trans en={"High"} te={"అత్యధిక"} /> : aiRecommendation.severity === "medium" ? <Trans en={"Medium"} te={"మధ్యస్థ"} /> : <Trans en={"Low"} te={"తక్కువ"} />}
                           </Badge>
                         </div>
 
                         <div className="text-sm">
-                          <strong>Risk:</strong> {aiRecommendation.riskType}
+                          <strong><Trans en={"Risk:"} te={"రిస్క్:"} /></strong> <Trans en={aiRecommendation.riskType} te={t(aiRecommendation.riskType)} />
                         </div>
 
                         <div className="text-sm">
-                          <strong>Reason:</strong> {aiRecommendation.reason}
+                          <strong><Trans en={"Reason:"} te={"కారణం:"} /></strong> <Trans en={aiRecommendation.reason} te={t(aiRecommendation.reason)} />
                         </div>
 
                         <div className="text-sm">
-                          <strong>Action:</strong> {aiRecommendation.action}
+                          <strong><Trans en={"Action:"} te={"చర్య:"} /></strong> <Trans en={aiRecommendation.action} te={t(aiRecommendation.action)} />
                         </div>
 
                         <div className="text-sm">
-                          💧 Water Required: {aiRecommendation.estimatedWaterLitres} L
+                          💧 <Trans en={"Water Required:"} te={"నీరు అవసరం:"} /> {aiRecommendation.estimatedWaterLitres} L
                         </div>
 
                         <div className="text-sm">
-                          🌿 Nutrients Required: {aiRecommendation.estimatedNutrientMl} ml
+                          🌿 <Trans en={"Nutrients Required:"} te={"పోషక పదార్థాల అవసరం:"} /> {aiRecommendation.estimatedNutrientMl} ml
                         </div>
 
                         <div className="text-xs text-muted-foreground">
-                          {aiRecommendation.savingsNote}
+                          <Trans en={aiRecommendation.savingsNote} te={t(aiRecommendation.savingsNote)} />
                         </div>
 
                       </div>
@@ -655,11 +679,11 @@ export default function FarmMap() {
                     {/* Additional Info */}
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Plant Count:</span>
+                        <span className="text-muted-foreground"><Trans en={"Plant Count:"} te={"ప్లాంట్‌ల సంఖ్య:"} /></span>
                         <span className="font-medium">{selectedZone.plantCount}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Last Sprayed:</span>
+                        <span className="text-muted-foreground"><Trans en={"Last Sprayed:"} te={"చివరిస్ప్రే:"} /></span>
                         <span className="font-medium">
                           {formatDate(selectedZone.lastSprayed)}
                         </span>
@@ -695,14 +719,14 @@ export default function FarmMap() {
                         }}
                       >
                         <Sprout className="mr-2 h-4 w-4" />
-                        {isSpraying ? "Spraying..." : "Spray This Zone"}
+                        {isSpraying ? <Trans en={"Spraying..."} te={"స్ప్రే చేస్తున్నాం..."} /> : <Trans en={"Spray This Zone"} te={"ఈ జోన్‌ను స్ప్రే చేయండి"} />}
                       </Button>
 
 
 
                       <Button variant="outline" className="w-full bg-transparent" size="sm">
                         <Calendar className="mr-2 h-4 w-4" />
-                        Schedule Spraying
+                        <Trans en={"Schedule Spraying"} te={"స్ప్రేయింగ్ షెడ్యూల్"} />
                       </Button>
                     </div>
                   </div>
@@ -710,7 +734,7 @@ export default function FarmMap() {
                   <div className="text-center py-8">
                     <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                     <p className="text-muted-foreground">
-                      Click on any zone in the map to view its detailed information and control options.
+                      <Trans en={"Click on any zone in the map to view its detailed information and control options."} te={"మ్యాప్‌లోని ఏదైనా జోన్‌పై క్లిక్ చేసి దాని వివరాలు మరియు నియంత్రణ ఎంపికలు చూడండి."} />
                     </p>
                   </div>
                 )}

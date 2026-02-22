@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import LanguageProvider, { LanguageToggle } from '@/components/language-provider'
 
 export const metadata: Metadata = {
   title: 'v0 App',
@@ -35,7 +36,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased ${GeistSans.variable} ${GeistMono.variable}`}>
-        {children}
+        <LanguageProvider>
+          <header className="w-full border-b bg-background/50 px-4 py-3">
+            <div className="mx-auto max-w-7xl flex items-center justify-end">
+              {/* language toggle */}
+              <LanguageToggle />
+            </div>
+          </header>
+          {children}
+        </LanguageProvider>
         <Analytics />
       </body>
     </html>
