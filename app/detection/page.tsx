@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { diseaseKnowledge } from "@/app/data/diseaseKnowledge"
 import { pesticideDatabase } from "@/app/data/pesticideDatabase"
+import { getSafePesticideRecommendation } from "@/app/lib/pesticideEngine"
+
 
 export default function DetectionPage() {
   const [file, setFile] = useState<File | null>(null)
@@ -20,14 +22,13 @@ export default function DetectionPage() {
       .replace(/_+/g, "_")    // collapse multiple underscores
       .trim()
 
-  const recommendedPesticides =
-    result?.disease
-      ? pesticideDatabase.filter(p =>
-        p.approvedFor.some(d =>
-          normalize(d) === normalize(result.disease)
-        )
-      )
-      : [];
+
+const recommendation = result?.disease
+  ? getSafePesticideRecommendation(result.disease, result.confidence)
+  : null
+
+const recommendedPesticides = recommendation?.pesticides || []
+const warningMessage = recommendation?.warning
 
   console.log("Detected disease:", result?.disease);
   console.log("Approved list:", pesticideDatabase.map(p => p.approvedFor));
