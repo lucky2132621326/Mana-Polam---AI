@@ -686,7 +686,8 @@ export default function FarmMap() {
                             body: JSON.stringify({ zoneId: selectedZone.id })
                           })
 
-                          await fetchZones() // immediate refresh
+                          await fetchZones()
+                          setSelectedZone(null)
 
                           setTimeout(() => {
                             setIsSpraying(false)
