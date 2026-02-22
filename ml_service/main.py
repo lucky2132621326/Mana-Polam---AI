@@ -4,7 +4,12 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from PIL import Image
+
 import os
+
+DATASET_DIR = r"C:\Users\Gopal Reddy\Downloads\archive\New Plant Diseases Dataset(Augmented)\New Plant Diseases Dataset(Augmented)\train"
+
+class_names = sorted(os.listdir(DATASET_DIR))
 
 app = Flask(__name__)   # ✅ FIRST create app
 CORS(app)               # ✅ THEN enable CORS
@@ -16,13 +21,12 @@ MODEL_PATH = os.path.join(BASE_DIR, "mobilenetv2_best.keras")
 
 # Get class names in sorted order
 # Temporary dummy class names until dataset is ready
-class_names = [f"Class_{i}" for i in range(38)]
+# class_names = [f"Class_{i}" for i in range(38)]
 
 model = tf.keras.models.load_model(MODEL_PATH)
 
 IMG_SIZE = 224
 
-@app.route("/predict", methods=["POST"])
 @app.route("/predict", methods=["POST"])
 def predict():
     file = request.files["file"]
@@ -34,23 +38,25 @@ def predict():
     img_array = np.expand_dims(img_array, axis=0)
     img_array = preprocess_input(img_array)
 
-    # ✅ Correct variable used here
     predictions = model.predict(img_array)[0]
 
-    # ✅ Top 3 indices
+    predicted_index = int(np.argmax(predictions))
+    predicted_disease = class_names[predicted_index]
+    confidence = float(predictions[predicted_index])
+
     top3_indices = predictions.argsort()[-3:][::-1]
 
     top3 = [
         {
-            "classIndex": int(i),
+            "disease": class_names[int(i)],
             "probability": float(predictions[i])
         }
         for i in top3_indices
     ]
 
     return jsonify({
-        "classIndex": int(top3_indices[0]),
-        "confidence": float(predictions[top3_indices[0]]),
+        "disease": predicted_disease,
+        "confidence": confidence,
         "top3": top3
     })
 if __name__ == "__main__":

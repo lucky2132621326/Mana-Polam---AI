@@ -105,35 +105,37 @@ export default function DetectionPage() {
 
         {/* Result Card */}
         {result && (
-          <div className="mt-6 bg-white shadow-md border rounded-xl p-6 space-y-4">
+  <div className="mt-6 bg-gray-100 p-6 rounded-xl shadow-sm">
+    <h2 className="text-xl font-semibold mb-3">
+      Prediction Result
+    </h2>
 
-            <h2 className="text-lg font-semibold text-gray-800">
-              Prediction Result
-            </h2>
+    <p className="text-lg">
+      <span className="font-medium">Detected Disease:</span>{" "}
+      {result.disease?.replace(/___/g, " - ").replace(/_/g, " ")}
+    </p>
 
-            <div className="text-sm">
-              <strong>Detected Class:</strong> {result.className || result.classIndex}
-            </div>
+    <p className="mt-2">
+      <span className="font-medium">Confidence:</span>{" "}
+      {(result.confidence * 100).toFixed(2)}%
+    </p>
 
-            <div className="text-sm">
-              <strong>Confidence:</strong>{" "}
-              {(result.confidence * 100).toFixed(2)}%
-            </div>
+    <h3 className="mt-4 font-medium">
+      Top 3 Predictions:
+    </h3>
 
-            {/* 🔥 Add This Button Right Here */}
-            <div className="pt-4">
-              <button
-                onClick={() =>
-                  window.location.href = `/clinical?disease=${result.className || result.classIndex}`
-                }
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
-              >
-                View Clinical & Scientific Details
-              </button>
-            </div>
-
-          </div>
-        )}
+    <ul className="mt-2 space-y-1">
+      {result.top3?.map((item: any, index: number) => (
+        <li key={index}>
+          {item.disease
+            .replace(/___/g, " - ")
+            .replace(/_/g, " ")} —{" "}
+          {(item.probability * 100).toFixed(2)}%
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
       </div>
     </div>
   )
