@@ -131,3 +131,9 @@ export const zoneHistory: ZoneHistoryEntry[] = zones.map(zone => ({
   severityHistory: [],
   timestampHistory: [],
 }))
+// 🔥 Activity log store
+export const activityLog: {
+  type: "spray" | "alert"
+  zoneId: string
+  timestamp: string
+}[] = []
