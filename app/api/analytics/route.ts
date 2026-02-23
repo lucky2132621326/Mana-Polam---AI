@@ -2,146 +2,244 @@ import { NextResponse } from "next/server"
 import { readDB } from "@/app/lib/database"
 
 export async function GET() {
-
   const db = readDB()
 
-  const detectionEvents = db.detections || []
-  const sprayEvents = db.sprays || []
+  const detections = db.detections || []
+  const sprays = db.sprays || []
 
-  const totalDetections = detectionEvents.length
-  const totalSprays = sprayEvents.length
+  const totalDetections = detections.length
+  const totalSprays = sprays.length
 
-  // =========================
-  // SEVERITY BREAKDOWN
-  // =========================
+  /* ============================================================
+     SEVERITY MODEL (6 / 3 / 1)
+  ============================================================ */
 
-  const high = detectionEvents.filter(
-    (d: any) => d.severityLevel === "high"
-  ).length
+  let high = 0
+  let medium = 0
+  let low = 0
 
-  const medium = detectionEvents.filter(
-    (d: any) => d.severityLevel === "medium"
-  ).length
-
-  const low = detectionEvents.filter(
-    (d: any) => d.severityLevel === "low"
-  ).length
-
-  // =========================
-  // DISEASE FREQUENCY
-  // =========================
-
-  const diseaseFrequency: Record<string, number> = {}
-
-  detectionEvents.forEach((d: any) => {
-    diseaseFrequency[d.disease] =
-      (diseaseFrequency[d.disease] || 0) + 1
+  detections.forEach((d: any) => {
+    if (d.severityLevel === "high") high++
+    else if (d.severityLevel === "medium") medium++
+    else if (d.severityLevel === "low") low++
   })
 
-  // =========================
-  // AVG CONFIDENCE
-  // =========================
+  const severityPenalty =
+    high * 6 +
+    medium * 3 +
+    low * 1
 
-  const avgConfidence =
-    totalDetections === 0
-      ? 0
-      : detectionEvents.reduce(
-          (sum: number, d: any) => sum + (d.confidence || 0),
+  const maxPossiblePenalty =
+    totalDetections * 6 || 1
+
+  const weightedRiskPercent =
+    (severityPenalty / maxPossiblePenalty) * 100
+
+    const diseaseFrequency: Record<string, number> ={}
+
+  /* ============================================================
+     ZONE GROUPING
+  ============================================================ */
+
+  const zoneMap: Record<string, any> = {}
+
+  detections.forEach((d: any) => {
+    if (!zoneMap[d.zoneId]) {
+      zoneMap[d.zoneId] = {
+        detections: [],
+        sprays: [],
+      }
+    }
+    zoneMap[d.zoneId].detections.push(d)
+  })
+
+  detections.forEach((d: any) => {
+  const diseaseName = d.diseaseName || d.disease || "Unknown"
+
+  diseaseFrequency[diseaseName] =
+    (diseaseFrequency[diseaseName] || 0) + 1
+})
+
+  sprays.forEach((s: any) => {
+    if (!zoneMap[s.zoneId]) {
+      zoneMap[s.zoneId] = {
+        detections: [],
+        sprays: [],
+      }
+    }
+    zoneMap[s.zoneId].sprays.push(s)
+  })
+
+  /* ============================================================
+     ZONE INTELLIGENCE MODEL
+  ============================================================ */
+
+  const zoneAnalytics: any[] = []
+
+  Object.keys(zoneMap).forEach((zoneId) => {
+    const zone = zoneMap[zoneId]
+    const zoneDetections = zone.detections
+    const zoneSprays = zone.sprays
+
+    let zoneHigh = 0
+    let zoneMedium = 0
+
+    zoneDetections.forEach((d: any) => {
+      if (d.severityLevel === "high") zoneHigh++
+      if (d.severityLevel === "medium") zoneMedium++
+    })
+
+    /* ===== Required Spray Logic ===== */
+
+    const requiredSprays =
+      zoneHigh * 1 +
+      zoneMedium * 0.7
+
+    const actualSprays = zoneSprays.length
+
+    const overSpray =
+      Math.max(0, actualSprays - requiredSprays)
+
+    /* ===== Volume Penalty (Logarithmic) ===== */
+
+    const volumePenalty =
+      Math.log(actualSprays + 1) * 30
+
+    /* ============================================================
+       TRUE RESPONSE DELAY (HOUR BASED)
+    ============================================================ */
+
+    let totalDelayPenalty = 0
+    let pairedCount = 0
+
+    zoneDetections.forEach((d: any) => {
+      const detectionTime = new Date(d.timestamp).getTime()
+
+      const validSprays = zoneSprays
+        .filter((s: any) =>
+          new Date(s.timestamp).getTime() >= detectionTime
+        )
+        .sort(
+          (a: any, b: any) =>
+            new Date(a.timestamp).getTime() -
+            new Date(b.timestamp).getTime()
+        )
+
+      if (validSprays.length === 0) {
+        totalDelayPenalty += 15
+        return
+      }
+
+      const firstSprayTime =
+        new Date(validSprays[0].timestamp).getTime()
+
+      const delayHours =
+        (firstSprayTime - detectionTime) /
+        (1000 * 60 * 60)
+
+      let penalty = 0
+
+      if (delayHours <= 6) penalty = 0
+      else if (delayHours <= 24) penalty = 4
+      else if (delayHours <= 48) penalty = 8
+      else if (delayHours <= 72) penalty = 12
+      else penalty = 15
+
+      totalDelayPenalty += penalty
+      pairedCount++
+    })
+
+    const avgDelayPenalty =
+      pairedCount === 0
+        ? 0
+        : totalDelayPenalty / pairedCount
+
+    /* ===== Over-Spray Penalty ===== */
+
+    const overPenalty =
+      overSpray * 8
+
+    /* ============================================================
+       FINAL ZONE EFFICIENCY
+    ============================================================ */
+
+    let zoneEfficiency =
+      100
+      - volumePenalty
+      - overPenalty
+      - avgDelayPenalty
+
+    zoneEfficiency =
+      Math.max(40, zoneEfficiency)
+
+    zoneAnalytics.push({
+      zoneId,
+      requiredSprays,
+      actualSprays,
+      overSpray,
+      volumePenalty,
+      overPenalty,
+      avgDelayPenalty,
+      zoneEfficiency,
+    })
+  })
+
+  /* ============================================================
+     GLOBAL SPRAY EFFICIENCY
+  ============================================================ */
+
+  const globalSprayEfficiency =
+    zoneAnalytics.length === 0
+      ? 100
+      : zoneAnalytics.reduce(
+          (sum, z) => sum + z.zoneEfficiency,
           0
-        ) / totalDetections
+        ) / zoneAnalytics.length
 
-  // =========================
-  // SPREAD INDEX
-  // =========================
+  /* ============================================================
+     WATER MODELING
+  ============================================================ */
 
-  const spreadIndex =
-    totalDetections === 0 ? 0 : high / totalDetections
+  const manualWater =
+    (high + medium + low) * 15
 
-  // =========================
-  // DETECTION TIMELINE
-  // =========================
+  const aiWater =
+    totalSprays * 15
 
-  const detectionTimeline: Record<string, number> = {}
+  const waterSaved =
+    manualWater - aiWater
 
-  detectionEvents.forEach((d: any) => {
-    const date = d.timestamp?.split("T")[0]
-    if (!date) return
-    detectionTimeline[date] =
-      (detectionTimeline[date] || 0) + 1
-  })
+  const waterReductionPercent =
+    manualWater === 0
+      ? 0
+      : (waterSaved / manualWater) * 100
 
-  // =========================
-  // SPRAY TIMELINE
-  // =========================
-
-  const sprayTimeline: Record<string, number> = {}
-
-  sprayEvents.forEach((s: any) => {
-    const date = s.timestamp?.split("T")[0]
-    if (!date) return
-    sprayTimeline[date] =
-      (sprayTimeline[date] || 0) + 1
-  })
-
-  // =========================
-  // ZONE BREAKDOWN
-  // =========================
-
-  const zoneBreakdown: Record<
-    string,
-    { detections: number; sprays: number }
-  > = {}
-
-  detectionEvents.forEach((d: any) => {
-    if (!zoneBreakdown[d.zoneId]) {
-      zoneBreakdown[d.zoneId] = {
-        detections: 0,
-        sprays: 0,
-      }
-    }
-    zoneBreakdown[d.zoneId].detections++
-  })
-
-  sprayEvents.forEach((s: any) => {
-    if (!zoneBreakdown[s.zoneId]) {
-      zoneBreakdown[s.zoneId] = {
-        detections: 0,
-        sprays: 0,
-      }
-    }
-    zoneBreakdown[s.zoneId].sprays++
-  })
-
-  // =========================
-  // AI METRICS
-  // =========================
-
-  const autoSprayRatio =
-    totalDetections === 0 ? 0 : totalSprays / totalDetections
+  /* ============================================================
+     RETURN OBJECT
+  ============================================================ */
 
   return NextResponse.json({
-    totalDetections,
-    totalSprays,
+  totalDetections,
+  totalSprays,
 
-    severityBreakdown: {
-      high,
-      medium,
-      low,
-    },
+  severityBreakdown: {
+    high,
+    medium,
+    low,
+    severityPenalty,
+    weightedRiskPercent,
+  },
 
-    diseaseFrequency,
+  diseaseFrequency,   // 👈 ADD THIS
 
-    avgConfidence,
-    spreadIndex,
+  zoneAnalytics,
+  globalSprayEfficiency,
 
-    detectionTimeline,
-    sprayTimeline,
-    zoneBreakdown,
-
-    aiMetrics: {
-      highSeverityRatio: spreadIndex,
-      autoSprayRatio,
-      avgConfidence,
-    },
-  })
+  waterModel: {
+    manualWater,
+    aiWater,
+    waterSaved,
+    waterReductionPercent,
+  },
+})
 }
