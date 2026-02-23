@@ -686,12 +686,17 @@ export default function FarmMap() {
                             body: JSON.stringify({ zoneId: selectedZone.id })
                           })
 
-                          await fetchZones()
-                          setSelectedZone(null)
+                          const res = await fetch("/api/zones")
+                          const data = await res.json()
+                          setFarmData(data)
 
-                          setTimeout(() => {
-                            setIsSpraying(false)
-                          }, 2000)
+                          // 👇 CRITICAL LINE (this is the fix)
+                          const updatedZone = data.find((z: ZoneData) => z.id === selectedZone.id)
+                          if (updatedZone) {
+                            setSelectedZone(updatedZone)
+                          }
+
+                          setIsSpraying(false)
                         }}
                       >
                         <Sprout className="mr-2 h-4 w-4" />

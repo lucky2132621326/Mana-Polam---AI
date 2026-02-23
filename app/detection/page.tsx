@@ -18,6 +18,7 @@ export default function DetectionPage() {
     if (!file) return
 
     const formData = new FormData()
+    formData.append("zoneId", zone)
     formData.append("file", file)
 
     setLoading(true)
@@ -25,15 +26,24 @@ export default function DetectionPage() {
     setLogAdded(false)
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/predict", {
+      // ✅ CALL NEXT.JS BACKEND (NOT FLASK DIRECTLY)
+      const response = await fetch("/api/hardwareDetect", {
         method: "POST",
         body: formData,
       })
 
       const data = await response.json()
-      setResult(data)
+
+      if (data.success) {
+        // Use detection object returned from backend
+        setResult({
+          disease: data.detection.disease,
+          confidence: data.detection.confidence,
+          severityLevel: data.detection.severityLevel,
+        })
+      }
     } catch (error) {
-      console.error("Prediction error:", error)
+      console.error("Hardware detect error:", error)
     }
 
     setLoading(false)
@@ -49,12 +59,9 @@ export default function DetectionPage() {
       : null
 
   const severity =
-    knowledge && result
-      ? result.confidence >= knowledge.severityThresholds.moderate
-        ? "High"
-        : result.confidence >= knowledge.severityThresholds.low
-        ? "Moderate"
-        : "Low"
+    result?.severityLevel
+      ? result.severityLevel.charAt(0).toUpperCase() +
+        result.severityLevel.slice(1)
       : null
 
   const recommendedPesticides =
@@ -86,7 +93,6 @@ export default function DetectionPage() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 p-10">
       <div className="max-w-6xl mx-auto space-y-10">
 
-        {/* Header */}
         <div className="text-center">
           <h1 className="text-4xl font-bold text-green-800">
             🌿 AI Disease Detection
@@ -96,9 +102,7 @@ export default function DetectionPage() {
           </p>
         </div>
 
-        {/* Upload Section */}
         <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-green-200">
-
           <div className="flex flex-col md:flex-row gap-8 items-center">
 
             <div className="w-72 h-72 flex items-center justify-center border-2 border-green-200 rounded-xl bg-white">
@@ -116,7 +120,6 @@ export default function DetectionPage() {
             </div>
 
             <div className="space-y-4 w-full">
-
               <input
                 type="file"
                 accept="image/*"
@@ -150,10 +153,8 @@ export default function DetectionPage() {
           </div>
         </div>
 
-        {/* Results */}
         {result && (
           <div className="bg-white p-10 rounded-2xl shadow-xl border-l-8 border-green-600">
-
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-green-800">
                 Analysis Complete
@@ -196,18 +197,15 @@ export default function DetectionPage() {
                   <p><strong>Severity:</strong> {severity}</p>
                 </div>
 
-                <div>
-                  <button
-                    onClick={() => setShowDetails(!showDetails)}
-                    className="w-full bg-green-100 text-green-800 py-2 rounded-lg hover:bg-green-200"
-                  >
-                    {showDetails ? "Hide Detailed Report" : "View Detailed Treatment Plan"}
-                  </button>
-                </div>
+                <button
+                  onClick={() => setShowDetails(!showDetails)}
+                  className="w-full bg-green-100 text-green-800 py-2 rounded-lg hover:bg-green-200"
+                >
+                  {showDetails ? "Hide Detailed Report" : "View Detailed Treatment Plan"}
+                </button>
 
                 {showDetails && (
                   <div className="space-y-6">
-
                     <div>
                       <h3 className="text-lg font-semibold text-green-800">
                         Recommended Chemical Treatment
@@ -239,9 +237,9 @@ export default function DetectionPage() {
                         ))}
                       </ul>
                     </div>
-
                   </div>
                 )}
+
               </div>
             </div>
           </div>

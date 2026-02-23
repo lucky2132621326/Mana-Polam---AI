@@ -103,10 +103,10 @@ const healthTrendData =
     { month: "Mar", spraying: 48, diseases: 11, yield: 89 },
   ]
 
-  const diseaseBreakdownData = [
-  { disease: "Critical Zones", cases: analytics?.criticalZones ?? 0, severity: "high" },
-  { disease: "Warning Zones", cases: analytics?.warningZones ?? 0, severity: "medium" },
-  { disease: "Healthy Zones", cases: analytics?.healthyZones ?? 0, severity: "low" },
+ const diseaseBreakdownData = [
+  { disease: "High Severity", cases: analytics?.highSeverity ?? 0, severity: "high" },
+  { disease: "Medium Severity", cases: analytics?.mediumSeverity ?? 0, severity: "medium" },
+  { disease: "Low Severity", cases: analytics?.lowSeverity ?? 0, severity: "low" },
 ]
 
   const getSeverityColor = (severity: string) => {
@@ -179,7 +179,7 @@ const healthTrendData =
               <Sprout className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics?.totalSpraying}</div>
+              <div className="text-2xl font-bold">{analytics?.totalSprays}</div>
               <div className="flex items-center gap-1 text-xs text-green-600">
                 <TrendingUp className="h-3 w-3" />
                 <span>+12% from last month</span>
@@ -207,7 +207,7 @@ const healthTrendData =
               <Droplets className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics?.pesticideSaved}%</div>
+              <div className="text-2xl font-bold">{analytics?.estimatedWaterSaved}%</div>
               <div className="flex items-center gap-1 text-xs text-green-600">
                 <TrendingUp className="h-3 w-3" />
                 <span>vs manual spraying</span>
@@ -221,7 +221,7 @@ const healthTrendData =
               <AlertTriangle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics?.diseasesPrevented}</div>
+              <div className="text-2xl font-bold">{analytics?.totalDetections}</div>
               <div className="flex items-center gap-1 text-xs text-green-600">
                 <TrendingUp className="h-3 w-3" />
                 <span>Early detection</span>
