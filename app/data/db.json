@@ -1,0 +1,175 @@
+{
+  "detections": [
+    {
+      "id": "849bcf14-8575-4d1d-8180-bb71c031c84e",
+      "zoneId": "A1",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "confidence": 0.997552216053009,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T12:08:56.275Z"
+    },
+    {
+      "id": "cfa39407-db74-4f65-afdc-dbb671453e05",
+      "zoneId": "A1",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "confidence": 0.9988297820091248,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T12:09:05.898Z"
+    },
+    {
+      "id": "be719bc8-d1c5-4a4b-9d3e-fdd3258ba3cd",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Common_rust_",
+      "confidence": 0.7169639468193054,
+      "severityLevel": "moderate",
+      "severityScore": 2,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T12:15:41.798Z"
+    },
+    {
+      "id": "4dce58be-e037-470c-a500-1e752d03cbb0",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Common_rust_",
+      "confidence": 0.9996765851974487,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T12:15:55.215Z"
+    },
+    {
+      "id": "3e616383-b829-4c69-ab4b-51b60b7c1adb",
+      "zoneId": "A1",
+      "disease": "Grape___healthy",
+      "confidence": 0.9999855756759644,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T12:16:43.322Z"
+    },
+    {
+      "id": "50a4ea4b-33d7-4ef8-b89d-dac91c6ed52d",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "confidence": 0.9984204769134521,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T12:16:59.652Z"
+    },
+    {
+      "id": "06695c6e-93ef-4af6-b8bb-2d6eccc1f998",
+      "zoneId": "A1",
+      "disease": "Potato___healthy",
+      "confidence": 0.9971585273742676,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T12:17:10.972Z"
+    },
+    {
+      "id": "72b37a6a-d5a8-413e-b7f3-4f65163db528",
+      "zoneId": "A1",
+      "disease": "Apple___Black_rot",
+      "confidence": 0.999494194984436,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Thiophanate-Methyl 70% WP",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 g per liter",
+      "timestamp": "2026-02-23T12:17:30.172Z"
+    }
+  ],
+  "sprays": [
+    {
+      "id": "15449bbf-9c5b-48c4-be57-c6cbb42bdf19",
+      "zoneId": "A1",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T12:08:56.275Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "01108531-e77d-4e95-af81-d600f1542fe3",
+      "zoneId": "A1",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T12:09:05.899Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "c0fee7eb-a73e-434a-be3f-7c62b0585976",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Common_rust_",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T12:15:41.798Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "9876d594-7ee8-4ce0-816a-89a962fd5353",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Common_rust_",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T12:15:55.216Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "59802d0c-979a-40b2-93c0-2225c5484c7e",
+      "zoneId": "A1",
+      "disease": "Grape___healthy",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T12:16:43.323Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "f5405e7a-7be5-40ff-a161-ee41cbdf5c01",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T12:16:59.653Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "be72318a-c529-4327-9faf-3ee443bdccd7",
+      "zoneId": "A1",
+      "disease": "Potato___healthy",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T12:17:10.972Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "2f81a5bc-b0ec-4260-b2f4-264dc1661426",
+      "zoneId": "A1",
+      "disease": "Apple___Black_rot",
+      "chemical": "Thiophanate-Methyl 70% WP",
+      "dosage": "1 g per liter",
+      "timestamp": "2026-02-23T12:17:30.173Z",
+      "triggeredBy": "AI Auto Spray"
+    }
+  ],
+  "zoneHistory": []
+}
