@@ -95,6 +95,162 @@
       "organicAlternative": "Neem Oil (3-5 ml/L)",
       "dosage": "1 g per liter",
       "timestamp": "2026-02-23T12:17:30.172Z"
+    },
+    {
+      "id": "f4d79d2e-c27d-4e6f-9b39-7ace70021239",
+      "zoneId": "D3",
+      "disease": "Apple___Black_rot",
+      "confidence": 0.999736487865448,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Thiophanate-Methyl 70% WP",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 g per liter",
+      "timestamp": "2026-02-23T14:11:56.686Z"
+    },
+    {
+      "id": "da6626de-9374-45b1-a119-36b876c24990",
+      "zoneId": "A1",
+      "disease": "Apple___Black_rot",
+      "confidence": 0.9999675750732422,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Thiophanate-Methyl 70% WP",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 g per liter",
+      "timestamp": "2026-02-23T14:50:12.898Z"
+    },
+    {
+      "id": "87c4504e-c858-4660-9c3a-a7fe15bdb191",
+      "zoneId": "A1",
+      "disease": "Apple___Apple_scab",
+      "confidence": 0.9998058676719666,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Captan 50% WP",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-23T14:50:30.303Z"
+    },
+    {
+      "id": "a68944a7-21b9-4d95-90fd-ee364bc584b5",
+      "zoneId": "A1",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "confidence": 0.9991484880447388,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T14:50:39.493Z"
+    },
+    {
+      "id": "646bb3fa-594e-4516-a3f7-329b01f1117d",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "confidence": 0.9871374368667603,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Azoxystrobin",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T14:50:54.141Z"
+    },
+    {
+      "id": "4b60bf6a-1be5-4358-a064-46bf87d78ff2",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "confidence": 0.9975107908248901,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Azoxystrobin",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T15:29:08.894Z"
+    },
+    {
+      "id": "45e617af-5bdc-45c8-8c6a-2989977799e6",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "confidence": 0.9871374368667603,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Azoxystrobin",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T15:29:15.410Z"
+    },
+    {
+      "id": "61134cd1-8ed3-4046-9bf8-ef3bb99931b6",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "confidence": 0.9989640712738037,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Azoxystrobin",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T15:29:21.060Z"
+    },
+    {
+      "id": "0f15d758-5d71-43e4-8d25-7b4209813cbb",
+      "zoneId": "A1",
+      "disease": "Peach___healthy",
+      "confidence": 0.9999791383743286,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T15:29:31.258Z"
+    },
+    {
+      "id": "562a20f9-5a15-4850-a3fb-a200d2a1f759",
+      "zoneId": "A1",
+      "disease": "Raspberry___healthy",
+      "confidence": 0.9999953508377075,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T15:29:42.232Z"
+    },
+    {
+      "id": "579ecdde-88a8-4eb3-85ed-a66f103cd057",
+      "zoneId": "A1",
+      "disease": "Raspberry___healthy",
+      "confidence": 0.9999953508377075,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T15:29:43.963Z"
+    },
+    {
+      "id": "5ee7be4c-57d1-400f-b925-9059c46ea2eb",
+      "zoneId": "A1",
+      "disease": "Raspberry___healthy",
+      "confidence": 0.9999912977218628,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T16:26:14.065Z"
+    },
+    {
+      "id": "9d055ce8-59b9-4bc0-888e-16882e06fa2a",
+      "zoneId": "A1",
+      "disease": "Tomato___Bacterial_spot",
+      "confidence": 0.5235235691070557,
+      "severityLevel": "moderate",
+      "severityScore": 2,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-23T16:26:24.932Z"
     }
   ],
   "sprays": [
@@ -168,6 +324,141 @@
       "chemical": "Thiophanate-Methyl 70% WP",
       "dosage": "1 g per liter",
       "timestamp": "2026-02-23T12:17:30.173Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "c05c9442-9cbc-49a6-8677-d04903fd2d89",
+      "zoneId": "D3",
+      "disease": "Apple___Black_rot",
+      "chemical": "Thiophanate-Methyl 70% WP",
+      "dosage": "1 g per liter",
+      "timestamp": "2026-02-23T14:11:56.687Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "ac635ae6-26b5-4801-8d2c-64d9f7e5adb3",
+      "zoneId": "A1",
+      "timestamp": "2026-02-23T14:49:41.289Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "ecf51057-0097-4ab7-8a0c-376a9395abd2",
+      "zoneId": "A1",
+      "timestamp": "2026-02-23T14:49:42.694Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "e5bf67ca-85d5-449d-a031-f6f30a577410",
+      "zoneId": "A1",
+      "timestamp": "2026-02-23T14:49:44.562Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "d1f49b38-d1b3-4cca-9994-23386d63274e",
+      "zoneId": "A1",
+      "disease": "Apple___Black_rot",
+      "chemical": "Thiophanate-Methyl 70% WP",
+      "dosage": "1 g per liter",
+      "timestamp": "2026-02-23T14:50:12.898Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "205d42e6-ccdc-4b05-9ad3-341f2790d048",
+      "zoneId": "A1",
+      "disease": "Apple___Apple_scab",
+      "chemical": "Captan 50% WP",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-23T14:50:30.304Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "1801e092-0f73-4c9d-af52-3c6e726cc028",
+      "zoneId": "A1",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T14:50:39.494Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "fdbbadee-8205-471f-bb02-40d7b6c1a194",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "chemical": "Azoxystrobin",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T14:50:54.142Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "1a7683f5-1ff8-4c0a-971e-08a99c109674",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "chemical": "Azoxystrobin",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T15:29:08.894Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "5659de33-9e2d-4840-99ef-97b68e6ef69c",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "chemical": "Azoxystrobin",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T15:29:15.410Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "bc77a395-a896-46b4-9ac8-cb5dabe087a4",
+      "zoneId": "A1",
+      "disease": "Grape___Esca_(Black_Measles)",
+      "chemical": "Azoxystrobin",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-23T15:29:21.061Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "247f1dfd-4676-43a3-bcb8-05df4622cc7e",
+      "zoneId": "A1",
+      "disease": "Peach___healthy",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T15:29:31.258Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "04b96732-e8bf-4139-bfd1-7e183d7e0ae7",
+      "zoneId": "A1",
+      "disease": "Raspberry___healthy",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T15:29:42.233Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "a0ce050c-8b64-4801-9563-a9a4d6e428d3",
+      "zoneId": "A1",
+      "disease": "Raspberry___healthy",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T15:29:43.964Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "806dd1c8-c49e-4af5-80ad-62ed30c9a765",
+      "zoneId": "A1",
+      "disease": "Raspberry___healthy",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T16:26:14.065Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "0a532029-dae3-43d9-a745-232365f42115",
+      "zoneId": "A1",
+      "disease": "Tomato___Bacterial_spot",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-23T16:26:24.933Z",
       "triggeredBy": "AI Auto Spray"
     }
   ],
