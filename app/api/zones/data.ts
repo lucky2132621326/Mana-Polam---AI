@@ -22,6 +22,12 @@ export interface ZoneData {
   severityScore?: number
   severityLevel?: "low" | "moderate" | "high"
   lastAnalyzed?: string
+
+  treatmentHistory?: {
+    pesticide: string
+    dosage: string
+    timestamp: string
+  }[]
 }
 
 // Shared simulation flag
@@ -130,6 +136,7 @@ export const zoneHistory: ZoneHistoryEntry[] = zones.map(zone => ({
   confidenceHistory: [],
   severityHistory: [],
   timestampHistory: [],
+    treatmentHistory: [],
 }))
 // 🔥 Activity log store
 export const activityLog: {

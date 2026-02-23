@@ -3,45 +3,16 @@
 import { useState } from "react"
 import { diseaseKnowledge } from "@/app/data/diseaseKnowledge"
 import { pesticideDatabase } from "@/app/data/pesticideDatabase"
-import { getSafePesticideRecommendation } from "@/app/lib/pesticideEngine"
-
+import { addDetectionLog } from "@/app/lib/mlLogStore"
 
 export default function DetectionPage() {
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [result, setResult] = useState<any>(null)
   const [loading, setLoading] = useState(false)
-
-  const knowledge =
-    result?.disease ? diseaseKnowledge[result.disease] : undefined;
-
-  const normalize = (str: string) =>
-    str
-      .toLowerCase()
-      .replace(/\s+/g, "_")   // convert spaces to underscores
-      .replace(/_+/g, "_")    // collapse multiple underscores
-      .trim()
-
-
-const recommendation = result?.disease
-  ? getSafePesticideRecommendation(result.disease, result.confidence)
-  : null
-
-const recommendedPesticides = recommendation?.pesticides || []
-const warningMessage = recommendation?.warning
-
-  console.log("Detected disease:", result?.disease);
-  console.log("Approved list:", pesticideDatabase.map(p => p.approvedFor));
-  console.log("Matched pesticides:", recommendedPesticides);
-
-  const severity =
-    knowledge && result
-      ? result.confidence >= knowledge.severityThresholds.moderate
-        ? "high"
-        : result.confidence >= knowledge.severityThresholds.low
-          ? "moderate"
-          : "low"
-      : null;
+  const [zone, setZone] = useState("A1")
+  const [showDetails, setShowDetails] = useState(false)
+  const [logAdded, setLogAdded] = useState(false)
 
   const handleUpload = async () => {
     if (!file) return
@@ -50,6 +21,8 @@ const warningMessage = recommendation?.warning
     formData.append("file", file)
 
     setLoading(true)
+    setShowDetails(false)
+    setLogAdded(false)
 
     try {
       const response = await fetch("http://127.0.0.1:5000/predict", {
@@ -60,30 +33,75 @@ const warningMessage = recommendation?.warning
       const data = await response.json()
       setResult(data)
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Prediction error:", error)
     }
 
     setLoading(false)
   }
 
+  const formattedDisease = result?.disease
+    ? result.disease.replace(/___/g, " - ").replace(/_/g, " ")
+    : null
+
+  const knowledge =
+    result?.disease && diseaseKnowledge[result.disease]
+      ? diseaseKnowledge[result.disease]
+      : null
+
+  const severity =
+    knowledge && result
+      ? result.confidence >= knowledge.severityThresholds.moderate
+        ? "High"
+        : result.confidence >= knowledge.severityThresholds.low
+        ? "Moderate"
+        : "Low"
+      : null
+
+  const recommendedPesticides =
+    result?.disease
+      ? pesticideDatabase.filter((p) =>
+          p.approvedFor.includes(result.disease)
+        )
+      : []
+
+  if (result && severity && !logAdded) {
+    addDetectionLog({
+      zone,
+      disease: result.disease,
+      confidence: result.confidence,
+      severity,
+      timestamp: Date.now(),
+    })
+    setLogAdded(true)
+  }
+
+  const organicSuggestions = [
+    "Neem Oil (3-5 ml per liter of water)",
+    "Trichoderma-based biological fungicide",
+    "Baking soda solution (5g per liter) for fungal control",
+    "Encourage Integrated Pest Management (IPM)"
+  ]
+
   return (
-    <div className="min-h-screen bg-background p-8">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 p-10">
+      <div className="max-w-6xl mx-auto space-y-10">
 
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">🌿 AI Disease Detection</h1>
-          <p className="text-muted-foreground">
-            Upload a leaf image to analyze potential plant diseases.
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-green-800">
+            🌿 AI Disease Detection
+          </h1>
+          <p className="text-green-700 mt-2">
+            Intelligent crop health monitoring and treatment planning
           </p>
         </div>
 
-        {/* Upload Card */}
-        <div className="bg-white p-6 rounded-2xl shadow-md border space-y-6">
-          <div className="flex flex-col md:flex-row gap-6 items-center">
+        {/* Upload Section */}
+        <div className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-green-200">
 
-            {/* Image Preview */}
-            <div className="w-64 h-64 flex items-center justify-center border rounded-xl bg-muted/30">
+          <div className="flex flex-col md:flex-row gap-8 items-center">
+
+            <div className="w-72 h-72 flex items-center justify-center border-2 border-green-200 rounded-xl bg-white">
               {preview ? (
                 <img
                   src={preview}
@@ -91,14 +109,14 @@ const warningMessage = recommendation?.warning
                   className="object-contain max-h-full"
                 />
               ) : (
-                <span className="text-muted-foreground text-sm">
-                  Image Preview
+                <span className="text-green-600 text-sm">
+                  Leaf Image Preview
                 </span>
               )}
             </div>
 
-            {/* Controls */}
-            <div className="space-y-4">
+            <div className="space-y-4 w-full">
+
               <input
                 type="file"
                 accept="image/*"
@@ -109,13 +127,22 @@ const warningMessage = recommendation?.warning
                     setPreview(URL.createObjectURL(selected))
                   }
                 }}
-                className="block text-sm"
               />
+
+              <select
+                value={zone}
+                onChange={(e) => setZone(e.target.value)}
+                className="border border-green-300 rounded-lg px-3 py-2 w-full"
+              >
+                {["A1","A2","A3","A4","B1","B2","B3","B4","C1","C2","C3","C4","D1","D2","D3","D4"].map(z => (
+                  <option key={z} value={z}>{z}</option>
+                ))}
+              </select>
 
               <button
                 onClick={handleUpload}
                 disabled={!file || loading}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
+                className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg w-full"
               >
                 {loading ? "Analyzing..." : "Analyze Leaf"}
               </button>
@@ -123,69 +150,102 @@ const warningMessage = recommendation?.warning
           </div>
         </div>
 
-        {/* Result Card */}
+        {/* Results */}
         {result && (
-          <div className="mt-6 bg-gray-100 p-6 rounded-xl shadow-sm">
-            <h2 className="text-xl font-semibold mb-3">
-              Prediction Result
-            </h2>
+          <div className="bg-white p-10 rounded-2xl shadow-xl border-l-8 border-green-600">
 
-            <p className="text-lg">
-              <span className="font-medium">Detected Disease:</span>{" "}
-              {result.disease?.replace(/___/g, " - ").replace(/_/g, " ")}
-            </p>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-green-800">
+                Analysis Complete
+              </h2>
+              <p className="text-green-600 mt-2">
+                AI-generated crop health insights
+              </p>
+            </div>
 
-            <p className="mt-2">
-              <span className="font-medium">Confidence:</span>{" "}
-              {(result.confidence * 100).toFixed(2)}%
-            </p>
+            <div className="grid md:grid-cols-2 gap-10">
 
-            <h3 className="mt-4 font-medium">
-              Top 3 Predictions:
-            </h3>
-
-            <ul className="mt-2 space-y-1">
-              {result.top3?.map((item: any, index: number) => (
-                <li key={index}>
-                  {item.disease
-                    .replace(/___/g, " - ")
-                    .replace(/_/g, " ")} —{" "}
-                  {(item.probability * 100).toFixed(2)}%
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Pesticide Panel */}
-        {recommendedPesticides.length > 0 && (
-          <div className="mt-6 p-6 rounded-xl border bg-white shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">
-              Government Approved Pesticide Options
-            </h2>
-
-            {recommendedPesticides.map((pesticide, index) => (
-              <div
-                key={index}
-                className="mb-4 p-4 rounded-lg bg-gray-50 border"
-              >
-                <h3 className="font-medium text-lg">
-                  {pesticide.chemicalName}
-                </h3>
-
-                <p><strong>Type:</strong> {pesticide.type}</p>
-                <p><strong>Dosage:</strong> {pesticide.dosage}</p>
-                <p><strong>Application:</strong> {pesticide.applicationMethod}</p>
-                <p><strong>Spray Interval:</strong> {pesticide.sprayInterval}</p>
-                <p><strong>Pre-Harvest Interval:</strong> {pesticide.preHarvestInterval}</p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  ⚠ {pesticide.safetyNote}
-                </p>
+              <div className="flex justify-center">
+                {preview && (
+                  <img
+                    src={preview}
+                    alt="Uploaded"
+                    className="w-80 h-80 object-contain rounded-xl border border-green-200"
+                  />
+                )}
               </div>
-            ))}
+
+              <div className="space-y-5">
+
+                <div className="text-center">
+                  {severity === "High" || severity === "Moderate" ? (
+                    <span className="bg-red-100 text-red-700 px-4 py-2 rounded-full font-semibold">
+                      ⚠ Disease Detected
+                    </span>
+                  ) : (
+                    <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold">
+                      ✓ Healthy Plant
+                    </span>
+                  )}
+                </div>
+
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <p><strong>Plant:</strong> {formattedDisease?.split(" - ")[0]}</p>
+                  <p><strong>Condition:</strong> {formattedDisease?.split(" - ")[1]}</p>
+                  <p><strong>Confidence:</strong> {(result.confidence * 100).toFixed(2)}%</p>
+                  <p><strong>Severity:</strong> {severity}</p>
+                </div>
+
+                <div>
+                  <button
+                    onClick={() => setShowDetails(!showDetails)}
+                    className="w-full bg-green-100 text-green-800 py-2 rounded-lg hover:bg-green-200"
+                  >
+                    {showDetails ? "Hide Detailed Report" : "View Detailed Treatment Plan"}
+                  </button>
+                </div>
+
+                {showDetails && (
+                  <div className="space-y-6">
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-green-800">
+                        Recommended Chemical Treatment
+                      </h3>
+
+                      {recommendedPesticides.length > 0 ? (
+                        recommendedPesticides.map((p, i) => (
+                          <div key={i} className="bg-white border border-green-200 p-4 rounded-lg mt-3">
+                            <p><strong>Name:</strong> {p.chemicalName}</p>
+                            <p><strong>Type:</strong> {p.type}</p>
+                            <p><strong>Dosage:</strong> {p.dosage}</p>
+                            <p><strong>Spray Interval:</strong> {p.sprayInterval}</p>
+                            <p><strong>Pre-Harvest:</strong> {p.preHarvestInterval}</p>
+                            <p className="text-red-600 text-sm mt-2">⚠ {p.safetyNote}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p>No chemical treatment available.</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-green-800">
+                        Organic Alternative Options
+                      </h3>
+                      <ul className="list-disc list-inside mt-2 space-y-1">
+                        {organicSuggestions.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         )}
-
       </div>
     </div>
   )
