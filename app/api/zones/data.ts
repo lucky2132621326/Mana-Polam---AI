@@ -1,3 +1,4 @@
+import type { DetectionEvent } from "../data/detectionStore"
 export type ZoneStatus =
   | "healthy"
   | "warning"
@@ -20,14 +21,10 @@ export interface ZoneData {
   disease?: string
   mlConfidence?: number
   severityScore?: number
-  severityLevel?: "low" | "moderate" | "high"
+  severityLevel?: "low" | "medium" | "high"
   lastAnalyzed?: string
 
-  treatmentHistory?: {
-    pesticide: string
-    dosage: string
-    timestamp: string
-  }[]
+  treatmentHistory?:DetectionEvent[]
 }
 
 // Shared simulation flag

@@ -1,39 +1,26 @@
 import { NextResponse } from "next/server"
-import { zones, zoneHistory } from "../zones/data"
-
+import { detectionEvents } from "../data/detectionStore"
+import { sprayEvents } from "../spray/sprayStore"
 
 export async function GET() {
-  const totalZones = zones.length
 
-  const criticalZones = zones.filter(z => z.status === "critical").length
-  const warningZones = zones.filter(z => z.status === "warning").length
-  const healthyZones = zones.filter(z => z.status === "healthy").length
+  const totalDetections = detectionEvents.length
+  const highSeverity = detectionEvents.filter(d => d.severityLevel === "high").length
+  const moderateSeverity = detectionEvents.filter(d => d.severityLevel === "moderate").length
 
-  const averageHealth =
-    zones.reduce((sum, z) => sum + z.healthScore, 0) / totalZones
+  const totalSprays = sprayEvents.length
 
-  const totalSprays = zoneHistory.reduce(
-    (sum, h) => sum + h.sprays,
-    0
-  )
-  // 🔥 Find most critical zone
-const mostCritical = zones.reduce((prev, current) =>
-  current.healthScore < prev.healthScore ? current : prev
-)
+  const diseaseFrequency: Record<string, number> = {}
 
-// 💧 Estimate water saved (assume 5L saved per smart spray)
-const estimatedWaterSaved = totalSprays * 5
+  detectionEvents.forEach(d => {
+    diseaseFrequency[d.disease] = (diseaseFrequency[d.disease] || 0) + 1
+  })
 
-
- return NextResponse.json({
-  totalZones,
-  criticalZones,
-  warningZones,
-  healthyZones,
-  averageHealth: Math.round(averageHealth),
-  totalSprays,
-  mostCriticalZone: mostCritical.id,
-  lowestHealthScore: mostCritical.healthScore,
-  estimatedWaterSaved,
-})
+  return NextResponse.json({
+    totalDetections,
+    highSeverity,
+    moderateSeverity,
+    totalSprays,
+    diseaseFrequency
+  })
 }
