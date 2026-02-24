@@ -13,6 +13,12 @@ type DetectionEvent = {
   organicAlternative: string
   dosage: string
   timestamp: string
+
+  status:"active" | "treated" | "resolved"
+  treatedAt: string | null
+  postSeverityScore: number | null
+  linkedSprayId: string | null
+  
 }
 export async function POST(req: Request) {
   try {
@@ -79,6 +85,12 @@ export async function POST(req: Request) {
       dosage:
         primaryChemical?.dosage ?? "As per label",
       timestamp: new Date().toISOString(),
+
+      status: "active",
+      treatedAt: null,
+      postSeverityScore: null,
+      linkedSprayId: null,
+
     }
 
     // 🔥 READ DB

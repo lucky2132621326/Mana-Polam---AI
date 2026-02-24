@@ -9,13 +9,14 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const { zoneId } = body
+  const { zoneId, disease, chemical, dosage, detectionId } = body
 
   const zoneIndex = zones.findIndex(z => z.id === zoneId)
   if (zoneIndex === -1) {
     return NextResponse.json({ message: "Zone not found" }, { status: 404 })
   }
 
+  // Update zone state
   zones[zoneIndex] = {
     ...zones[zoneIndex],
     status: "healthy",
@@ -37,12 +38,29 @@ export async function POST(req: Request) {
 
   const db = readDB()
 
-  db.sprays.push({
+  // ✅ Create spray object FIRST
+  const spray = {
     id: crypto.randomUUID(),
     zoneId,
+    disease,
+    chemical,
+    dosage,
     timestamp: new Date().toISOString(),
     triggeredBy: "Manual Spray"
-  })
+  }
+
+  db.sprays.push(spray)
+
+  // ✅ Link spray to detection (Lifecycle Update)
+  if (detectionId) {
+    const detection = db.detections.find((d: any) => d.id === detectionId)
+
+    if (detection) {
+      detection.status = "treated"
+      detection.treatedAt = spray.timestamp
+      detection.linkedSprayId = spray.id
+    }
+  }
 
   writeDB(db)
 
