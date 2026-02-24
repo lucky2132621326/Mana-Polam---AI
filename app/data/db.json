@@ -251,6 +251,46 @@
       "organicAlternative": "Neem Oil (3-5 ml/L)",
       "dosage": "As per label",
       "timestamp": "2026-02-23T16:26:24.932Z"
+    },
+    {
+      "id": "5f9f6f9b-3a57-4672-b185-8d413cbf5999",
+      "zoneId": "A1",
+      "disease": "Tomato___Bacterial_spot",
+      "confidence": 0.5235235691070557,
+      "severityLevel": "moderate",
+      "severityScore": 2,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-24T04:31:34.923Z"
+    },
+    {
+      "id": "16568899-4a02-4acb-819c-fa38e10aa77b",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "confidence": 0.9662783145904541,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Propiconazole 25% EC",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-24T04:32:56.300Z"
+    },
+    {
+      "id": "dccec2e5-2a49-4640-8f85-182fbc17c430",
+      "zoneId": "A1",
+      "disease": "Tomato___Tomato_mosaic_virus",
+      "confidence": 0.861065149307251,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-24T06:30:59.542Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
     }
   ],
   "sprays": [
@@ -460,6 +500,111 @@
       "dosage": "Standard",
       "timestamp": "2026-02-23T16:26:24.933Z",
       "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "f9c18839-08d7-4f12-a369-a02c082a9a5e",
+      "zoneId": "A3",
+      "timestamp": "2026-02-24T04:29:19.603Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "92ea13c1-1cdf-4cdf-898b-f8a1587c942d",
+      "zoneId": "A3",
+      "timestamp": "2026-02-24T04:29:21.879Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "ee2e0dd5-ad3d-43a5-8fa0-5485be5a938e",
+      "zoneId": "A3",
+      "timestamp": "2026-02-24T04:29:23.909Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "91ebead5-70d8-42c2-8c00-3a6b17711e26",
+      "zoneId": "A3",
+      "timestamp": "2026-02-24T04:29:25.762Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "10ac90ed-39bc-4a29-93d2-c65e75d6b2c3",
+      "zoneId": "A3",
+      "timestamp": "2026-02-24T04:29:27.894Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "8454e0dc-10ca-400c-b35d-c81b16f68f6f",
+      "zoneId": "C5",
+      "timestamp": "2026-02-24T04:29:57.878Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "f792d53e-ea3c-42c3-8db9-c79a4b993674",
+      "zoneId": "C5",
+      "timestamp": "2026-02-24T04:29:59.284Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "26d7d9bb-5909-4d65-ae22-14d663a0ffcd",
+      "zoneId": "C5",
+      "timestamp": "2026-02-24T04:30:00.341Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "dd79c618-53ec-44e4-aa06-f7dc5d895261",
+      "zoneId": "C5",
+      "timestamp": "2026-02-24T04:30:01.083Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "1b3a28d4-f5db-41cd-9957-39bb8c780fff",
+      "zoneId": "C5",
+      "timestamp": "2026-02-24T04:30:02.675Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "4f07530c-26a4-4a25-bddd-61fac47598d5",
+      "zoneId": "A1",
+      "disease": "Tomato___Bacterial_spot",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-24T04:31:34.924Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "6690fce3-4284-4d04-8d4b-92e476b98528",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "chemical": "Propiconazole 25% EC",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-24T04:32:56.301Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "2e703b1a-30b4-4e8e-8b61-e31d0ab2a33a",
+      "zoneId": "A1",
+      "disease": "Tomato___Tomato_mosaic_virus",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-24T06:30:59.543Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "f6c52ea3-4feb-4d83-8c84-3b9ed052a153",
+      "zoneId": "B3",
+      "timestamp": "2026-02-24T07:02:38.806Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "addb0129-ddeb-4f9b-a6d1-c280fb97c61f",
+      "zoneId": "B3",
+      "timestamp": "2026-02-24T07:02:43.345Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "683780bd-60e9-4067-8ee6-b71f2370ebe2",
+      "zoneId": "B3",
+      "timestamp": "2026-02-24T07:02:46.786Z",
+      "triggeredBy": "Manual Spray"
     }
   ],
   "zoneHistory": []
