@@ -4,8 +4,11 @@ import { useState } from "react"
 import { diseaseKnowledge } from "@/app/data/diseaseKnowledge"
 import { pesticideDatabase } from "@/app/data/pesticideDatabase"
 import { addDetectionLog } from "@/app/lib/mlLogStore"
+import { useFarmStore } from "@/store/farmStore"
+import { toast } from "sonner"
 
 export default function DetectionPage() {
+  const setDetection = useFarmStore((state) => state.setDetection)
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [result, setResult] = useState<any>(null)
@@ -35,12 +38,30 @@ export default function DetectionPage() {
       const data = await response.json()
 
       if (data.success) {
-        // Use detection object returned from backend
+        const severityStr = data.detection.severityLevel.charAt(0).toUpperCase() + data.detection.severityLevel.slice(1)
+        const recommended = pesticideDatabase.filter((p) => p.approvedFor.includes(data.detection.disease))[0]
+
+        setDetection({
+          plantType: data.detection.disease.split("___")[0].replace(/_/g, " "),
+          diseaseName: data.detection.disease.split("___")[1]?.replace(/_/g, " ") || "Healthy",
+          severity: severityStr as any,
+          infectedZoneId: zone,
+          pesticideName: recommended?.chemicalName || "Organic Neem Oil",
+          pesticideCategory: (recommended?.type as any) || "Viral Control",
+          dosagePerLiter: 2.5, // Defaulting as per common practice if not in DB
+          coveragePerLiter: 100, // Square meters per liter (assumption)
+          sprayInterval: recommended?.sprayInterval || "7-10 days",
+          preHarvestDays: parseInt(recommended?.preHarvestInterval) || 14,
+          createdAt: Date.now()
+        })
+
         setResult({
           disease: data.detection.disease,
           confidence: data.detection.confidence,
           severityLevel: data.detection.severityLevel,
         })
+        
+        toast.success(`Analysis complete for Zone ${zone}`)
       }
     } catch (error) {
       console.error("Hardware detect error:", error)
@@ -137,8 +158,8 @@ export default function DetectionPage() {
                 onChange={(e) => setZone(e.target.value)}
                 className="border border-green-300 rounded-lg px-3 py-2 w-full"
               >
-                {["A1","A2","A3","A4","B1","B2","B3","B4","C1","C2","C3","C4","D1","D2","D3","D4"].map(z => (
-                  <option key={z} value={z}>{z}</option>
+                {["A1","A2","A3","A4","A5","A6","B1","B2","B3","B4","B5","B6","C1","C2","C3","C4","C5","C6","D1","D2","D3","D4","D5","D6"].map(z => (
+                  <option key={z} value={z}>Zone {z}</option>
                 ))}
               </select>
 
