@@ -387,6 +387,70 @@
       "treatedAt": null,
       "postSeverityScore": null,
       "linkedSprayId": null
+    },
+    {
+      "id": "39f0775e-29e5-4fcf-bfcb-5e68b6927b61",
+      "zoneId": "A1",
+      "disease": "Apple___Apple_scab",
+      "confidence": 0.972861111164093,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Captan 50% WP",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T20:40:19.819Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "878128b9-8a07-4916-8377-7ce98f8d0048",
+      "zoneId": "A2",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "confidence": 0.9997966885566711,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "As per label",
+      "timestamp": "2026-02-25T20:40:51.160Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "5ce3685d-0824-457d-b518-a2e1072d8c75",
+      "zoneId": "A3",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "confidence": 0.9662783145904541,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Propiconazole 25% EC",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-25T20:41:19.600Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "4c834282-6889-46b5-a629-9e0aaf4e31b2",
+      "zoneId": "A1",
+      "disease": "Tomato___Early_blight",
+      "confidence": 0.6833544969558716,
+      "severityLevel": "moderate",
+      "severityScore": 2,
+      "recommendedChemical": "Metalaxyl + Mancozeb",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T20:44:45.082Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
     }
   ],
   "sprays": [
@@ -754,6 +818,48 @@
       "chemical": "Captan 50% WP",
       "dosage": "2 g per liter",
       "timestamp": "2026-02-25T06:27:34.158Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "476e72f3-39de-483b-86cb-59dc23ed72ba",
+      "zoneId": "A1",
+      "timestamp": "2026-02-25T20:10:20.463Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "01c97085-69b3-4845-88f2-2a05ee21ccaf",
+      "zoneId": "A1",
+      "disease": "Apple___Apple_scab",
+      "chemical": "Captan 50% WP",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T20:40:19.821Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "bb68fcd1-029b-4c4d-a8cf-170a02265a17",
+      "zoneId": "A2",
+      "disease": "Cherry_(including_sour)___Powdery_mildew",
+      "chemical": "Organic Spray",
+      "dosage": "Standard",
+      "timestamp": "2026-02-25T20:40:51.161Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "75602deb-fb9e-483f-8bf5-15095121fc67",
+      "zoneId": "A3",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "chemical": "Propiconazole 25% EC",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-25T20:41:19.601Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "84cff9d5-7ccc-458d-8dcf-6e4cf7f3ae82",
+      "zoneId": "A1",
+      "disease": "Tomato___Early_blight",
+      "chemical": "Metalaxyl + Mancozeb",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T20:44:45.087Z",
       "triggeredBy": "AI Auto Spray"
     }
   ],

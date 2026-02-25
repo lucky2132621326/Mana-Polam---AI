@@ -33,13 +33,18 @@ export default function DashboardLayout({
         <div className="flex min-h-screen bg-gradient-to-br from-[#f4fbf6] via-[#eef9f2] to-[#e6f6ec]">
 
             {/* ===== SIDEBAR ===== */}
-            <aside className="w-72 bg-white shadow-xl border-r border-green-100 p-6">
+            <aside className="fixed left-0 top-0 h-screen w-20 hover:w-72 bg-white shadow-2xl border-r border-green-100 p-4 transition-all duration-500 ease-in-out z-50 group flex flex-col items-center hover:items-start overflow-hidden">
 
-                <h1 className="text-2xl font-bold text-green-700 mb-10">
-                    Mana Polam
-                </h1>
+                <div className="mb-10 mt-4 flex items-center justify-center w-full group-hover:justify-start px-2">
+                    <h1 className="text-2xl font-bold text-green-700 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        Mana Polam
+                    </h1>
+                    <div className="absolute font-bold text-2xl text-green-700 group-hover:hidden">
+                        MP
+                    </div>
+                </div>
 
-                <nav className="space-y-2">
+                <nav className="space-y-4 w-full">
                     {navItems.map((item) => {
                         const Icon = item.icon
                         const isActive = pathname === item.href
@@ -48,13 +53,15 @@ export default function DashboardLayout({
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${isActive
-                                        ? "bg-green-600 text-white shadow-md"
+                                className={`flex items-center gap-4 px-4 py-3 rounded-2xl transition-all duration-300 ${isActive
+                                        ? "bg-green-600 text-white shadow-lg"
                                         : "text-green-800 hover:bg-green-50"
                                     }`}
                             >
-                                <Icon size={18} />
-                                <span className="text-sm font-medium">
+                                <div className="min-w-[1.25rem] flex items-center justify-center">
+                                    <Icon size={22} />
+                                </div>
+                                <span className="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden">
                                     {item.name}
                                 </span>
                             </Link>
@@ -64,8 +71,9 @@ export default function DashboardLayout({
             </aside>
 
             {/* ===== MAIN CONTENT ===== */}
-            <main className="flex-1 p-10 overflow-y-auto">
-                <div className="bg-white rounded-3xl shadow-xl p-8 min-h-[calc(100vh-5rem)]">          {children}
+            <main className="flex-1 ml-20 p-10 overflow-y-auto min-h-screen">
+                <div className="bg-white rounded-[2.5rem] shadow-2xl p-10 min-h-full border border-green-50">
+                    {children}
                 </div>
             </main>
 
