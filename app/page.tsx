@@ -198,7 +198,7 @@ export default function HomePage() {
       <section className="bg-[#1e3a23] border-b border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-3 flex flex-wrap gap-3 justify-center">
           <StatusPill icon={Cpu} label="AI Model" value="Active" color="text-lime-400" />
-          <StatusPill icon={Layers} label="Zones Monitored" value="12" color="text-emerald-400" />
+          <StatusPill icon={Layers} label="Zones Monitored" value="24" color="text-emerald-400" />
           <StatusPill icon={FlaskConical} label="Disease Classes" value="38" color="text-cyan-400" />
           <StatusPill icon={Shield} label="System Status" value="Operational" color="text-lime-400" />
         </div>
