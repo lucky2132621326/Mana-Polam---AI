@@ -19,14 +19,14 @@ import {
 } from "lucide-react"
 
 export default function ControlsPage() {
-  const { detection, activities, addActivity } = useFarmStore()
+  const { detections, activities, addActivity } = useFarmStore()
   const [selectedZones, setSelectedZones] = useState<string[]>([])
   const [viewingZoneId, setViewingZoneId] = useState<string | null>(null)
   const [showHistory, setShowHistory] = useState(false)
 
   const zones = useMemo(() => {
     const rows = ["A", "B", "C", "D"]
-    const cols = [1, 2, 3, 4]
+    const cols = [1, 2, 3, 4, 5, 6]
     return rows.flatMap(r => cols.map(c => `${r}${c}`))
   }, [])
 
@@ -38,9 +38,10 @@ export default function ControlsPage() {
   }
 
   const getSeverityColor = (zoneId: string) => {
-    if (!detection || detection.infectedZoneId !== zoneId) return "bg-green-100 border-green-200"
+    const zoneDetection = detections.find(d => d.infectedZoneId === zoneId)
+    if (!zoneDetection) return "bg-green-100 border-green-200"
     
-    switch (detection.severity) {
+    switch (zoneDetection.severity) {
       case "Low": return "bg-yellow-100 border-yellow-300"
       case "Moderate": return "bg-orange-200 border-orange-400"
       case "High": return "bg-red-200 border-red-400"
@@ -49,9 +50,10 @@ export default function ControlsPage() {
   }
 
   const getBorderClass = (zoneId: string) => {
-    if (!detection || detection.infectedZoneId !== zoneId) return ""
+    const zoneDetection = detections.find(d => d.infectedZoneId === zoneId)
+    if (!zoneDetection) return ""
     
-    switch (detection.pesticideCategory) {
+    switch (zoneDetection.pesticideCategory) {
       case "Fungicide": return "border-[3px] border-blue-500 shadow-lg shadow-blue-200"
       case "Bactericide": return "border-[3px] border-purple-500 shadow-lg shadow-purple-200"
       case "Nematicide": return "border-[3px] border-amber-800 shadow-lg shadow-amber-200"
@@ -65,10 +67,20 @@ export default function ControlsPage() {
       toast.error("Please select at least one zone to spray")
       return
     }
-    if (!detection) {
-      toast.error("No detection data available. Visit Detection page first.")
+    
+    // Check if any selected zones have detections
+    const zonesWithDetections = selectedZones.filter(zId => 
+      detections.some(d => d.infectedZoneId === zId)
+    )
+
+    if (zonesWithDetections.length === 0) {
+      toast.error("No detection data available for selected zones. Visit Detection page first.")
       return
     }
+
+    // For simplicity, we'll use the detection data from the FIRST infected zone in the selection
+    const firstDetectionId = zonesWithDetections[0]
+    const detection = detections.find(d => d.infectedZoneId === firstDetectionId)!
 
     const areaPerZone = 25 // 25 sq meters per zone
     const totalArea = selectedZones.length * areaPerZone
@@ -171,7 +183,7 @@ export default function ControlsPage() {
               <Card className="border-slate-200 shadow-md overflow-hidden">
                 <CardHeader className="bg-white border-b border-slate-100">
                   <div className="flex justify-between items-center">
-                    <CardTitle>Farm Grid Map (A1-D4)</CardTitle>
+                    <CardTitle>Farm Grid Map (A1-D6)</CardTitle>
                     <div className="flex gap-4">
                        <span className="flex items-center gap-1.5 text-xs text-slate-600">
                         <div className="h-2.5 w-2.5 rounded-full bg-green-400" /> Healthy
@@ -183,57 +195,71 @@ export default function ControlsPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="p-8 bg-slate-50/50">
-                  <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
-                    {zones.map((id) => (
-                      <button
-                        key={id}
-                        onClick={() => {
-                          handleZoneToggle(id);
-                          setViewingZoneId(id);
-                        }}
-                        className={`
-                          aspect-square rounded-2xl flex flex-col items-center justify-center gap-2
-                          transition-all duration-300 relative group
-                          ${getSeverityColor(id)}
-                          ${getBorderClass(id)}
-                          ${selectedZones.includes(id) ? "ring-4 ring-blue-500/30 scale-[1.05] z-10" : "hover:scale-[1.02]"}
-                        `}
-                      >
-                        <span className={`text-sm font-bold ${detection?.infectedZoneId === id ? "text-slate-900" : "text-green-700"}`}>
-                            {id}
-                        </span>
-                        {selectedZones.includes(id) && (
-                           <div className="absolute top-2 right-2 h-5 w-5 bg-blue-600 rounded-full flex items-center justify-center">
-                              <span className="text-[10px] text-white font-bold animate-in zoom-in-50">✓</span>
-                           </div>
-                        )}
-                        {detection?.infectedZoneId === id && (
-                           <div className="text-[10px] font-bold text-red-600 px-2 py-0.5 rounded-full bg-white/60 border border-red-200">
-                              {detection.severity}
-                           </div>
-                        )}
-                      </button>
-                    ))}
+                  <div className="grid grid-cols-6 gap-4 max-w-3xl mx-auto">
+                    {zones.map((id) => {
+                      const zoneDetection = detections.find(d => d.infectedZoneId === id);
+                      return (
+                        <button
+                          key={id}
+                          onClick={() => {
+                            handleZoneToggle(id);
+                            setViewingZoneId(id);
+                          }}
+                          className={`
+                            aspect-square rounded-2xl flex flex-col items-center justify-center gap-2
+                            transition-all duration-300 relative group
+                            ${getSeverityColor(id)}
+                            ${getBorderClass(id)}
+                            ${selectedZones.includes(id) ? "ring-4 ring-blue-500/30 scale-[1.05] z-10" : "hover:scale-[1.02]"}
+                          `}
+                        >
+                          <span className={`text-sm font-bold ${zoneDetection ? "text-slate-900" : "text-green-700"}`}>
+                              {id}
+                          </span>
+                          {selectedZones.includes(id) && (
+                             <div className="absolute top-2 right-2 h-5 w-5 bg-blue-600 rounded-full flex items-center justify-center">
+                                <span className="text-[10px] text-white font-bold animate-in zoom-in-50">✓</span>
+                             </div>
+                          )}
+                          {zoneDetection && (
+                             <div className="text-[10px] font-bold text-red-600 px-2 py-0.5 rounded-full bg-white/60 border border-red-200">
+                                {zoneDetection.severity}
+                             </div>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>
 
               {/* Status Alert */}
               <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
-                  <div className={`h-12 w-12 rounded-2xl flex items-center justify-center ${detection ? "bg-amber-50 text-amber-600" : "bg-green-50 text-green-600"}`}>
-                      {detection ? <AlertCircle className="h-6 w-6" /> : <Sprout className="h-6 w-6" />}
-                  </div>
-                  <div>
-                      <h4 className="font-bold text-slate-900">
-                        {detection ? `Detection: ${detection.diseaseName}` : "System Status: Optimized"}
-                      </h4>
-                      <p className="text-sm text-slate-500">
-                        {detection 
-                           ? `AI has identified ${detection.severity} severity infection in Zone ${detection.infectedZoneId}. Action recommended.`
-                           : "All zones currently monitored. No critical pathogens detected in latest scan cycle."
-                        }
-                      </p>
-                  </div>
+                  {detections.length > 0 ? (
+                    <>
+                      <div className="h-12 w-12 rounded-2xl flex items-center justify-center bg-amber-50 text-amber-600">
+                          <AlertCircle className="h-6 w-6" />
+                      </div>
+                      <div>
+                          <h4 className="font-bold text-slate-900">
+                            Detection: {detections[0].diseaseName}
+                          </h4>
+                          <p className="text-sm text-slate-500">
+                            AI has identified {detections[0].severity} severity infection in {detections.length} zones. Action recommended.
+                          </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="h-12 w-12 rounded-2xl flex items-center justify-center bg-green-50 text-green-600">
+                          <Sprout className="h-6 w-6" />
+                      </div>
+                      <div>
+                          <h4 className="font-bold text-slate-900">System Status: Optimized</h4>
+                          <p className="text-sm text-slate-500">All zones currently monitored. No critical pathogens detected in latest scan cycle.</p>
+                      </div>
+                    </>
+                  )}
               </div>
             </div>
 
@@ -251,24 +277,24 @@ export default function ControlsPage() {
                       <CardDescription>Live data from detection engine</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                    {detection ? (
+                    {detections.length > 0 ? (
                       <>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500 flex items-center gap-2"><FlaskConical className="h-4 w-4" /> Pesticide</span>
-                                <span className="font-semibold text-slate-900">{detection.pesticideName}</span>
+                                <span className="font-semibold text-slate-900">{detections[0].pesticideName}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Category</span>
-                                <Badge className="bg-slate-100 text-slate-700 hover:bg-slate-100 border-none">{detection.pesticideCategory}</Badge>
+                                <Badge className="bg-slate-100 text-slate-700 hover:bg-slate-100 border-none">{detections[0].pesticideCategory}</Badge>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Dosage</span>
-                                <span className="font-semibold">{detection.dosagePerLiter} ml/L</span>
+                                <span className="font-semibold">{detections[0].dosagePerLiter} ml/L</span>
                             </div>
                             <div className="flex justify-between items-center text-sm">
                                 <span className="text-slate-500">Coverage</span>
-                                <span className="font-semibold">{detection.coveragePerLiter} m²/L</span>
+                                <span className="font-semibold">{detections[0].coveragePerLiter} m²/L</span>
                             </div>
                         </div>
 
@@ -286,7 +312,7 @@ export default function ControlsPage() {
                                 <div className="flex justify-between items-center pt-2 border-t border-slate-100">
                                     <span className="text-sm font-bold text-slate-900">Required Vol.</span>
                                     <span className="text-lg font-black text-blue-600">
-                                        {detection ? (selectedZones.length * 25 / detection.coveragePerLiter).toFixed(2) : "0.00"} L
+                                        {(selectedZones.length * 25 / detections[0].coveragePerLiter).toFixed(2)} L
                                     </span>
                                 </div>
                             </div>
@@ -298,8 +324,8 @@ export default function ControlsPage() {
                         <p className="text-sm text-slate-400">Perform a leaf scan to generate treatment specifications.</p>
                       </div>
                     )}
-                  </CardContent>
-               </Card>
+                    </CardContent>
+                 </Card>
                )}
             </div>
 

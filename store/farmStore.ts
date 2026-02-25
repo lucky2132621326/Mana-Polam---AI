@@ -25,24 +25,29 @@ export interface SprayActivity {
 }
 
 interface FarmState {
-  detection: DetectionResult | null
+  detections: DetectionResult[]
   activities: SprayActivity[]
-  setDetection: (detection: DetectionResult | null) => void
+  addDetection: (detection: DetectionResult) => void
   addActivity: (activity: SprayActivity) => void
-  clearDetection: () => void
+  clearDetections: () => void
   clearActivities: () => void
 }
 
 export const useFarmStore = create<FarmState>()(
   persist(
     (set) => ({
-      detection: null,
+      detections: [],
       activities: [],
-      setDetection: (detection) => set({ detection }),
+      addDetection: (detection) => set((state) => ({ 
+        detections: [
+          detection, 
+          ...state.detections.filter(d => d.infectedZoneId !== detection.infectedZoneId)
+        ] 
+      })),
       addActivity: (activity) => set((state) => ({ 
         activities: [activity, ...state.activities] 
       })),
-      clearDetection: () => set({ detection: null }),
+      clearDetections: () => set({ detections: [] }),
       clearActivities: () => set({ activities: [] }),
     }),
     {
