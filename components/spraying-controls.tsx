@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useAutomation } from "@/lib/automation-context"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -40,7 +41,7 @@ interface SprayingSession {
 }
 
 export default function SprayingControls() {
-  const [autoMode, setAutoMode] = useState(true)
+  const { zones: globalZones, isAutoMode, setAutoMode, activities } = useAutomation()
   const [globalDosage, setGlobalDosage] = useState([75])
   const [selectedZones, setSelectedZones] = useState<string[]>([])
   const [pesticideLevel, setPesticideLevel] = useState(68)
@@ -195,7 +196,7 @@ export default function SprayingControls() {
                 <div>
                   <h3 className="font-medium">Operation Mode</h3>
                   <p className="text-sm text-muted-foreground">
-                    {autoMode
+                    {isAutoMode
                       ? "AI automatically manages spraying based on sensor data"
                       : "Manual control of all spraying operations"}
                   </p>
@@ -205,7 +206,7 @@ export default function SprayingControls() {
                 <Label htmlFor="auto-mode" className="text-sm">
                   Manual
                 </Label>
-                <Switch id="auto-mode" checked={autoMode} onCheckedChange={setAutoMode} />
+                <Switch id="auto-mode" checked={isAutoMode} onCheckedChange={setAutoMode} />
                 <Label htmlFor="auto-mode" className="text-sm">
                   Auto
                 </Label>
@@ -235,15 +236,15 @@ export default function SprayingControls() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-6 gap-2">
-                    {zones.map((zone) => (
+                    {zones.map((zoneId) => (
                       <Button
-                        key={zone}
-                        variant={selectedZones.includes(zone) ? "default" : "outline"}
+                        key={zoneId}
+                        variant={selectedZones.includes(zoneId) ? "secondary" : "outline"}
                         size="sm"
-                        className="h-10"
-                        onClick={() => handleZoneToggle(zone)}
+                        className={`h-10 border-2 ${globalZones[zoneId]?.color} ${selectedZones.includes(zoneId) ? "ring-2 ring-primary ring-offset-2" : ""}`}
+                        onClick={() => handleZoneToggle(zoneId)}
                       >
-                        {zone}
+                        {zoneId}
                       </Button>
                     ))}
                   </div>
@@ -315,7 +316,7 @@ export default function SprayingControls() {
                     className="w-full"
                     size="lg"
                     onClick={handleStartSpraying}
-                    disabled={selectedZones.length === 0 || autoMode}
+                    disabled={selectedZones.length === 0 || isAutoMode}
                   >
                     <Sprout className="mr-2 h-5 w-5" />
                     Start Spraying ({selectedZones.length} zones)
@@ -555,6 +556,46 @@ export default function SprayingControls() {
             )}
           </TabsContent>
         </Tabs>
+
+        {/* Recent Automation Activity */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-primary" />
+              Recent Automation Activity
+            </CardTitle>
+            <CardDescription>Automated spray actions triggered by AI detection</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {activities.length > 0 ? (
+                activities.map((activity) => (
+                  <div key={activity.id} className="flex items-start justify-between p-4 rounded-lg border bg-muted/30">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+                          Zone {activity.zoneId}
+                        </Badge>
+                        <span className="font-semibold text-sm">{activity.disease}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        Treated with <span className="text-foreground font-medium">{activity.chemical}</span> at <span className="text-foreground font-medium">{activity.dosage}</span> dosage.
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs text-muted-foreground">{activity.timestamp}</p>
+                      <Badge variant="secondary" className="text-[10px] mt-1">Auto-Triggered</Badge>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-6 text-muted-foreground">
+                  No recent automation activity
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

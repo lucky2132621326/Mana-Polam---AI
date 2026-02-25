@@ -291,6 +291,38 @@
       "treatedAt": null,
       "postSeverityScore": null,
       "linkedSprayId": null
+    },
+    {
+      "id": "49dafc55-9f1c-4867-b7b6-80cc90b52f48",
+      "zoneId": "A1",
+      "disease": "Apple___Apple_scab",
+      "confidence": 0.972861111164093,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Captan 50% WP",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T05:42:29.285Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "e45992dd-b018-4f98-95d1-5d3d32ef3c38",
+      "zoneId": "B3",
+      "disease": "Apple___Apple_scab",
+      "confidence": 0.972861111164093,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Captan 50% WP",
+      "organicAlternative": "Neem Oil (3-5 ml/L)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T05:43:48.582Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
     }
   ],
   "sprays": [
@@ -605,6 +637,24 @@
       "zoneId": "B3",
       "timestamp": "2026-02-24T07:02:46.786Z",
       "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "76fb828f-a183-4109-9675-6630b01ea5e2",
+      "zoneId": "A1",
+      "disease": "Apple___Apple_scab",
+      "chemical": "Captan 50% WP",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T05:42:29.286Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "2ea08b29-69fa-466e-b8e6-b93fc1b26417",
+      "zoneId": "B3",
+      "disease": "Apple___Apple_scab",
+      "chemical": "Captan 50% WP",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-25T05:43:48.584Z",
+      "triggeredBy": "AI Auto Spray"
     }
   ],
   "zoneHistory": []
