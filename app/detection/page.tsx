@@ -8,7 +8,7 @@ import { useFarmStore } from "@/store/farmStore"
 import { toast } from "sonner"
 
 export default function DetectionPage() {
-  const setDetection = useFarmStore((state) => state.setDetection)
+  const addDetection = useFarmStore((state) => state.addDetection)
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [result, setResult] = useState<any>(null)
@@ -41,7 +41,7 @@ export default function DetectionPage() {
         const severityStr = data.detection.severityLevel.charAt(0).toUpperCase() + data.detection.severityLevel.slice(1)
         const recommended = pesticideDatabase.filter((p) => p.approvedFor.includes(data.detection.disease))[0]
 
-        setDetection({
+        addDetection({
           plantType: data.detection.disease.split("___")[0].replace(/_/g, " "),
           diseaseName: data.detection.disease.split("___")[1]?.replace(/_/g, " ") || "Healthy",
           severity: severityStr as any,

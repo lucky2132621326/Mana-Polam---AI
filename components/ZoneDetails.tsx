@@ -24,10 +24,11 @@ interface ZoneDetailsProps {
 }
 
 export default function ZoneDetails({ zoneId, onClose }: ZoneDetailsProps) {
-  const { detection, activities } = useFarmStore()
+  const { detections, activities } = useFarmStore()
 
   // 1. Determine Infection Info
-  const isInfected = detection?.infectedZoneId === zoneId
+  const detection = detections.find(d => d.infectedZoneId === zoneId)
+  const isInfected = !!detection
   
   // 2. Filter Spray History for this specific zone
   const zoneActivities = activities.filter(act => act.zones.includes(zoneId))
@@ -82,7 +83,7 @@ export default function ZoneDetails({ zoneId, onClose }: ZoneDetailsProps) {
                   {config.icon}
                   {config.label}
                 </Badge>
-                {isInfected && (
+                {isInfected && detection && (
                   <Badge variant="outline" className="border-slate-300 bg-white">
                     {detection.severity} Severity
                   </Badge>
@@ -108,7 +109,7 @@ export default function ZoneDetails({ zoneId, onClose }: ZoneDetailsProps) {
             <div className="bg-slate-50 p-3 rounded-lg">
               <p className="text-[10px] text-slate-500 uppercase font-medium">Last Updated</p>
               <p className="text-sm font-semibold text-slate-900">
-                {isInfected ? new Date(detection.createdAt).toLocaleTimeString() : "N/A"}
+                {isInfected && detection ? new Date(detection.createdAt).toLocaleTimeString() : "N/A"}
               </p>
             </div>
             <div className="bg-slate-50 p-3 rounded-lg">
@@ -125,7 +126,7 @@ export default function ZoneDetails({ zoneId, onClose }: ZoneDetailsProps) {
           <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
             <AlertTriangle className={`h-3 w-3 ${isInfected ? 'text-red-500' : ''}`} /> Disease Info
           </h4>
-          {isInfected ? (
+          {isInfected && detection ? (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-y-3">
                 <div>
