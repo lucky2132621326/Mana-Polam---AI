@@ -66,7 +66,9 @@ export const useFarmStore = create<FarmState>()(
       })),
       addImplementationRecord: (record) => set((state) => {
         // Prevent duplicate implementation for the same ID/Zone
-        const exists = state.implementedRecords.some(r => r.id === record.id);
+        const exists = state.implementedRecords.some(
+          (r) => r.id === record.id && r.zone === record.zone
+        );
         if (exists) return state;
         return { implementedRecords: [record, ...state.implementedRecords] };
       }),
