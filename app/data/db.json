@@ -707,6 +707,38 @@
       "treatedAt": null,
       "postSeverityScore": null,
       "linkedSprayId": null
+    },
+    {
+      "id": "f4829fa7-bcc8-401f-82ba-d98ae6aa9410",
+      "zoneId": "A1",
+      "disease": "Tomato___Early_blight",
+      "confidence": 0.5924980640411377,
+      "severityLevel": "medium",
+      "severityScore": 2,
+      "recommendedChemical": "Chlorothalonil 75% WP",
+      "organicAlternative": "Neem Oil Extract (Cold Pressed) (5 ml per liter with soap)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-27T05:36:58.463Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "2209ea5e-d29d-4e01-9c8f-393df02fb160",
+      "zoneId": "A1",
+      "disease": "Tomato___Early_blight",
+      "confidence": 0.6833544969558716,
+      "severityLevel": "medium",
+      "severityScore": 2,
+      "recommendedChemical": "Chlorothalonil 75% WP",
+      "organicAlternative": "Neem Oil Extract (Cold Pressed) (5 ml per liter with soap)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-27T10:19:04.249Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
     }
   ],
   "sprays": [
@@ -1278,6 +1310,48 @@
       "chemical": "Chlorothalonil 75% WP",
       "dosage": "2 g per liter",
       "timestamp": "2026-02-27T03:54:28.723Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "0520acd5-081e-425d-a9b3-994a5d202365",
+      "zoneId": "A1",
+      "disease": "Tomato___Early_blight",
+      "chemical": "Chlorothalonil 75% WP",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-27T05:36:58.465Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "a6529c69-91f0-4000-bb3b-d47cf70c4cca",
+      "zoneId": "A4",
+      "timestamp": "2026-02-27T09:33:03.537Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "3d668bae-64fb-414d-8796-7bfad117fd59",
+      "zoneId": "A1",
+      "timestamp": "2026-02-27T10:06:52.971Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "c4e084f2-c7e4-4f7a-903c-83a8de8eb875",
+      "zoneId": "A1",
+      "timestamp": "2026-02-27T10:07:37.215Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "8f56e9b1-23d1-4c1c-b397-e310412c1cbc",
+      "zoneId": "A1",
+      "timestamp": "2026-02-27T10:07:49.152Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "85be06a3-6d07-4086-9edb-129dea6a40af",
+      "zoneId": "A1",
+      "disease": "Tomato___Early_blight",
+      "chemical": "Chlorothalonil 75% WP",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-27T10:19:04.251Z",
       "triggeredBy": "AI Auto Spray"
     }
   ],

@@ -5,7 +5,7 @@ import time
 
 # --- CONFIGURATION ---
 # ⚠️ ACTION REQUIRED: Check your Arduino IDE or Device Manager for the correct COM Port
-PORT = 'COM3'  # Example: 'COM3' on Windows or '/dev/ttyUSB0' on Linux
+PORT = 'COM5'  # Example: 'COM3' on Windows or '/dev/ttyUSB0' on Linux
 BAUD_RATE = 115200
 WEB_URL = 'http://localhost:3000/api/sensor'
 

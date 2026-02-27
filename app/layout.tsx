@@ -7,25 +7,21 @@ import { AutomationProvider } from '@/lib/automation-context'
 import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: "Mana Polam - AI Smart Farming Dashboard",
+  description: "Advanced agricultural monitoring and disease detection system powered by AI.",
+  generator: "Mana Polam AI",
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
+        url: "/favicon.ico",
+        media: "(prefers-color-scheme: light)",
       },
       {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+        url: "/favicon.ico",
+        media: "(prefers-color-scheme: dark)",
+      }
     ],
-    apple: '/apple-icon.png',
+    apple: "/apple-icon.png",
   },
 }
 

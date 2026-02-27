@@ -1,10 +1,10 @@
 {
-  "name": "my-v0-project",
+  "name": "mana-polam-ai",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "next build",
-    "predev": "npx kill-port 3000",
+    "predev": "npx kill-port 3000 && cmd /c \"if exist dist rd /s /q dist && if exist .next rd /s /q .next\"",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"

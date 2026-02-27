@@ -1,0 +1,138 @@
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Sprout, Lock, Mail, Loader2, ArrowLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { toast } from "sonner"
+import Link from "next/link"
+
+export default function LoginPage() {
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        toast.success("Login successful!")
+        router.push("/dashboard")
+        router.refresh()
+      } else {
+        toast.error(data.message || "Invalid email or password")
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f7faf8] p-4 relative overflow-hidden">
+      {/* Decorative background circles */}
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-green-100 rounded-full blur-3xl opacity-50 pointer-events-none" />
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-lime-100 rounded-full blur-3xl opacity-50 pointer-events-none" />
+
+      <Link 
+        href="/" 
+        className="absolute top-8 left-8 flex items-center gap-2 text-sm font-medium text-[#3a7d44] hover:text-[#1e3a23] transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Home
+      </Link>
+
+      <div className="w-full max-w-md z-10 transition-all duration-300 animate-fade-in-up">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#3a7d44] to-[#1e3a23] flex items-center justify-center shadow-lg shadow-green-900/20 mb-4">
+            <Sprout className="h-10 w-10 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight text-[#1e3a23]">Mana Polam AI</h1>
+          <p className="text-[#5a7a60] font-medium mt-1">Smart Agriculture Management</p>
+        </div>
+
+        <Card className="border-[#d4e9c8] shadow-sm overflow-hidden bg-white/80 backdrop-blur-sm">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl text-[#1e3a23]">Login</CardTitle>
+            <CardDescription className="text-[#5a7a60]">
+              Enter your credentials to access the farm dashboard
+            </CardDescription>
+          </CardHeader>
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-[#1e3a23]">Email Address</Label>
+                <div className="relative group">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5a7a60] group-focus-within:text-[#3a7d44] transition-colors" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="admin@manapolam.ai"
+                    className="pl-10 border-[#d4e9c8] focus-visible:ring-[#3a7d44]"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password" title="password123" className="text-[#1e3a23]">Password</Label>
+                </div>
+                <div className="relative group">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5a7a60] group-focus-within:text-[#3a7d44] transition-colors" />
+                  <Input
+                    id="password"
+                    type="password"
+                    className="pl-10 border-[#d4e9c8] focus-visible:ring-[#3a7d44]"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="flex flex-col gap-4">
+              <Button 
+                type="submit" 
+                className="w-full bg-[#3a7d44] hover:bg-[#1e3a23] text-white shadow-md shadow-green-900/10 transition-all duration-200 h-10"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Authenticating...
+                  </>
+                ) : (
+                  "Log in to Dashboard"
+                )}
+              </Button>
+              <p className="text-xs text-center text-[#5a7a60]">
+                Access restricted to authorized personnel only.
+              </p>
+            </CardFooter>
+          </form>
+        </Card>
+      </div>
+    </div>
+  )
+}

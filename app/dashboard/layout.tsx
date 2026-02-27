@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { toast } from "sonner"
 import {
     Home,
     SprayCan,
@@ -12,6 +13,7 @@ import {
     Users,
     Info,
     History,
+    LogOut,
 } from "lucide-react"
 
 export default function DashboardLayout({
@@ -20,6 +22,7 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     const pathname = usePathname()
+    const router = useRouter()
 
     const navItems = [
         { name: "Home", href: "/dashboard", icon: Home },
@@ -32,6 +35,17 @@ export default function DashboardLayout({
         { name: "User Management", href: "/dashboard/users", icon: Users },
         { name: "About", href: "/dashboard/about", icon: Info },
     ]
+
+    const handleLogout = async () => {
+        try {
+            await fetch("/api/auth/logout", { method: "POST" })
+            toast.success("Logged out successfully")
+            router.push("/login")
+            router.refresh()
+        } catch (error) {
+            toast.error("Logout failed")
+        }
+    }
 
     return (
         <div className="flex min-h-screen bg-gradient-to-br from-[#f4fbf6] via-[#eef9f2] to-[#e6f6ec]">
@@ -71,6 +85,18 @@ export default function DashboardLayout({
                             </Link>
                         )
                     })}
+
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-4 px-4 py-3 rounded-2xl w-full transition-all duration-300 text-red-700 hover:bg-red-50 hover:shadow-md mt-auto"
+                    >
+                        <div className="min-w-[1.25rem] flex items-center justify-center">
+                            <LogOut size={22} />
+                        </div>
+                        <span className="text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden">
+                            Logout
+                        </span>
+                    </button>
                 </nav>
             </aside>
 

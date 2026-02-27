@@ -419,6 +419,56 @@ export default function AnalyticsPage() {
                   }))
 
                 /* ============================================================
+                   DELAY RESPONSIVENESS MODEL (Frontend Paired)
+                ============================================================ */
+
+                let totalDelayHours = 0
+                let validPairs = 0
+
+                detections.forEach((d: any) => {
+                  const detectionTime = new Date(d.timestamp).getTime()
+
+                  const futureSprays = sprays
+                    .filter(
+                      (s: any) =>
+                        s.zoneId === d.zoneId &&
+                        new Date(s.timestamp).getTime() >=
+                        detectionTime
+                    )
+                    .sort(
+                      (a: any, b: any) =>
+                        new Date(a.timestamp).getTime() -
+                        new Date(b.timestamp).getTime()
+                    )
+
+                  if (futureSprays.length === 0) return
+
+                  const firstSprayTime =
+                    new Date(
+                      futureSprays[0].timestamp
+                    ).getTime()
+
+                  const delayHours =
+                    (firstSprayTime - detectionTime) /
+                    (1000 * 60 * 60)
+
+                  if (delayHours >= 0) {
+                    totalDelayHours += delayHours
+                    validPairs++
+                  }
+                })
+
+                const avgDelay =
+                  validPairs === 0
+                    ? 0
+                    : totalDelayHours / validPairs
+
+                const lambda = 0.08
+
+                const responsivenessIndex =
+                  100 * Math.exp(-lambda * avgDelay)
+
+                /* ============================================================
                    INTERVENTION INTENSITY SCORE
                 ============================================================ */
 
