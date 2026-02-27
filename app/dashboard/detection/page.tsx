@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { diseaseKnowledge } from "@/app/data/diseaseKnowledge"
 import { pesticideDatabase } from "@/app/data/pesticideDatabase"
+import { getSafePesticideRecommendation } from "@/app/lib/pesticideEngine"
 import { addDetectionLog } from "@/app/lib/mlLogStore"
 import { useFarmStore } from "@/store/farmStore"
 import { toast } from "sonner"
@@ -25,7 +26,9 @@ import {
   Clock,
   FlaskConical,
   Leaf,
-  Droplets
+  Droplets,
+  Zap,
+  CheckCircle
 } from "lucide-react"
 import {
   Select,
@@ -67,19 +70,22 @@ export default function DetectionPage() {
 
       if (data.success) {
         const severityStr = data.detection.severityLevel.charAt(0).toUpperCase() + data.detection.severityLevel.slice(1)
-        const recommended = pesticideDatabase.filter((p) => p.approvedFor.includes(data.detection.disease))[0]
+        
+        // Use the robust engine instead of simple filter
+        const recommendation = getSafePesticideRecommendation(data.detection.disease)
+        const recommended = recommendation.pesticides[0]
 
         addDetection({
           plantType: data.detection.disease.split("___")[0].replace(/_/g, " "),
           diseaseName: data.detection.disease.split("___")[1]?.replace(/_/g, " ") || "Healthy",
           severity: severityStr as any,
           infectedZoneId: zone,
-          pesticideName: recommended?.chemicalName || "Organic Neem Oil",
-          pesticideCategory: (recommended?.type as any) || "Viral Control",
-          dosagePerLiter: 2.5, // Defaulting as per common practice if not in DB
-          coveragePerLiter: 100, // Square meters per liter (assumption)
+          pesticideName: recommended?.chemicalName || "Custom Neem Solution",
+          pesticideCategory: (recommended?.type as any) || "Organic",
+          dosagePerLiter: 2.5,
+          coveragePerLiter: 100,
           sprayInterval: recommended?.sprayInterval || "7-10 days",
-          preHarvestDays: parseInt(recommended?.preHarvestInterval) || 14,
+          preHarvestDays: parseInt(recommended?.preHarvestInterval) || 0,
           createdAt: Date.now()
         })
 
@@ -115,28 +121,23 @@ export default function DetectionPage() {
 
   const recommendedPesticides =
     result?.disease
-      ? pesticideDatabase.filter((p) =>
-          p.approvedFor.includes(result.disease)
-        )
+      ? getSafePesticideRecommendation(result.disease).pesticides
       : []
 
-  if (result && severity && !logAdded) {
-    addDetectionLog({
-      zone,
-      disease: result.disease,
-      confidence: result.confidence,
-      severity,
-      timestamp: Date.now(),
-    })
-    setLogAdded(true)
-  }
-
-  const organicSuggestions = [
-    "Neem Oil (3-5 ml per liter of water)",
-    "Trichoderma-based biological fungicide",
-    "Baking soda solution (5g per liter) for fungal control",
-    "Encourage Integrated Pest Management (IPM)"
-  ]
+  const organicSuggestions =
+    result?.disease
+      ? pesticideDatabase
+          .filter(p => 
+            p.type === "Organic" && 
+            (p.approvedFor.includes(result.disease) || p.approvedFor.includes("Any___Healthy"))
+          )
+          .map(p => `${p.chemicalName} - ${p.dosage}`)
+      : [
+          "Neem Oil (3-5 ml per liter of water)",
+          "Panchagavya (30ml per liter)",
+          "Trichoderma-based biological fungicide",
+          "Fermented Buttermilk (10% solution)"
+        ]
 
   return (
     <div className="min-h-screen space-y-8 animate-in fade-in duration-700">
@@ -307,9 +308,17 @@ export default function DetectionPage() {
                             <Info className="h-4 w-4" />
                             Disease Insight
                           </h4>
-                          <p className="text-sm text-green-900/70 leading-relaxed italic">
-                            {knowledge || "No major issues identified. Maintain standard irrigation and moisture control to ensure continued crop health."}
-                          </p>
+                          <div className="text-sm text-green-900/70 leading-relaxed italic">
+                            {knowledge ? (
+                              <div className="space-y-2">
+                                <p><span className="font-bold">Impact:</span> {knowledge.scientificInsights.impact}</p>
+                                <p><span className="font-bold">Transmission:</span> {knowledge.scientificInsights.transmission}</p>
+                                <p><span className="font-bold">Triggers:</span> {knowledge.scientificInsights.environmentalTriggers}</p>
+                              </div>
+                            ) : (
+                              "No major issues identified. Maintain standard irrigation and moisture control to ensure continued crop health."
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -353,12 +362,27 @@ export default function DetectionPage() {
 
                    {/* Secondary Actions */}
                    <div className="grid md:grid-cols-2 gap-4">
+                    {knowledge && knowledge.farmerGuidance.immediateActions.length > 0 && (
+                      <Card className="bg-amber-50 border-amber-100 rounded-2xl p-5">
+                        <h4 className="font-black text-[10px] text-amber-600 uppercase tracking-widest mb-4 flex items-center gap-2">
+                          <Zap className="h-3 w-3" /> Immediate Actions
+                        </h4>
+                        <ul className="space-y-2">
+                          {knowledge.farmerGuidance.immediateActions.map((action, i) => (
+                            <li key={i} className="flex items-start gap-2 text-xs font-bold text-amber-900">
+                              <CheckCircle className="h-3 w-3 text-amber-500 mt-0.5" />
+                              {action}
+                            </li>
+                          ))}
+                        </ul>
+                      </Card>
+                    )}
                     <Card className="bg-slate-50 border-none rounded-2xl p-5">
                       <h4 className="font-black text-[10px] text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                         <Leaf className="h-3 w-3" /> Organic Alternatives
                       </h4>
                       <ul className="space-y-3">
-                        {organicSuggestions.slice(0, 2).map((s, i) => (
+                        {organicSuggestions.slice(0, 4).map((s, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs font-bold text-slate-600">
                             <ChevronRight className="h-3 w-3 text-green-600 mt-0.5" />
                             {s}

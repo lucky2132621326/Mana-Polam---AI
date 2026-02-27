@@ -1,41 +1,16 @@
-import type { DetectionEvent } from "../data/detectionStore"
-export type ZoneStatus =
-  | "healthy"
-  | "warning"
-  | "critical"
-  | "uncertain"
+import { ZoneStatus, ZoneData, ZoneHistoryEntry, DetectionEvent } from "./types"
 
-export interface ZoneData {
-  id: string
-  row: number
-  col: number
-  status: ZoneStatus
-  lastSprayed: string
-  soilMoisture: number
-  temperature: number
-  humidity: number
-  plantCount: number
-  healthScore: number
-
-  // 🔥 NEW ML FIELDS
-  disease?: string
-  mlConfidence?: number
-  severityScore?: number
-  severityLevel?: "low" | "medium" | "high"
-  lastAnalyzed?: string
-
-  treatmentHistory?:DetectionEvent[]
-}
+// --- SINGLETON PATTERN FOR HMR STABILITY ---
+const globalMemory = global as any;
 
 // Shared simulation flag
-export const simulationEnabledRef = {
-  value: true
+export const simulationEnabledRef = globalMemory.simulationEnabledRef || {
+  value: false
 }
+if (!globalMemory.simulationEnabledRef) globalMemory.simulationEnabledRef = simulationEnabledRef
 
 // Shared zones array
-
- 
-  export let zones: ZoneData[] = [
+export let zones: ZoneData[] = globalMemory.zones || [
   // Row A
   { id: "A1", row: 0, col: 0, status: "healthy", lastSprayed: "2026-02-17T08:30:00.000Z", soilMoisture: 72, temperature: 23, humidity: 68, plantCount: 45, healthScore: 92 },
   { id: "A2", row: 0, col: 1, status: "healthy", lastSprayed: "2026-02-17T09:10:00.000Z", soilMoisture: 68, temperature: 24, humidity: 70, plantCount: 48, healthScore: 88 },
@@ -68,6 +43,8 @@ export const simulationEnabledRef = {
   { id: "D5", row: 3, col: 4, status: "healthy", lastSprayed: "2026-02-12T08:55:00.000Z", soilMoisture: 74, temperature: 22, humidity: 67, plantCount: 50, healthScore: 93 },
   { id: "D6", row: 3, col: 5, status: "healthy", lastSprayed: "2026-02-12T09:30:00.000Z", soilMoisture: 71, temperature: 24, humidity: 69, plantCount: 47, healthScore: 87 },
 ]
+if (!globalMemory.zones) globalMemory.zones = zones
+
 
 
 
@@ -78,51 +55,27 @@ export const simulationEnabledRef = {
 export function updateLiveZones() {
   const liveIds = ["A1", "A2", "A3", "A4"]
 
-  zones = zones.map(zone => {
-    if (!liveIds.includes(zone.id)) return zone
+  for (const zone of zones) {
+    if (!liveIds.includes(zone.id)) continue
 
     if (zone.status === "healthy") {
-      return {
-        ...zone,
-        status: "warning",
-        soilMoisture: 35,
-        humidity: 82,
-        healthScore: 65,
-      }
+      zone.status = "warning"
+      zone.soilMoisture = 35
+      zone.humidity = 82
+      zone.healthScore = 65
+    } else if (zone.status === "warning") {
+      zone.status = "critical"
+      zone.soilMoisture = 20
+      zone.humidity = 92
+      zone.healthScore = 45
+    } else {
+      zone.status = "healthy"
+      zone.soilMoisture = 70
+      zone.humidity = 65
+      zone.healthScore = 90
     }
-
-    if (zone.status === "warning") {
-      return {
-        ...zone,
-        status: "critical",
-        soilMoisture: 20,
-        humidity: 92,
-        healthScore: 45,
-      }
-    }
-
-    return {
-      ...zone,
-      status: "healthy",
-      soilMoisture: 70,
-      humidity: 65,
-      healthScore: 90,
-    }
-  })
+  }
 }
-export interface ZoneHistoryEntry {
-  zoneId: string
-  moistureHistory: number[]
-  temperatureHistory: number[]
-  sprays: number
-
-  // 🔥 NEW ML HISTORY
-  diseaseHistory: string[]
-  confidenceHistory: number[]
-  severityHistory: number[]
-  timestampHistory: string[]
-}
-
 export const zoneHistory: ZoneHistoryEntry[] = zones.map(zone => ({
   zoneId: zone.id,
   moistureHistory: [zone.soilMoisture],
@@ -137,7 +90,11 @@ export const zoneHistory: ZoneHistoryEntry[] = zones.map(zone => ({
 }))
 // 🔥 Activity log store
 export const activityLog: {
-  type: "spray" | "alert"
+  type: "spray" | "alert" | "water"
   zoneId: string
   timestamp: string
-}[] = []
+}[] = globalMemory.activityLog || []
+if (!globalMemory.activityLog) globalMemory.activityLog = activityLog
+
+export const pendingCommands: Record<string, ("spray" | "water")[]> = globalMemory.pendingCommands || {}
+if (!globalMemory.pendingCommands) globalMemory.pendingCommands = pendingCommands

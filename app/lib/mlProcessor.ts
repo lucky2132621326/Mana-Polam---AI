@@ -15,22 +15,29 @@ export async function runMLPrediction(file: File) {
 
 export function calculateSeverity(confidence: number
 
-): { level: "low" | "moderate" | "high"; score: number } {
+): { level: "low" | "medium" | "high"; score: number } {
   if (confidence > 0.75) return { level: "high", score: 3 }
-  if (confidence > 0.45) return { level: "moderate", score: 2 }
+  if (confidence > 0.45) return { level: "medium", score: 2 }
   return { level: "low", score: 1 }
 }
 
 export function getTreatmentOptions(disease: string) {
   const chemicals = pesticideDatabase.filter(p =>
-    p.approvedFor.includes(disease)
+    p.type !== "Organic" && p.approvedFor.includes(disease)
   )
 
-  const organic = [
-    "Neem Oil (3-5 ml/L)",
-    "Trichoderma bio-fungicide",
-    "IPM based monitoring"
-  ]
+  const organicEntries = pesticideDatabase.filter(p =>
+    p.type === "Organic" && 
+    (p.approvedFor.includes(disease) || p.approvedFor.includes("Any___Healthy"))
+  )
+
+  const organic = organicEntries.length > 0 
+    ? organicEntries.map(p => `${p.chemicalName} (${p.dosage})`)
+    : [
+        "Neem Oil (3-5 ml/L)",
+        "Trichoderma bio-fungicide",
+        "Liquid seaweed extract"
+      ]
 
   return { chemicals, organic }
 }

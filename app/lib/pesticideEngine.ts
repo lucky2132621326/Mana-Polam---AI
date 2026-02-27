@@ -107,14 +107,43 @@ export function getSafePesticideRecommendation(
     }
 
     /* ==============================
-       4️⃣ FINAL ORGANIC FALLBACK
+       4️⃣ DYNAMIC ORGANIC SELECTOR
     ============================== */
 
     const organicFallback = pesticideDatabase.filter(p => p.type === "Organic")
+    
+    // First try: Specific organic match for this disease
+    const organicMatch = organicFallback.filter(p => 
+        p.approvedFor.some(d => normalize(d) === normalizedDisease)
+    )
+
+    if (organicMatch.length > 0) {
+        return {
+            pesticides: organicMatch,
+            recommendationType: "exact",
+            warning: "Specific organic treatment found for this condition."
+        }
+    }
+
+    // Second try: Organic match for the disease type (Fungal/Bacterial/Viral)
+    const typeMatch = organicFallback.filter(p => {
+        if (diseaseType === "fungal") return p.chemicalName.toLowerCase().includes("buttermilk") || p.chemicalName.toLowerCase().includes("trichoderma") || p.chemicalName.toLowerCase().includes("soda")
+        if (diseaseType === "viral") return p.chemicalName.toLowerCase().includes("ggc") || p.chemicalName.toLowerCase().includes("agni")
+        if (diseaseType === "bacterial") return p.chemicalName.toLowerCase().includes("pseudomonas")
+        return false
+    })
+
+    if (typeMatch.length > 0) {
+        return {
+            pesticides: typeMatch,
+            recommendationType: "type",
+            warning: "Selected organic treatment suitable for this disease category."
+        }
+    }
 
     return {
-        pesticides: organicFallback.length > 0 ? organicFallback : pesticideDatabase.slice(0, 2),
+        pesticides: organicFallback.slice(0, 3),
         recommendationType: "organic",
-        warning: "No direct match found. Showing safe preventive treatment."
+        warning: "No direct match found. Showing broad-spectrum organic guidance."
     }
 }

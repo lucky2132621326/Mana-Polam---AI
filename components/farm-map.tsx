@@ -37,6 +37,9 @@ interface ZoneData {
 
 export default function FarmMap() {
   const [selectedZone, setSelectedZone] = useState<ZoneData | null>(null)
+  const [isSpraying, setIsSpraying] = useState(false)
+  const [isHydrating, setIsHydrating] = useState(false)
+  const [commandQueue, setCommandQueue] = useState<Record<string, string[]>>({})
   const [zoomLevel, setZoomLevel] = useState(1)
   const [mlData, setMlData] = useState<{
     [zoneId: string]: {
@@ -48,8 +51,20 @@ export default function FarmMap() {
     }
   }>({})
 
+  useEffect(() => {
+    const fetchQueue = async () => {
+      try {
+        const res = await fetch("/api/zones/queue")
+        const data = await res.json()
+        setCommandQueue(data)
+      } catch (err) { }
+    }
+    fetchQueue()
+    const interval = setInterval(fetchQueue, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
   const [farmData, setFarmData] = useState<ZoneData[]>([])
-  const [isSpraying, setIsSpraying] = useState(false)
   const aiRecommendation = selectedZone
     ? generateRecommendation(selectedZone)
     : null
@@ -102,7 +117,7 @@ export default function FarmMap() {
 
   useEffect(() => {
     fetchZones()
-    const interval = setInterval(fetchZones, 20000)
+    const interval = setInterval(fetchZones, 2000)
     return () => clearInterval(interval)
   }, [])
 
@@ -303,8 +318,8 @@ export default function FarmMap() {
                       onClick={() => setSelectedZone(zone)}
                     >
                       <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
-                        <span className="text-xs font-bold text-white">{zone.id}</span>
-                        <span className="text-xs text-white/80">{zone.plantCount}</span>
+                        <span className="text-[10px] font-bold text-white opacity-80 uppercase leading-none">{zone.id}</span>
+                        <span className="text-xs font-black text-white">{zone.soilMoisture}%</span>
                       </div>
 
                       {zone.status !== "healthy" && (
@@ -669,6 +684,34 @@ export default function FarmMap() {
 
                     <Separator />
 
+                    {/* Hardware Queue */}
+                    {commandQueue[selectedZone.id] && commandQueue[selectedZone.id].length > 0 && (
+                      <div className="space-y-3 pb-2 pt-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-xs font-black uppercase tracking-widest text-blue-700 flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+                            Hardware Queue
+                          </h4>
+                          <Badge variant="outline" className="text-[10px] font-bold border-blue-200 text-blue-700">
+                            {commandQueue[selectedZone.id].length} PENDING
+                          </Badge>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {commandQueue[selectedZone.id].map((cmd, i) => (
+                            <div
+                              key={i}
+                              className={`text-[9px] font-black uppercase px-2 py-1 rounded-md border shadow-sm transition-all duration-300 ${cmd === "spray" ? "bg-green-50 text-green-700 border-green-200" : "bg-blue-50 text-blue-700 border-blue-200"
+                                } translate-y-0 hover:-translate-y-0.5`}
+                            >
+                              {i + 1}. {cmd === "spray" ? "ACTIVATE SPRAYER" : "PULSE WATER PUMP"}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <Separator />
+
                     {/* Actions */}
                     <div className="space-y-2">
                       <Button
@@ -690,7 +733,6 @@ export default function FarmMap() {
                           const data = await res.json()
                           setFarmData(data)
 
-                          // 👇 CRITICAL LINE (this is the fix)
                           const updatedZone = data.find((z: ZoneData) => z.id === selectedZone.id)
                           if (updatedZone) {
                             setSelectedZone(updatedZone)
@@ -700,14 +742,28 @@ export default function FarmMap() {
                         }}
                       >
                         <Sprout className="mr-2 h-4 w-4" />
-                        {isSpraying ? "Spraying..." : "Spray This Zone"}
+                        {isSpraying ? "Spraying..." : "Spray Now"}
                       </Button>
 
+                      <Button 
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
+                        size="sm"
+                        disabled={isHydrating}
+                        onClick={async () => {
+                          if (!selectedZone) return
+                          setIsHydrating(true)
+                          
+                          await fetch("/api/hydrate", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ zoneId: selectedZone.id })
+                          })
 
-
-                      <Button variant="outline" className="w-full bg-transparent" size="sm">
-                        <Calendar className="mr-2 h-4 w-4" />
-                        Schedule Spraying
+                          setIsHydrating(false)
+                        }}
+                      >
+                        <Droplets className="mr-2 h-4 w-4" />
+                        {isHydrating ? "Hydrating..." : "Hydrate"}
                       </Button>
                     </div>
                   </div>

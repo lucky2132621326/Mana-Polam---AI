@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { zones, zoneHistory, activityLog } from "../zones/data"
+import { zones, zoneHistory, activityLog, pendingCommands } from "../zones/data"
 import { readDB, writeDB } from "@/app/lib/database"
 
 export async function GET() {
@@ -63,6 +63,12 @@ export async function POST(req: Request) {
   }
 
   writeDB(db)
+
+  // Queue command for hardware
+  if (!pendingCommands[zoneId]) {
+    pendingCommands[zoneId] = []
+  }
+  pendingCommands[zoneId].push("spray")
 
   return NextResponse.json({
     message: `Spray activated for zone ${zoneId}`

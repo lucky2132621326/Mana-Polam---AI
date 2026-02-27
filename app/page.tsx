@@ -79,7 +79,7 @@ export default function HomePage() {
       title: "Disease Detection",
       description:
         "Upload crop images and get instant AI diagnosis with severity scoring and confidence metrics powered by MobileNetV2.",
-      href: "/detection",
+      href: "/dashboard/detection",
       accent: "bg-emerald-100",
     },
     {
@@ -87,7 +87,7 @@ export default function HomePage() {
       title: "Spray Optimization",
       description:
         "Logarithmic penalty engine computes required vs. actual spray volumes, preventing overspray and waste.",
-      href: "/controls",
+      href: "/dashboard/autospray",
       accent: "bg-lime-100",
     },
     {
@@ -95,7 +95,7 @@ export default function HomePage() {
       title: "Farm Health Analytics",
       description:
         "Track Stability Index, Disease Pressure, and Ecosystem Balance across every monitored zone.",
-      href: "/analytics",
+      href: "/dashboard/analytics",
       accent: "bg-green-100",
     },
     {
@@ -103,7 +103,7 @@ export default function HomePage() {
       title: "View Farm Map",
       description:
         "Visualize zone health, active detections and sprayinterventions in real time.",
-      href: "/map",
+      href: "/dashboard/map",
       accent: "bg-cyan-100",
     },
     {
@@ -111,7 +111,7 @@ export default function HomePage() {
       title: "AI Recommendations",
       description:
         "Audit every detection event and intervention. Full timeline with disease class, severity, and response logs.",
-      href: "/recommendations",
+      href: "/dashboard/recommendations",
       accent: "bg-cyan-100",
     },
   ]

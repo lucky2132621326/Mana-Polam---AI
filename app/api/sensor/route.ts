@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server"
-import { zones, zoneHistory, simulationEnabledRef } from "../zones/data"
+import { zones, zoneHistory, simulationEnabledRef, pendingCommands, activityLog } from "../zones/data"
 
 export async function POST(req: Request) {
   const body = await req.json()
 
   const { zoneId, soilMoisture, temperature, humidity } = body
+
+  // 🛰️ HARDWARE DIAGNOSTIC LOGGING
+  console.log(`\x1b[36m[IOT -> SERVER]\x1b[0m Received from Zone: ${zoneId} | Moisture: ${soilMoisture}% | Temp: ${temperature}°C`)
 
   // Disable simulation when real sensor sends data
   simulationEnabledRef.value = false
@@ -43,9 +46,6 @@ export async function POST(req: Request) {
 const historyEntry = zoneHistory.find(h => h.zoneId === zoneId)
 
 if (historyEntry) {
-
-  historyEntry.moistureHistory = [72, 70, 68, 65, 60]
-
   historyEntry.moistureHistory.push(soilMoisture)
   historyEntry.temperatureHistory.push(temperature)
 
@@ -59,6 +59,32 @@ if (historyEntry) {
 }
 
 
-  return NextResponse.json({ message: "Zone updated successfully" })
+  const commandQueue = pendingCommands[zoneId] || []
+  const command = commandQueue.length > 0 ? commandQueue.shift() : null
+
+  if (command) {
+    const now = new Date().toISOString()
+    // ✅ SYNC WITH HARDWARE: Update the zone "lastSprayed" the moment it is DISPATCHED
+    if (zones[zoneIndex]) {
+      zones[zoneIndex].lastSprayed = now
+    }
+
+    console.log(`\x1b[33m[SERVER -> IOT]\x1b[0m 🚀 DISPATCHING COMMAND: ${command.toUpperCase()} to ${zoneId} at ${now}`)
+    
+    // Create activity log entry
+    activityLog.unshift({
+      type: command === "water" ? "water" : "spray",
+      zoneId: zoneId,
+      timestamp: now
+    })
+    
+    if (activityLog.length > 50) activityLog.pop()
+  }
+
+  return NextResponse.json({ 
+    message: "Zone updated successfully",
+    command,
+    remainingQueue: commandQueue.length
+  })
 }
 

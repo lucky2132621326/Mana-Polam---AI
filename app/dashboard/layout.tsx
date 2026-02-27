@@ -7,9 +7,11 @@ import {
     SprayCan,
     Map,
     Microscope,
+    BarChart3,
     Brain,
     Users,
     Info,
+    History,
 } from "lucide-react"
 
 export default function DashboardLayout({
@@ -24,7 +26,9 @@ export default function DashboardLayout({
         { name: "Auto Spray", href: "/dashboard/autospray", icon: SprayCan },
         { name: "View Farm Map", href: "/dashboard/map", icon: Map },
         { name: "Disease Detection", href: "/dashboard/detection", icon: Microscope },
+        { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
         { name: "AI Recommendations", href: "/dashboard/recommendations", icon: Brain },
+        { name: "Activity History", href: "/dashboard/history", icon: History },
         { name: "User Management", href: "/dashboard/users", icon: Users },
         { name: "About", href: "/dashboard/about", icon: Info },
     ]

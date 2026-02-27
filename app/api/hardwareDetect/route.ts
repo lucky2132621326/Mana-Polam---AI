@@ -1,25 +1,9 @@
 import { NextResponse } from "next/server"
 import { zones } from "../zones/data"
+import { DetectionEvent } from "../zones/types"
 import { calculateSeverity, getTreatmentOptions } from "@/app/lib/mlProcessor"
 import { readDB, writeDB } from "@/app/lib/database"
-type DetectionEvent = {
-  id: string
-  zoneId: string
-  disease: string
-  confidence: number
-  severityLevel: "low" | "medium" | "high"
-  severityScore: number
-  recommendedChemical: string
-  organicAlternative: string
-  dosage: string
-  timestamp: string
 
-  status:"active" | "treated" | "resolved"
-  treatedAt: string | null
-  postSeverityScore: number | null
-  linkedSprayId: string | null
-  
-}
 export async function POST(req: Request) {
   try {
     const formData = await req.formData()
@@ -76,14 +60,14 @@ export async function POST(req: Request) {
       zoneId,
       disease,
       confidence,
-      severityLevel: level as "low" | "medium" | "high",
+      severityLevel: level,
       severityScore: score,
       recommendedChemical:
         primaryChemical?.chemicalName ?? "No chemical required",
       organicAlternative:
-        treatments.organic?.[0] ?? "Neem Oil",
+        treatments.organic?.[0] ?? "Neem Oil Extract",
       dosage:
-        primaryChemical?.dosage ?? "As per label",
+        primaryChemical?.dosage ?? (treatments.organic?.[0]?.includes("(") ? treatments.organic[0].split("(")[1]?.replace(")", "") : "5ml/L"),
       timestamp: new Date().toISOString(),
 
       status: "active",
@@ -106,9 +90,9 @@ export async function POST(req: Request) {
         zoneId,
         disease,
         chemical:
-          primaryChemical?.chemicalName ?? "Organic Spray",
+          primaryChemical?.chemicalName ?? (treatments.organic?.[0]?.split(" (")[0] || "Neem Oil Extract"),
         dosage:
-          primaryChemical?.dosage ?? "Standard",
+          primaryChemical?.dosage ?? (treatments.organic?.[0]?.includes("(") ? treatments.organic[0].split("(")[1]?.replace(")", "") : "5ml/L"),
         timestamp: new Date().toISOString(),
         triggeredBy: "AI Auto Spray",
       })
