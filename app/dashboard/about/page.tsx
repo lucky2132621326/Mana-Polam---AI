@@ -39,7 +39,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-[#1a2e1d]">Our Mission</h2>
           <div className="space-y-4 text-slate-600 leading-relaxed text-lg">
             <p>
-              Mana Polam is committed to revolutionizing plant health management. 
+              Bhoomitra is committed to revolutionizing plant health management. 
               We empower farmers and agricultural professionals with instant, accurate disease detection to protect crops and increase yields.
             </p>
             <p>
@@ -164,7 +164,7 @@ export default function AboutPage() {
             </div>
             <div>
               <p className="font-bold text-slate-800 text-sm">Smart Bridge Hyderabad</p>
-              <p className="text-xs text-slate-500">© 2026 Mana Polam AI. All rights reserved.</p>
+              <p className="text-xs text-slate-500">© 2026 Bhoomitra AI. All rights reserved.</p>
             </div>
           </div>
         </div>

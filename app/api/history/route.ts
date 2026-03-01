@@ -25,6 +25,8 @@ export async function GET() {
 
   return NextResponse.json({
     history,
+    detections: db.detections || [],
+    sprays: db.sprays || [],
     summary: {
       totalDetections: detections.length,
       active: detections.filter((d: any) => d.status === "active").length,

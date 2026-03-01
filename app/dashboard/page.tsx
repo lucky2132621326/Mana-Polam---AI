@@ -10,14 +10,21 @@ import {
   LayoutDashboard, 
   Map as MapIcon, 
   TrendingUp,
-  Zap
+  Zap,
+  Droplets
 } from "lucide-react"
 
 export default function DashboardHome() {
-  const { detections, activities } = useFarmStore()
+  const { detections, activities, sensorData } = useFarmStore()
   
   const activeDetectionsCount = detections?.length || 0
   const totalSprayLiters = activities?.reduce((acc, curr) => acc + (curr.totalLiters || 0), 0) || 0
+
+  // 🛰️ Real-time average moisture from all active sensors
+  const sensors = Object.values(sensorData);
+  const avgMoisture = sensors.length > 0 
+    ? Math.round(sensors.reduce((acc, s) => acc + s.soilMoisture, 0) / sensors.length)
+    : 42; // Fallback value
 
   return (
     <div className="space-y-12 animate-in fade-in duration-700">
@@ -95,19 +102,18 @@ export default function DashboardHome() {
           <div className="absolute top-0 right-0 w-24 h-24 bg-yellow-50 rounded-bl-full -mr-8 -mt-8 opacity-50 group-hover:scale-110 transition-transform"></div>
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="text-sm font-semibold text-[#5a7a60] uppercase tracking-wider">Efficiency</h3>
-              <p className="text-4xl font-black text-[#1e3a23] mt-3">92%</p>
+              <h3 className="text-sm font-semibold text-[#5a7a60] uppercase tracking-wider">Avg. Soil Moisture</h3>
+              <p className="text-4xl font-black text-[#1e3a23] mt-3">{avgMoisture}%</p>
             </div>
             <div className="bg-yellow-100 p-3 rounded-2xl text-yellow-600">
-              <TrendingUp className="h-6 w-6" />
+              <Droplets className="h-6 w-6" />
             </div>
           </div>
           <div className="mt-4 flex items-center text-xs text-yellow-600 font-bold">
-            <CheckCircle2 className="h-3 w-3 mr-1" />
-            High Performance
+            <Activity className="h-3 w-3 mr-1" />
+            Live Telemetry
           </div>
         </div>
-
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">

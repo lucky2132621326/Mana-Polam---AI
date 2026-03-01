@@ -45,6 +45,29 @@ export default function LoginPage() {
     }
   }
 
+  const handleGuestLogin = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch("/api/auth/guest", {
+        method: "POST",
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        toast.success("Welcome aboard as Guest!")
+        router.push("/dashboard")
+        router.refresh()
+      } else {
+        toast.error("Guest login currently unavailable")
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[#f7faf8] p-4 relative overflow-hidden">
       {/* Decorative background circles */}
@@ -64,7 +87,7 @@ export default function LoginPage() {
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#3a7d44] to-[#1e3a23] flex items-center justify-center shadow-lg shadow-green-900/20 mb-4">
             <Sprout className="h-10 w-10 text-white" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#1e3a23]">Mana Polam AI</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[#1e3a23]">Bhoomitra AI</h1>
           <p className="text-[#5a7a60] font-medium mt-1">Smart Agriculture Management</p>
         </div>
 
@@ -126,6 +149,23 @@ export default function LoginPage() {
                   "Log in to Dashboard"
                 )}
               </Button>
+              
+              <div className="flex items-center gap-2 w-full my-1">
+                <div className="h-[1px] bg-slate-200 flex-1"></div>
+                <span className="text-[10px] uppercase font-bold text-slate-400">or</span>
+                <div className="h-[1px] bg-slate-200 flex-1"></div>
+              </div>
+
+              <Button 
+                type="button" 
+                variant="outline"
+                onClick={handleGuestLogin}
+                className="w-full border-green-200 text-[#3a7d44] hover:bg-green-50 h-10 transition-all font-semibold"
+                disabled={loading}
+              >
+                Skip for now (Guest Mode)
+              </Button>
+
               <p className="text-xs text-center text-[#5a7a60]">
                 Access restricted to authorized personnel only.
               </p>

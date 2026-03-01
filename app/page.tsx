@@ -220,11 +220,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Why Mana Polam ──────────────────────────────────────────────── */}
+      {/* ── Why Bhoomitra ──────────────────────────────────────────────── */}
       <section className="bg-white border-y border-[#d4e9c8]">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a23] mb-3">Why Mana Polam?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a23] mb-3">Why Bhoomitra?</h2>
             <p className="text-[#5a7a60]">The difference intelligence makes at every decision point.</p>
           </div>
 
@@ -236,7 +236,7 @@ export default function HomePage() {
                 <X className="h-3.5 w-3.5 text-red-400" /> Traditional Farming
               </div>
               <div className="px-5 py-3 border-l border-white/10 flex items-center gap-2">
-                <CheckCircle className="h-3.5 w-3.5 text-lime-400" /> Mana Polam AI
+                <CheckCircle className="h-3.5 w-3.5 text-lime-400" /> Bhoomitra AI
               </div>
             </div>
 
@@ -281,7 +281,7 @@ export default function HomePage() {
 
       {/* ── Footer strip ────────────────────────────────────────────────── */}
       <footer className="bg-[#1e3a23] text-white/40 text-xs text-center py-4">
-        © {new Date().getFullYear()} Mana Polam · AI Crop Intelligence Platform
+        © {new Date().getFullYear()} Bhoomitra · AI Crop Intelligence Platform
       </footer>
     </div>
   )

@@ -45,13 +45,6 @@ export let zones: ZoneData[] = globalMemory.zones || [
 ]
 if (!globalMemory.zones) globalMemory.zones = zones
 
-
-
-
-
-  // Keep the rest of your zones A5–D6 here
-
-
 export function updateLiveZones() {
   const liveIds = ["A1", "A2", "A3", "A4"]
 

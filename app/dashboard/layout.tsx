@@ -55,10 +55,10 @@ export default function DashboardLayout({
 
                 <div className="mb-10 mt-4 flex items-center justify-center w-full group-hover:justify-start px-2">
                     <h1 className="text-2xl font-bold text-green-700 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        Mana Polam
+                        Bhoomitra
                     </h1>
                     <div className="absolute font-bold text-2xl text-green-700 group-hover:hidden">
-                        MP
+                        BT
                     </div>
                 </div>
 

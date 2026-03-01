@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
+import { Button } from "@/components/ui/button"
 import { Info } from "lucide-react"
 import {
   ResponsiveContainer,
@@ -29,9 +30,10 @@ import {
 export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState<any>(null)
   const [historyData, setHistoryData] = useState<any>(null)
+  const [showFormulas, setShowFormulas] = useState(false)
 
   const CalculationDetails = ({ title, formulas }: { title: string, formulas: { label: string, math: string, desc: string }[] }) => (
-    <Card className="mt-8 border-none bg-gradient-to-br from-slate-900 via-green-950 to-slate-900 text-white shadow-2xl overflow-hidden rounded-[2rem] border border-white/5">
+    <Card className={`mt-8 border-none bg-gradient-to-br from-slate-900 via-green-950 to-slate-900 text-white shadow-2xl overflow-hidden rounded-[2rem] border border-white/5 transition-all duration-700 ${showFormulas ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 pointer-events-none'}`}>
       <CardHeader className="py-6 border-b border-white/10 bg-black/40 backdrop-blur-2xl">
         <CardTitle className="text-[11px] font-black flex items-center gap-4 text-emerald-400 uppercase tracking-[0.4em] antialiased">
           <div className="h-4 w-1 bg-emerald-500 rounded-full shadow-[0_0_15px_#10b981]" />
@@ -68,8 +70,8 @@ export default function AnalyticsPage() {
         const aData = await a.json()
         setAnalytics(aData)
 
-        const h = await fetch("/api/history")
-        const hData = await h.json()
+        const historyDataRaw = await fetch("/api/history")
+        const hData = await historyDataRaw.json()
         setHistoryData(hData)
       } catch (err) {
         console.error("Analytics fetch error:", err)
@@ -92,6 +94,20 @@ export default function AnalyticsPage() {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto space-y-6">
+
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Intelligence Analytics</h1>
+            <p className="text-muted-foreground font-medium">Neural processing of farm ecosystem metadata</p>
+          </div>
+          <Button 
+            variant="outline" 
+            onClick={() => setShowFormulas(!showFormulas)}
+            className={`rounded-full px-6 font-bold transition-all duration-300 ${showFormulas ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-white text-emerald-600 border-emerald-200'}`}
+          >
+            {showFormulas ? "Hide Core Logic" : "Inspect Neural Logic"}
+          </Button>
+        </div>
 
         <Tabs defaultValue="stability" className="w-full">
 

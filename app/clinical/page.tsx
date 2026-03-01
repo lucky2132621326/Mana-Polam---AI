@@ -11,7 +11,7 @@ export default function ClinicalPage() {
             🔬 Clinical & Scientific Intelligence
           </h1>
           <p className="text-muted-foreground mt-2">
-            Detailed technical overview of the AI disease detection system used in Mana Polam.
+            Detailed technical overview of the AI disease detection system used in Bhoomitra.
           </p>
         </div>
 

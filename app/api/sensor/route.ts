@@ -7,10 +7,13 @@ export async function POST(req: Request) {
   const { zoneId, soilMoisture, temperature, humidity } = body
 
   // 🛰️ HARDWARE DIAGNOSTIC LOGGING
-  console.log(`\x1b[36m[IOT -> SERVER]\x1b[0m Received from Zone: ${zoneId} | Moisture: ${soilMoisture}% | Temp: ${temperature}°C`)
+  console.log(`\x1b[36m[IOT -> SERVER]\x1b[0m 📶 Incoming data for ${zoneId}: Moisture ${soilMoisture}%, Temp ${temperature}°C`)
 
   // Disable simulation when real sensor sends data
-  simulationEnabledRef.value = false
+  if (simulationEnabledRef.value !== false) {
+    console.log(`\x1b[35m[SYSTEM]\x1b[0m 🟢 Live hardware detected! Disabling simulation mode automatically.`)
+    simulationEnabledRef.value = false
+  }
 
   const zoneIndex = zones.findIndex(z => z.id === zoneId)
 
@@ -84,6 +87,7 @@ if (historyEntry) {
   return NextResponse.json({ 
     message: "Zone updated successfully",
     command,
+    targetZone: zoneId,
     remainingQueue: commandQueue.length
   })
 }

@@ -7,9 +7,9 @@ import { AutomationProvider } from '@/lib/automation-context'
 import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
-  title: "Mana Polam - AI Smart Farming Dashboard",
+  title: "Bhoomitra - AI Powered Precision Farming System",
   description: "Advanced agricultural monitoring and disease detection system powered by AI.",
-  generator: "Mana Polam AI",
+  generator: "Bhoomitra AI",
   icons: {
     icon: [
       {

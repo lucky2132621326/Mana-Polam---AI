@@ -33,14 +33,24 @@ export interface ImplementationRecord {
   impact: string
 }
 
+export interface ZoneSensorData {
+  id: string
+  soilMoisture: number
+  temperature: number
+  humidity: number
+  lastUpdate: number
+}
+
 interface FarmState {
   detections: DetectionResult[]
   activities: SprayActivity[]
   implementedRecords: ImplementationRecord[]
+  sensorData: Record<string, ZoneSensorData>
   addDetection: (detection: DetectionResult) => void
   removeDetection: (zoneId: string) => void
   addActivity: (activity: SprayActivity) => void
   addImplementationRecord: (record: ImplementationRecord) => void
+  updateSensorData: (data: ZoneSensorData) => void
   clearDetections: () => void
   clearActivities: () => void
   clearImplementationRecords: () => void
@@ -52,6 +62,7 @@ export const useFarmStore = create<FarmState>()(
       detections: [],
       activities: [],
       implementedRecords: [],
+      sensorData: {},
       addDetection: (detection) => set((state) => ({ 
         detections: [
           detection, 
@@ -72,6 +83,12 @@ export const useFarmStore = create<FarmState>()(
         if (exists) return state;
         return { implementedRecords: [record, ...state.implementedRecords] };
       }),
+      updateSensorData: (data) => set((state) => ({
+        sensorData: {
+          ...state.sensorData,
+          [data.id]: data
+        }
+      })),
       clearDetections: () => set({ detections: [] }),
       clearActivities: () => set({ activities: [] }),
       clearImplementationRecords: () => set({ implementedRecords: [] }),

@@ -21,6 +21,8 @@ import {
 import { generateRecommendation } from "@/lib/ai-engine"
 
 
+import { useFarmStore } from "@/store/farmStore"
+
 interface ZoneData {
   id: string
   row: number
@@ -41,6 +43,7 @@ export default function FarmMap() {
   const [isHydrating, setIsHydrating] = useState(false)
   const [commandQueue, setCommandQueue] = useState<Record<string, string[]>>({})
   const [zoomLevel, setZoomLevel] = useState(1)
+  const { updateSensorData } = useFarmStore()
   const [mlData, setMlData] = useState<{
     [zoneId: string]: {
       confidence: number
@@ -76,6 +79,17 @@ export default function FarmMap() {
       const data = await res.json()
 
       setFarmData(data)
+
+      // Update all zones in global store for comprehensive live dashboard tracking
+      data.forEach((zone: ZoneData) => {
+        updateSensorData({
+          id: zone.id,
+          soilMoisture: zone.soilMoisture,
+          temperature: zone.temperature,
+          humidity: zone.humidity,
+          lastUpdate: Date.now()
+        })
+      })
 
       if (selectedZone) {
         const updatedZone = data.find((z: ZoneData) => z.id === selectedZone.id)

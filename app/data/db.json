@@ -739,6 +739,230 @@
       "treatedAt": null,
       "postSeverityScore": null,
       "linkedSprayId": null
+    },
+    {
+      "id": "e3ac2650-9472-4263-95a4-1e0e79c0c54d",
+      "zoneId": "A1",
+      "disease": "Apple___healthy",
+      "confidence": 0.9869579672813416,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Panchagavya (30 ml per liter)",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-02-28T05:28:48.299Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "7222ca79-3371-4c58-9d7d-d76e6dd01567",
+      "zoneId": "A1",
+      "disease": "Blueberry___healthy",
+      "confidence": 0.9999051094055176,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Panchagavya (30 ml per liter)",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-02-28T05:29:43.704Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "652a25fc-a3b7-45b2-808c-7f8cb1ef3c2a",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Northern_Leaf_Blight",
+      "confidence": 0.6289143562316895,
+      "severityLevel": "medium",
+      "severityScore": 2,
+      "recommendedChemical": "Propiconazole 25% EC",
+      "organicAlternative": "Dashaparani Kashayam (200 ml in 10 liters of water)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-28T05:38:20.634Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "db43333f-c37b-4113-9e83-599681879e67",
+      "zoneId": "A1",
+      "disease": "Grape___Black_rot",
+      "confidence": 0.9967358708381653,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Mancozeb 75% WP",
+      "organicAlternative": "Neem Oil Extract (Cold Pressed) (5 ml per liter with soap)",
+      "dosage": "2.5 g per liter",
+      "timestamp": "2026-02-28T05:38:47.163Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "f7434714-24b0-43ff-8d1c-20ce78848001",
+      "zoneId": "A1",
+      "disease": "Grape___Black_rot",
+      "confidence": 0.9967358708381653,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Mancozeb 75% WP",
+      "organicAlternative": "Neem Oil Extract (Cold Pressed) (5 ml per liter with soap)",
+      "dosage": "2.5 g per liter",
+      "timestamp": "2026-02-28T06:57:19.705Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "a1a40f69-ff9b-4402-b28f-d31bf12f4bd3",
+      "zoneId": "A1",
+      "disease": "Grape___Black_rot",
+      "confidence": 0.9998359680175781,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Mancozeb 75% WP",
+      "organicAlternative": "Neem Oil Extract (Cold Pressed) (5 ml per liter with soap)",
+      "dosage": "2.5 g per liter",
+      "timestamp": "2026-02-28T08:31:48.198Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "93e42b0f-f622-43b8-b718-bc5d702811f1",
+      "zoneId": "A1",
+      "disease": "Orange___Haunglongbing_(Citrus_greening)",
+      "confidence": 0.9999476671218872,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Panchagavya (30 ml per liter)",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-02-28T09:36:59.166Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "09b3e632-ea5f-4615-8be5-f2734dda7b90",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "confidence": 0.9662783145904541,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Propiconazole 25% EC",
+      "organicAlternative": "Panchagavya (30 ml per liter)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-28T09:37:49.226Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "b5c17cab-4efa-471e-bcf4-faf58d009b9b",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "confidence": 0.9662783145904541,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Propiconazole 25% EC",
+      "organicAlternative": "Panchagavya (30 ml per liter)",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-28T09:58:07.637Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "22b84d2a-773f-4610-b994-5fe7d67bf0f9",
+      "zoneId": "A1",
+      "disease": "Tomato___Late_blight",
+      "confidence": 0.36182403564453125,
+      "severityLevel": "low",
+      "severityScore": 1,
+      "recommendedChemical": "Chlorothalonil 75% WP",
+      "organicAlternative": "Trichoderma Viride (5 g per liter)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-02-28T09:58:35.291Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "1fdf43d1-70ea-4dd4-9a16-a46350426a2f",
+      "zoneId": "A1",
+      "disease": "Potato___Early_blight",
+      "confidence": 0.9993447661399841,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Chlorothalonil 75% WP",
+      "organicAlternative": "Panchagavya (30 ml per liter)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-03-01T12:39:21.557Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "a8d55aa5-2485-4b22-a5e5-731a062c193b",
+      "zoneId": "A2",
+      "disease": "Potato___healthy",
+      "confidence": 0.9999996423721313,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "No chemical required",
+      "organicAlternative": "Panchagavya (30 ml per liter)",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-03-01T12:42:27.514Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "1a053c5e-8d3a-4ae7-ac58-f7a1e6562e8b",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "confidence": 0.9999579191207886,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Copper Oxychloride 50% WP",
+      "organicAlternative": "Pseudomonas Fluorescens (10 g per liter)",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T12:53:32.187Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "499db3e4-4d60-4e11-8cc6-f83dbac2ede7",
+      "zoneId": "A3",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "confidence": 0.9659509658813477,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Copper Oxychloride 50% WP",
+      "organicAlternative": "Pseudomonas Fluorescens (10 g per liter)",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T12:54:48.139Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
     }
   ],
   "sprays": [
@@ -1353,6 +1577,219 @@
       "dosage": "2 g per liter",
       "timestamp": "2026-02-27T10:19:04.251Z",
       "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "6c832078-aab4-4c62-9569-a3f5b7b65d18",
+      "zoneId": "A1",
+      "disease": "Apple___healthy",
+      "chemical": "Panchagavya",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-02-28T05:28:48.302Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "bf307f03-0a11-4c04-ab4f-4cf43052fa07",
+      "zoneId": "A1",
+      "disease": "Blueberry___healthy",
+      "chemical": "Panchagavya",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-02-28T05:29:43.706Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "11febd13-3836-4bb4-8278-103ae126fce3",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Northern_Leaf_Blight",
+      "chemical": "Propiconazole 25% EC",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-28T05:38:20.639Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "38b62b84-51dd-4fc1-84a3-6380d60c8ed4",
+      "zoneId": "A1",
+      "disease": "Grape___Black_rot",
+      "chemical": "Mancozeb 75% WP",
+      "dosage": "2.5 g per liter",
+      "timestamp": "2026-02-28T05:38:47.165Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "ae408eba-d26d-4956-8a4a-73b3846ab191",
+      "zoneId": "A1",
+      "timestamp": "2026-02-28T06:27:32.685Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "a88dc998-8b5b-42fa-ac16-559bd179e922",
+      "zoneId": "A1",
+      "timestamp": "2026-02-28T06:41:26.411Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "1a57d260-8e29-4703-8497-0718b6535588",
+      "zoneId": "A2",
+      "timestamp": "2026-02-28T06:49:31.115Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "0b6f22a5-046d-4a84-b7dc-2f409906c197",
+      "zoneId": "A2",
+      "timestamp": "2026-02-28T06:49:55.676Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "b406863c-8d9e-4e44-9ad7-c06590e206d7",
+      "zoneId": "A1",
+      "disease": "Grape___Black_rot",
+      "chemical": "Mancozeb 75% WP",
+      "dosage": "2.5 g per liter",
+      "timestamp": "2026-02-28T06:57:19.706Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "8fc88e32-6370-463b-9490-2eeb3becfed0",
+      "zoneId": "A1",
+      "timestamp": "2026-02-28T08:07:15.711Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "2e7ca3a4-1fd3-4076-b6d2-097788f96901",
+      "zoneId": "A1",
+      "timestamp": "2026-02-28T08:12:26.882Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "9c2028a8-a57b-436e-a4b9-52e9439175e9",
+      "zoneId": "A1",
+      "timestamp": "2026-02-28T08:12:37.663Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "b5ac050b-1a91-4817-bf09-a88f0ab4b5cd",
+      "zoneId": "A2",
+      "timestamp": "2026-02-28T08:12:57.533Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "a0f02e2a-e7b5-4aca-b4a2-47cae27601cf",
+      "zoneId": "A1",
+      "timestamp": "2026-02-28T08:13:18.537Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "0737a29d-bb62-4acd-8d89-6fa272951f10",
+      "zoneId": "A2",
+      "timestamp": "2026-02-28T08:17:34.636Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "578ab67d-e564-40c7-9324-7a8b3ccd7a63",
+      "zoneId": "A1",
+      "disease": "Grape___Black_rot",
+      "chemical": "Mancozeb 75% WP",
+      "dosage": "2.5 g per liter",
+      "timestamp": "2026-02-28T08:31:48.199Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "fa73be90-9f8a-4781-8132-589ca0a0336e",
+      "zoneId": "A2",
+      "timestamp": "2026-02-28T08:39:01.185Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "337f2902-36a0-4ce0-b3b4-0cd7be03734a",
+      "zoneId": "A1",
+      "timestamp": "2026-02-28T08:40:03.911Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "a40a7bb2-248e-4fdb-aaf8-9a159cf38ee9",
+      "zoneId": "A2",
+      "timestamp": "2026-02-28T09:22:12.614Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "84bde093-9f02-4953-920f-29a345284fdb",
+      "zoneId": "A1",
+      "disease": "Orange___Haunglongbing_(Citrus_greening)",
+      "chemical": "Panchagavya",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-02-28T09:36:59.183Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "383ead94-92dd-4ec3-86e9-0c0bf823c611",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "chemical": "Propiconazole 25% EC",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-28T09:37:49.228Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "0d89f09d-2bc5-4a22-89d1-187401ac9ce5",
+      "zoneId": "A1",
+      "disease": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "chemical": "Propiconazole 25% EC",
+      "dosage": "1 ml per liter",
+      "timestamp": "2026-02-28T09:58:07.642Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "b7dcb953-abca-4a11-9b1e-7957e34c7ed0",
+      "zoneId": "A2",
+      "timestamp": "2026-02-28T10:04:02.566Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "21081928-a645-4b07-aea7-91b3bf07cb48",
+      "zoneId": "A1",
+      "timestamp": "2026-03-01T12:36:10.531Z",
+      "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "784bbe8e-6f19-4583-af9e-fc6903b7483f",
+      "zoneId": "A1",
+      "disease": "Potato___Early_blight",
+      "chemical": "Chlorothalonil 75% WP",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-03-01T12:39:21.559Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "3220db26-9091-493d-997c-11a6769e5379",
+      "zoneId": "A2",
+      "disease": "Potato___healthy",
+      "chemical": "Panchagavya",
+      "dosage": "30 ml per liter",
+      "timestamp": "2026-03-01T12:42:27.516Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "ee571432-408e-4411-996d-921b4ecd686e",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "chemical": "Copper Oxychloride 50% WP",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T12:53:32.188Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "d069bd45-72c5-4d09-86e7-292cc37e0225",
+      "zoneId": "A3",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "chemical": "Copper Oxychloride 50% WP",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T12:54:48.141Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "a743297f-d199-4f12-a0e9-17406a47b668",
+      "zoneId": "A3",
+      "timestamp": "2026-03-01T12:55:06.499Z",
+      "triggeredBy": "Manual Spray"
     }
   ],
   "zoneHistory": []
