@@ -963,6 +963,70 @@
       "treatedAt": null,
       "postSeverityScore": null,
       "linkedSprayId": null
+    },
+    {
+      "id": "a3b3042d-5d15-4d5a-9b7b-1f92cb6291fd",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "confidence": 0.9998936653137207,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Copper Oxychloride 50% WP",
+      "organicAlternative": "Pseudomonas Fluorescens (10 g per liter)",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T13:54:13.736Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "58f1e99c-c6e3-4be8-8f62-cd0c132bbb87",
+      "zoneId": "A1",
+      "disease": "Tomato___Late_blight",
+      "confidence": 0.36182403564453125,
+      "severityLevel": "low",
+      "severityScore": 1,
+      "recommendedChemical": "Chlorothalonil 75% WP",
+      "organicAlternative": "Trichoderma Viride (5 g per liter)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-03-01T13:54:57.400Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "ad2b6b8d-012f-44ea-9c9d-f72b4da6496f",
+      "zoneId": "A1",
+      "disease": "Tomato___Late_blight",
+      "confidence": 0.36182403564453125,
+      "severityLevel": "low",
+      "severityScore": 1,
+      "recommendedChemical": "Chlorothalonil 75% WP",
+      "organicAlternative": "Trichoderma Viride (5 g per liter)",
+      "dosage": "2 g per liter",
+      "timestamp": "2026-03-01T13:55:35.728Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
+    },
+    {
+      "id": "420a94ed-b6e3-4396-ab4e-0808639efe71",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "confidence": 0.9998936653137207,
+      "severityLevel": "high",
+      "severityScore": 3,
+      "recommendedChemical": "Copper Oxychloride 50% WP",
+      "organicAlternative": "Pseudomonas Fluorescens (10 g per liter)",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T13:56:18.106Z",
+      "status": "active",
+      "treatedAt": null,
+      "postSeverityScore": null,
+      "linkedSprayId": null
     }
   ],
   "sprays": [
@@ -1790,6 +1854,24 @@
       "zoneId": "A3",
       "timestamp": "2026-03-01T12:55:06.499Z",
       "triggeredBy": "Manual Spray"
+    },
+    {
+      "id": "b60f66b8-ccfe-49ec-9bff-a326b420e19b",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "chemical": "Copper Oxychloride 50% WP",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T13:54:13.741Z",
+      "triggeredBy": "AI Auto Spray"
+    },
+    {
+      "id": "b125a8bb-6c9a-4ef0-a311-621d11a771ef",
+      "zoneId": "A1",
+      "disease": "Pepper,_bell___Bacterial_spot",
+      "chemical": "Copper Oxychloride 50% WP",
+      "dosage": "3 g per liter",
+      "timestamp": "2026-03-01T13:56:18.106Z",
+      "triggeredBy": "AI Auto Spray"
     }
   ],
   "zoneHistory": []
